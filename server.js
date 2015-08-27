@@ -1,4 +1,7 @@
 var express = require('express');
+var config = require('./config.json');
+var utils = require('./utils.js');
+
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var cors = require('cors');
@@ -9,7 +12,7 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
-app.set('port', 3000);
+app.set('port', config.port);
 
 require('./models/user');
 
@@ -18,8 +21,10 @@ router.post('/auth/signup', authCtrl.emailSignup);
 router.post('/auth/login', authCtrl.emailLogin);
 //router.get('/private',middleware.ensureAuthenticated, function(req, res) {...} );
 
-mongoose.connect('mongodb://localhost', function(err) {
+mongoose.connect(config.mongodb.host, function(err) {
     app.listen(app.get('port'), function(){
-        console.log('Express corriendo en http://localhost:3000');
+        console.log(
+            utils.getInitServerMessage(config)
+        );
     });
 });

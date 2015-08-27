@@ -1,0 +1,12 @@
+{
+  "name": "Watch dog server",
+  "host": "http://localhost",
+  "port": "3000",
+  "token":{
+    "secret":"secreto"
+  },
+  "mongodb":{
+    "host":"mongodb://localhost",
+    "port":""
+  }
+}
