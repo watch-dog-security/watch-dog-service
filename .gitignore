@@ -1,4 +1,6 @@
 .idea/
 node_modules/
-# Never we have to add these files to git, the reason is easy to get, we just have to rename the sample and have our own config
+
+# Never we have to add these files to git
+# The reason is we just have to rename the sample and have our own config
 config.json

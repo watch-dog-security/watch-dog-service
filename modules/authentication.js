@@ -1,10 +1,9 @@
-// auth.js
 var mongoose = require('mongoose');
-require("./models/user");
+require("./../models/user");
 var User = mongoose.model('User');
-var service = require('./services');
+var service = require('./../services');
 
-exports.emailSignup = function(req, res) {
+exports.signPp = function(req, res) {
     var user = new User({
         // Creamos el usuario con los campos
         // que definamos en el Schema
