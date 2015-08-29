@@ -10,6 +10,7 @@ var utils = require('./utils.js');
 var authentication = require('./modules/authentication');
 var middleware = require('./middleware');
 var logErrors = require('./middleware/logErrors');
+var errorHandler = require('./middleware/errorHandler');
 
 //Models
 var usersModel = require('./models/user');
@@ -23,6 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 app.use(logErrors);
+app.use(errorHandler);
 
 //Routes
 //router.post('/auth/signup', authentication.signUp);
@@ -31,15 +33,20 @@ router.get('/',function(req, res){
     res.status(200);
 });
 
-function start(){
-    var server =  app.listen(app.get('port'), function(){
+app.use(router);
+
+function start(callback){
+    var server =  app.listen(app.get('port'), function(err){
         console.log(utils.getInitServerMessage(config));
+
         startMongoose(function(err,mongoServer){
             if(err!==undefined) {
                 console.error("Shutting down watchdog server - Reason: \n\n\t" + err.toString());
                 stop(server);
             }
         });
+
+        callback(err,server);
     });
 }
 
@@ -56,8 +63,10 @@ function stopMongoose(instance){
     isntance.connection.close();
 }
 
-function stop(instance){
-    instance.close();
+function stop(instance,callback){
+    instance.close(function(err){
+        callback(err)
+    });
 }
 
 module.exports = {
