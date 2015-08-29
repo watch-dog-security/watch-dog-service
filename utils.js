@@ -5,4 +5,3 @@ exports.getInitServerMessage = function(config){
     message += config.name + ' is running on port ' + config.port;
     return message;
 };
-

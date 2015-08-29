@@ -9,6 +9,7 @@ var config = require('./config.json');
 var utils = require('./utils.js');
 var authentication = require('./modules/authentication');
 var middleware = require('./middleware');
+var logErrors = require('./middleware/logErrors');
 
 //Models
 var usersModel = require('./models/user');
@@ -21,6 +22,7 @@ var exports = module.exports = {};
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
+app.use(logErrors);
 
 //Routes
 //router.post('/auth/signup', authentication.signUp);
@@ -39,8 +41,6 @@ function start(){
             }
         });
     });
-
-    return server;
 }
 
 function startMongoose(callback){
