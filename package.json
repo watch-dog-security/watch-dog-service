@@ -5,6 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.13.3",
+    "colors": "^1.1.2",
     "cors": "^2.7.1",
     "express": "^4.13.3",
     "jwt-simple": "^0.3.0",

@@ -4,7 +4,6 @@ var server = require('../server.js');
 
 describe(config.name, function() {
 
-    var url = config.host + config.port;
     var app;
 
     it("Server should be running", function (done) {

@@ -3,7 +3,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-
+var colors = require('colors');
 //Own files
 var config = require('./config.json');
 var utils = require('./utils.js');
@@ -20,6 +20,7 @@ var app = express();
 var router = express.Router();
 var exports = module.exports = {};
 
+//Middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
@@ -37,12 +38,15 @@ app.use(router);
 
 function start(callback){
     var server =  app.listen(app.get('port'), function(err){
-        console.log(utils.getInitServerMessage(config));
+
+        console.log("\n> " + config.name);
+
+        utils.consoleLogWithTick("It is running on port " + config.port);
 
         startMongoose(function(err,mongoServer){
             if(err!==undefined) {
-                console.error("Shutting down watchdog server - Reason: \n\n\t" + err.toString());
                 stop(server);
+                console.error("Shutting down watchdog server - Reason: \n\n\t" + err.toString());
             }
         });
 
@@ -53,7 +57,7 @@ function start(callback){
 function startMongoose(callback){
     var mongoServer = mongoose.connect(config.mongodb.host, function(err) {
         if(err===undefined) {
-            console.info("MongoDB is running.");
+            utils.consoleLogWithTick("MongoDB is running on port " + config.mongodb.port);
         }
         callback(err,mongoServer);
     });
