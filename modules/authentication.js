@@ -1,27 +1,33 @@
 var mongoose = require('mongoose');
-require("./../models/user");
-var User = mongoose.model('User');
+var User = require("./../models/user");
 var service = require('./../services');
+var userModule = ('./../modulesuser');
 
-exports.signPp = function(req, res) {
-    var user = new User({
-        // Creamos el usuario con los campos
-        // que definamos en el Schema
-        // nombre, email, etc...
+exports.signUp = function(req, res, err) {
+
+    var objUser = new User();
+
+    userModule.parseJsonToUserModel(req,function(user,error){
+        if(error){
+            err = error;
+        }else{
+            objUser = user;
+        }
     });
 
-    user.save(function(err){
-        return res
-            .status(200)
-            .send({token: service.createToken(user)});
+    objUser.save(function(err){
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Something is going wrong');
+        }else{
+            console.log('User saved successfully!');
+            return res.status(200);
+        }
     });
 };
 
-exports.emailLogin = function(req, res) {
+exports.signIn = function(req, res) {
     User.findOne({email: req.body.email.toLowerCase()}, function(err, user) {
-        // Comprobar si hay errores
-        // Si el usuario existe o no
-        // Y si la contraseña es correcta
         return res
             .status(200)
             .send({token: service.createToken(user)});

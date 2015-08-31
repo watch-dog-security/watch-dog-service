@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var colors = require('colors');
+
 //Own files
 var config = require('./config.json');
 var utils = require('./utils.js');
@@ -12,13 +13,11 @@ var middleware = require('./middleware');
 var logErrors = require('./middleware/logErrors');
 var errorHandler = require('./middleware/errorHandler');
 
-//Models
-var usersModel = require('./models/user');
+//controllers
+var authenticationController = require('./controllers/authentication.js');
 
 //Variables
 var app = express();
-var router = express.Router();
-var exports = module.exports = {};
 
 //Middlewares
 app.use(bodyParser.json());
@@ -27,17 +26,11 @@ app.use(cors());
 app.use(logErrors);
 app.use(errorHandler);
 
-//Routes
-//router.post('/auth/signup', authentication.signUp);
-//router.post('/auth/signin', authentication.signIn);
-router.get('/',function(req, res){
-    res.status(200);
-});
-
-app.use(router);
+//Routers
+app.use('/auth',authenticationController);
 
 function start(callback){
-    var server =  app.listen(app.get('port'), function(err){
+    var server =  app.listen(config.port, function(err){
 
         console.log("\n> " + config.name);
 
