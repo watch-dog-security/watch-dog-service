@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var colors = require('colors');
+var redis = require('redis');
 
 //Own files
 var config = require('./config.json');
@@ -18,6 +19,7 @@ var authenticationController = require('./controllers/authentication.js');
 
 //Variables
 var app = express();
+var redisClient = redis.createClient(config.redis.port,config.redis.host);
 
 //Middlewares
 app.use(bodyParser.json());
@@ -30,6 +32,7 @@ app.use(errorHandler);
 app.use('/auth',authenticationController);
 
 function start(callback){
+
     var server =  app.listen(config.port, function(err){
 
         console.log("\n> " + config.name);
@@ -40,10 +43,28 @@ function start(callback){
             if(err!==undefined) {
                 stop(server);
                 console.error("Shutting down watchdog server - Reason: \n\n\t" + err.toString());
+            }/**else{
+                startRedis(function(redisError,redisClient){
+                    if(redisError!==undefined) {
+                        stop(server);
+                        console.error("Shutting down watchdog server - Reason: \n\n\t" + err.toString());
+                    }else{
+                        callback(err,server);
+                    }
+                });
+            }**/
+        });
+        
+        startRedis(function(redisError,redisClient){
+            if(redisError!==undefined) {
+                stop(server);
+                console.error("Shutting down watchdog server - Reason: \n\n\t" + err.toString());
+            }else{
+                callback(err,server);
             }
         });
 
-        callback(err,server);
+        //callback(err,server);
     });
 }
 
@@ -53,6 +74,13 @@ function startMongoose(callback){
             utils.consoleLogWithTick("MongoDB is running on port " + config.mongodb.port);
         }
         callback(err,mongoServer);
+    });
+}
+
+function startRedis(callback){
+    var redisClientVar = redisClient.on("connect", function(err){
+        utils.consoleLogWithTick("Redis is running on port " + config.redis.port);
+        callback(err,redisClientVar);
     });
 }
 
