@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var User = require("./../models/user");
 var service = require('./../services');
 var userModule = ('./../modulesuser');
+var jwt = ('jwt');
 
 exports.signUp = function(req, res, err) {
 

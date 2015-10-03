@@ -43,18 +43,9 @@ function start(callback){
             if(err!==undefined) {
                 stop(server);
                 console.error("Shutting down watchdog server - Reason: \n\n\t" + err.toString());
-            }/**else{
-                startRedis(function(redisError,redisClient){
-                    if(redisError!==undefined) {
-                        stop(server);
-                        console.error("Shutting down watchdog server - Reason: \n\n\t" + err.toString());
-                    }else{
-                        callback(err,server);
-                    }
-                });
-            }**/
+            }
         });
-        
+
         startRedis(function(redisError,redisClient){
             if(redisError!==undefined) {
                 stop(server);
@@ -64,7 +55,6 @@ function start(callback){
             }
         });
 
-        //callback(err,server);
     });
 }
 
