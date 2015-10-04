@@ -2,7 +2,7 @@
   "name": "Watch dog server",
   "host": "http://localhost",
   "port": "3000",
-  "token":{
+  "jwt":{
     "secret":"secreto"
   },
   "mongodb":{
@@ -10,7 +10,7 @@
     "port":""
   },
   "redis":{
-    "host":"localhost",
+    "host":"127.0.0.1",
     "port":"6379"
   }
 }
