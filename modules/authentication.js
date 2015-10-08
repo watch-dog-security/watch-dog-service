@@ -1,22 +1,25 @@
 var mongoose = require('mongoose');
 var User = require("./../models/user");
 var service = require('./../services');
-var userModule = ('./../modulesuser');
+var UserTest = require('./../modules/user');
 var jwt = ('jwt');
 
 exports.signUp = function(req, res, err) {
 
-    var objUser = new User();
+    var oUser = new UserTest();
+    oUser.SaveToRedis();
 
-    userModule.parseJsonToUserModel(req,function(user,error){
+    oUser.parseJsonToUserModel(req,function(error){
         if(error){
             err = error;
-        }else{
-            objUser = user;
         }
     });
 
-    objUser.save(function(err){
+    var encriptado = jwt.encrypt(User.getPayload());
+
+    console.log("jwt:" + encriptado);
+
+    User.save(function(err){
         if (err) {
             console.error(err);
             return res.status(500).send('Something is going wrong');
@@ -25,6 +28,8 @@ exports.signUp = function(req, res, err) {
             return res.status(200);
         }
     });
+
+
 };
 
 exports.signIn = function(req, res) {
@@ -34,3 +39,4 @@ exports.signIn = function(req, res) {
             .send({token: service.createToken(user)});
     });
 };
+

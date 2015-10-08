@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var crypto = require('crypto');
 var Schema = mongoose.Schema;
 
-var User = new  Schema({
+var UserSchema = new Schema({
     name: String,
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -15,7 +15,8 @@ var User = new  Schema({
     created_at: Date,
     updated_at: Date
 });
+UserSchema.methods.prueba = function(){
+    console.log("Prueba user model");
+};
 
-mongoose.model('User', User);
-User = mongoose.model('User');
-module.exports =  User;
+module.exports = mongoose.model('User', UserSchema);;

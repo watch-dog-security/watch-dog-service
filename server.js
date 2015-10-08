@@ -1,3 +1,5 @@
+require("babel-core").transform("code", options);
+
 //Modules
 var express = require('express');
 var mongoose = require('mongoose');
@@ -31,48 +33,57 @@ app.use(errorHandler);
 //Routers
 app.use('/auth',authenticationController);
 
-function start(callback){
-
-    var server =  app.listen(config.port, function(err){
-
-        console.log("\n> " + config.name);
-
-        utils.consoleLogWithTick("It is running on port " + config.port);
-
-        startMongoose(function(err,mongoServer){
-            if(err!==undefined) {
-                stop(server);
-                console.error("Shutting down watchdog server - Reason: \n\n\t" + err.toString());
-            }
+function start(){
+    Promise.all([
+        startApp,
+        startRedis,
+        startMoongose
+    ])
+        .catch((error) => {
+            console.log("Error" + error);
         });
+}
 
-        startRedis(function(redisError,redisClient){
-            if(redisError!==undefined) {
-                stop(server);
-                console.error("Shutting down watchdog server - Reason: \n\n\t" + err.toString());
+let startApp  = function(){
+    return new Promise((resolve, reject) => {
+        app.listen(config.port, function(err){
+            if(err){
+                reject(err);
             }else{
-                callback(err,server);
+                utils.consoleLogWithTick("Server is up on port " + config.port);
+                resolve();
+            }
+        })
+    })
+};
+
+let startMoongose = function(){
+    return new Promise((resolve, reject) => {
+        mongoose.connect(config.mongodb.host, function(err) {
+            if(err){
+                reject(err);
+            }else{
+                utils.consoleLogWithTick("MongoDB is up on port " + config.mongodb.port);
+                resolve();
             }
         });
+    })
+};
 
-    });
-}
+let startRedis =  function (){
+    return new Promise((resolve, reject) => {
+        redisClient.on("connect", function(err){
+            if(err){
+                reject(err);
+            }else{
+                utils.consoleLogWithTick("Redis is up on port " + config.redis.port);
+                resolve();
+            }
+        });
+    })
+};
 
-function startMongoose(callback){
-    var mongoServer = mongoose.connect(config.mongodb.host, function(err) {
-        if(err===undefined) {
-            utils.consoleLogWithTick("MongoDB is running on port " + config.mongodb.port);
-        }
-        callback(err,mongoServer);
-    });
-}
 
-function startRedis(callback){
-    var redisClientVar = redisClient.on("connect", function(err){
-        utils.consoleLogWithTick("Redis is running on port " + config.redis.port);
-        callback(err,redisClientVar);
-    });
-}
 
 function stopMongoose(instance){
     isntance.connection.close();
@@ -87,6 +98,6 @@ function stop(instance,callback){
 module.exports = {
     start : start,
     stop : stop,
-    startMongoose: startMongoose,
+    startMoongose: startMoongose,
     stopMongoose: stopMongoose
 };
