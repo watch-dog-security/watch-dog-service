@@ -1,4 +1,4 @@
-require("babel-core").transform("code", options);
+"use strict";
 
 //Modules
 var express = require('express');
@@ -35,27 +35,31 @@ app.use('/auth',authenticationController);
 
 function start(){
     Promise.all([
-        startApp,
-        startRedis,
-        startMoongose
+        startApp(),
+        startMoongose(),
+        startRedis()
     ])
-        .catch((error) => {
+        .then(function(data){
+            data.forEach(function(txt){
+                utils.consoleLogWithTick(txt);
+            })
+        })
+        .catch(function (error){
             console.log("Error" + error);
         });
 }
 
-let startApp  = function(){
+let startApp = function(){
     return new Promise((resolve, reject) => {
         app.listen(config.port, function(err){
             if(err){
                 reject(err);
             }else{
-                utils.consoleLogWithTick("Server is up on port " + config.port);
-                resolve();
+                resolve("Server is up on port " + config.port);
             }
         })
     })
-};
+}
 
 let startMoongose = function(){
     return new Promise((resolve, reject) => {
@@ -63,8 +67,7 @@ let startMoongose = function(){
             if(err){
                 reject(err);
             }else{
-                utils.consoleLogWithTick("MongoDB is up on port " + config.mongodb.port);
-                resolve();
+                resolve("MongoDB is up on port " + config.mongodb.port);
             }
         });
     })
@@ -76,8 +79,7 @@ let startRedis =  function (){
             if(err){
                 reject(err);
             }else{
-                utils.consoleLogWithTick("Redis is up on port " + config.redis.port);
-                resolve();
+                resolve("Redis is up on port " + config.redis.port);
             }
         });
     })
@@ -98,6 +100,8 @@ function stop(instance,callback){
 module.exports = {
     start : start,
     stop : stop,
+    startApp: startApp,
+    startRedis: startRedis,
     startMoongose: startMoongose,
     stopMongoose: stopMongoose
 };
