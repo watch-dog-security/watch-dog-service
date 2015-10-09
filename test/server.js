@@ -1,25 +1,37 @@
+"use strict";
+
 var assert = require('assert');
 var config = require('./../config.json');
-var server = require('../server.js');
+var server = require('./../server.js');
 
 describe(config.name, function() {
 
-    var app;
-
-    it("Server should be running", function (done) {
-        server.start(function(err,watchdog){
-            assert.equal(err, undefined);
-            app = watchdog;
-            done();
-        });
+    it("Server UP", function (done) {
+        server.startApp()
+            .then(function(data){
+                console.log(data);
+                assert.notEqual(data, undefined);
+                done();
+            })
+            .catch(function (error){
+                assert.equal(error, undefined);
+                done();
+            });
     });
 
-    it("Server should be stoped", function (done){
-        server.stop(app,function(err){
-            assert.equal(err, undefined);
-            done();
-        });
+    it("Checked port", function (done) {
+        //TODO
+        done();
     });
 
-    //TODO:CHECK PORT CONECTION
+    it("Server down", function (done){
+        //TODO
+        done();
+    });
+
+    it("Duplicate instance", function (done){
+        //TODO
+        done();
+    });
+
 });
