@@ -4,7 +4,6 @@
   "description": "Proyecto de seguridad de servicios",
   "main": "server.js",
   "dependencies": {
-    "babel": "^5.8.23",
     "body-parser": "^1.13.3",
     "colors": "^1.1.2",
     "cors": "^2.7.1",
@@ -14,9 +13,6 @@
     "moment": "^2.10.6",
     "mongoose": "^4.1.3",
     "redis": "^0.12.1"
-  },
-  "devDependencies": {
-    "babel-core": "^5.8.25"
   },
   "scripts": {
     "test": "make test"
