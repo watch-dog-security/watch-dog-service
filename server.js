@@ -1,27 +1,31 @@
 "use strict";
 
 //Modules
-var express = require('express');
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
-var cors = require('cors');
-var colors = require('colors');
-var redis = require('redis');
+let express = require('express');
+let mongoose = require('mongoose');
+let bodyParser = require('body-parser');
+let cors = require('cors');
+let colors = require('colors');
+let redis = require('redis');
 
 //Own files
-var config = require('./config.json');
-var utils = require('./utils.js');
-var authentication = require('./modules/authentication');
-var middleware = require('./middleware');
-var logErrors = require('./middleware/logErrors');
-var errorHandler = require('./middleware/errorHandler');
+let config = require('./config.json');
+let utils = require('./utils.js');
+let authentication = require('./modules/authentication');
+let middleware = require('./middleware');
+let logErrors = require('./middleware/logErrors');
+let errorHandler = require('./middleware/errorHandler');
 
 //controllers
-var authenticationController = require('./controllers/authentication.js');
+let authenticationController = require('./controllers/authentication.js');
 
 //Variables
-var app = express();
-var redisClient = redis.createClient(config.redis.port,config.redis.host);
+let app = express();
+let redisClient = redis.createClient(config.redis.port,config.redis.host);
+let instanceApp = undefined;
+let instanceMoongose = undefined;
+let instanceRedis = undefined;
+
 
 //Middlewares
 app.use(bodyParser.json());
@@ -40,8 +44,8 @@ function start(){
         startRedis()
     ])
         .then(function(data){
-            data.forEach(function(txt){
-                utils.consoleLogWithTick(txt);
+            data.forEach(function(response){
+                utils.consoleLogWithTick(response.msg);
             })
         })
         .catch(function (error){
@@ -51,23 +55,27 @@ function start(){
 
 let startApp = function(){
     return new Promise((resolve, reject) => {
-        app.listen(config.port, function(err){
+        instanceApp = app.listen(config.port, function(err){
             if(err){
                 reject(err);
             }else{
-                resolve("Server is up on port " + config.port);
+                resolve(
+                    getResponse(instanceApp, "Server is up on port " + config.port)
+                );
             }
         })
     })
-}
+};
 
 let startMoongose = function(){
     return new Promise((resolve, reject) => {
-        mongoose.connect(config.mongodb.host, function(err) {
+        instanceMoongose =  mongoose.connect(config.mongodb.host, function(err) {
             if(err){
                 reject(err);
             }else{
-                resolve("MongoDB is up on port " + config.mongodb.port);
+                resolve(
+                    getResponse(instanceMoongose,"MongoDB is up on port " + config.mongodb.port)
+                );
             }
         });
     })
@@ -75,33 +83,49 @@ let startMoongose = function(){
 
 let startRedis =  function (){
     return new Promise((resolve, reject) => {
-        redisClient.on("connect", function(err){
+        instanceRedis = redisClient.on("connect", function(err){
             if(err){
                 reject(err);
             }else{
-                resolve("Redis is up on port " + config.redis.port);
+                resolve(
+                    getResponse(instanceRedis,"Redis is up on port " + config.redis.port)
+                );
             }
         });
     })
 };
 
 
+let stop = function(){
+    //TODO
+};
 
-function stopMongoose(instance){
-    isntance.connection.close();
-}
+let stopApp = function(){
+    //TODO
+};
 
-function stop(instance,callback){
-    instance.close(function(err){
-        callback(err)
-    });
-}
+let stopMongoose = function(){
+    //TODO
+};
+
+let stopRedis = function(){
+    //TODO
+};
+
+let getResponse = function(instance,msg){
+    return {
+        instance:instance,
+        msg:msg
+    };
+};
 
 module.exports = {
     start : start,
     stop : stop,
     startApp: startApp,
+    stopApp: stopApp,
     startRedis: startRedis,
+    stopRedis: stopRedis,
     startMoongose: startMoongose,
     stopMongoose: stopMongoose
 };
