@@ -1,10 +1,19 @@
+############
+# INTELLIJ #
+############
 .idea/
+
+###########
+# MODULES #
+###########
 node_modules/
 
-# Never we have to add these files to git
-# The reason is we just have to rename the sample and have our own config
+##########
+# CONFIG #
+##########
 config.json
 
-
-*-compiled.js.map
-*-compiled.js
+########
+# LOGS #
+########
+*.log
