@@ -15,7 +15,9 @@
     "redis": "^0.12.1"
   },
   "scripts": {
-    "test": "make test"
+      "test": "make test",
+      "clean": "rm -r ./node_modules",
+      "start": "node app.js"
   },
   "repository": {
     "type": "git",
