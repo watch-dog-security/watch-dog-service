@@ -103,19 +103,46 @@ describe(config.name, function() {
     });
 
     describe("Redis", function(){
-        it("It's up", function (done){
-            //TODO
+
+        let redisInstance;
+        let configRedisPort = config.redis.port;
+
+        beforeEach(function(done){
+            redisInstance = undefined;
             done();
         });
 
-        it("It's down", function (done){
-            //TODO
-            done();
+        it("It's up", function (done){
+            server.startRedis()
+                .then(function(response){
+                    redisInstance = response.instance;
+                    assert.notEqual(redisInstance,undefined);
+                    done();
+                });
+        });
+
+        it.skip("It's down", function (done){
+            server.startRedis()
+                .then(function(response){
+                    redisInstance = response.instance;
+                    console.log(redisInstance);
+                    assert.equal(redisInstance,undefined);
+                    done();
+                });
         });
 
         it("Cheked port", function (done){
-            //TODO
-            done();
+            let redisPort;
+
+            server.startRedis()
+                .then(function(response){
+                    redisInstance = response.instance;
+                    redisPort = redisInstance.connectionOption.port;
+                    assert(redisPort);
+                    assert(configRedisPort);
+                    assert.equal(redisPort,configRedisPort);
+                    done();
+                });
         });
     });
 

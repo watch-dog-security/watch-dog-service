@@ -21,7 +21,6 @@ let authenticationController = require('./controllers/authentication.js');
 
 //Variables
 let app = express();
-let redisClient = redis.createClient(config.redis.port,config.redis.host);
 let instanceApp = undefined;
 let instanceMoongose = undefined;
 let instanceRedis = undefined;
@@ -67,6 +66,7 @@ let startApp = function(){
     })
 };
 
+
 let startMoongose = function(){
     return new Promise((resolve, reject) => {
         instanceMoongose =  mongoose.connect(config.mongodb.host, function(err) {
@@ -83,12 +83,13 @@ let startMoongose = function(){
 
 let startRedis =  function (){
     return new Promise((resolve, reject) => {
-        instanceRedis = redisClient.on("connect", function(err){
+        instanceRedis = redis.createClient(config.redis.port,config.redis.host)
+        instanceRedis.on("connect", function(err){
             if(err){
                 reject(err);
             }else{
                 resolve(
-                    getResponse(instanceRedis,"Redis is up on port " + config.redis.port)
+                    getResponse(instanceRedis,"Redis is up on port " + instanceRedis.connectionOption.port)
                 );
             }
         });
