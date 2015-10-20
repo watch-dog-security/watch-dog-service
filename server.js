@@ -74,7 +74,7 @@ let startMoongose = function(){
                 reject(err);
             }else{
                 resolve(
-                    getResponse(instanceMoongose,"MongoDB is up on port " + config.mongodb.port)
+                    getResponse(instanceMoongose,"MongoDB is up on port " + instanceMoongose.connection.port)
                 );
             }
         });

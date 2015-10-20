@@ -56,18 +56,48 @@ describe(config.name, function() {
     });
 
     describe("MongoDB", function() {
-        it("It's up", function (done){
-            //TODO
+
+        let mongodbInstance;
+        let configPort = config.mongodb.port;
+
+        beforeEach(function(done){
+            mongodbInstance = undefined;
             done();
+        });
+
+        it("It's up", function (done){
+            server.startMoongose()
+                .then(function(response){
+                    mongodbInstance = response.instance;
+                    assert.notEqual(mongodbInstance, undefined);
+                    mongodbInstance.disconnect(done);
+                });
         });
 
         it("It's down", function (done){
-            //TODO
-            done();
+            server.startMoongose()
+                .then(function(response){
+                    mongodbInstance = response.instance;
+                    mongodbInstance.disconnect(function(){
+                        assert.notEqual(mongodbInstance, undefined);
+                        done();
+                    });
+                });
         });
 
         it("Cheked port", function (done){
-            //TODO
+            let mongodbPort;
+
+            server.startMoongose()
+                .then(function(response){
+                    mongodbInstance = response.instance;
+                    mongodbPort = mongodbInstance.connection.port;
+                    assert(mongodbPort);
+                    assert(configPort);
+                    assert.notEqual(mongodbPort, configPort);
+                    mongodbInstance.disconnect(done);
+                });
+
             done();
         });
     });
