@@ -50,7 +50,11 @@ describe(config.name, function() {
             serverAPP.startApp()
                 .then(function(response){
                     serverInstance = response.instance;
-                    serverInstance.close(done)
+                    serverAPP.stopApp()
+                        .then(function(msg){
+                            assert(msg);
+                            done();
+                        });
                 });
         });
     });
@@ -78,10 +82,11 @@ describe(config.name, function() {
             server.startMoongose()
                 .then(function(response){
                     mongodbInstance = response.instance;
-                    mongodbInstance.disconnect(function(){
-                        assert.notEqual(mongodbInstance, undefined);
-                        done();
-                    });
+                    server.stopMongoose()
+                        .then(function(msg){
+                            assert(msg);
+                            done();
+                        });
                 });
         });
 
@@ -126,6 +131,8 @@ describe(config.name, function() {
                 .then(function(response){
                     redisInstance = response.instance;
                     console.log(redisInstance);
+                    //redisInstance;
+                    //console.log(redisInstance);
                     assert.equal(redisInstance,undefined);
                     done();
                 });

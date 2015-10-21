@@ -1,16 +1,17 @@
-"use strict";
+'use strict';
 
 //Modules
 let express = require('express');
 let mongoose = require('mongoose');
+let redis = require('redis');
 let bodyParser = require('body-parser');
 let cors = require('cors');
 let colors = require('colors');
-let redis = require('redis');
 
 //Own files
 let config = require('./config.json');
 let utils = require('./utils.js');
+let serverEvents = require('./events/server.js');
 let authentication = require('./modules/authentication');
 let middleware = require('./middleware');
 let logErrors = require('./middleware/logErrors');
@@ -48,7 +49,7 @@ function start(){
             })
         })
         .catch(function (error){
-            console.log("Error" + error);
+            console.log('Error' + error);
         });
 }
 
@@ -58,8 +59,9 @@ let startApp = function(){
             if(err){
                 reject(err);
             }else{
+                instanceApp = serverEvents.loadServerEvents(instanceApp);
                 resolve(
-                    getResponse(instanceApp, "Server is up on port " + config.port)
+                    utils.getArrayResponseForInstances(instanceApp, 'Server is up on port ' + config.port)
                 );
             }
         })
@@ -74,7 +76,7 @@ let startMoongose = function(){
                 reject(err);
             }else{
                 resolve(
-                    getResponse(instanceMoongose,"MongoDB is up on port " + instanceMoongose.connection.port)
+                    utils.getArrayResponseForInstances(instanceMoongose,'MongoDB is up on port ' + instanceMoongose.connection.port)
                 );
             }
         });
@@ -83,13 +85,13 @@ let startMoongose = function(){
 
 let startRedis =  function (){
     return new Promise((resolve, reject) => {
-        instanceRedis = redis.createClient(config.redis.port,config.redis.host)
-        instanceRedis.on("connect", function(err){
+        instanceRedis = redis.createClient(config.redis.port,config.redis.host);
+        instanceRedis.on('connect', function(err){
             if(err){
                 reject(err);
             }else{
                 resolve(
-                    getResponse(instanceRedis,"Redis is up on port " + instanceRedis.connectionOption.port)
+                    utils.getArrayResponseForInstances(instanceRedis,'Redis is up on port ' + instanceRedis.connectionOption.port)
                 );
             }
         });
@@ -98,26 +100,64 @@ let startRedis =  function (){
 
 
 let stop = function(){
-    //TODO
+    Promise.all([
+        stopApp(),
+        stopMongoose(),
+        stopRedis()
+    ])
+        .then(function(data){
+            data.forEach(function(msg){
+                utils.consoleLogWithTick(msg);
+            })
+        })
+        .catch(function (error){
+            console.log('Error' + error);
+        });
 };
 
 let stopApp = function(){
-    //TODO
+    return new Promise((resolve, reject) => {
+        instanceApp.close(function(error){
+            let msg;
+            if(error){
+                msg = error.toString();
+                reject(msg)
+            }else{
+                msg = 'APP instance is correctly stoped.';
+                resolve(msg);
+            }
+        });
+    })
 };
 
 let stopMongoose = function(){
-    //TODO
+    return new Promise((resolve, reject) => {
+        instanceMoongose.disconnect(function(error){
+            let msg;
+            if(error){
+                msg = error.toString();
+                reject(msg)
+            }else{
+                msg = 'MongoDB instance is correctly stoped.';
+                resolve(msg);
+            }
+        });
+    })
 };
 
 let stopRedis = function(){
-    //TODO
-};
-
-let getResponse = function(instance,msg){
-    return {
-        instance:instance,
-        msg:msg
-    };
+    return new Promise((resolve, reject) => {
+        instanceRedis.disconnect(function(error){
+            let msg;
+            if(error){
+                msg = error.toString();
+                reject(msg)
+            }else{
+                msg = 'Redis instance is correctly stoped.';
+                resolve(msg);
+            }
+        });
+    })
 };
 
 module.exports = {
