@@ -1,7 +1,9 @@
 {
-  "name": "Watch dog server",
-  "host": "http://localhost",
-  "port": "3000",
+  "app": {
+    "name": "Watch dog server",
+    "host": "http://localhost",
+    "port": "3000"
+  },
   "jwt":{
     "secret":"secreto"
   },

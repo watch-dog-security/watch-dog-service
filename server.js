@@ -9,7 +9,7 @@ let cors = require('cors');
 let colors = require('colors');
 
 //Own files
-let config = require('./config.json');
+const config = require('./config.js');
 let utils = require('./utils.js');
 let serverEvents = require('./events/server.js');
 let authentication = require('./modules/authentication');
@@ -55,13 +55,13 @@ function start(){
 
 let startApp = function(){
     return new Promise((resolve, reject) => {
-        instanceApp = app.listen(config.port, function(err){
+        instanceApp = app.listen(config.app.port, function(err){
             if(err){
                 reject(err);
             }else{
                 instanceApp = serverEvents.loadServerEvents(instanceApp);
                 resolve(
-                    utils.getArrayResponseForInstances(instanceApp, 'Server is up on port ' + config.port)
+                    utils.getArrayResponseForInstances(instanceApp, 'Server is up on port ' + instanceApp.address().port)
                 );
             }
         })
@@ -71,7 +71,7 @@ let startApp = function(){
 
 let startMoongose = function(){
     return new Promise((resolve, reject) => {
-        instanceMoongose =  mongoose.connect(config.mongodb.host, function(err) {
+        instanceMoongose =  mongoose.connect(config.database.mongodb.host, function(err) {
             if(err){
                 reject(err);
             }else{
@@ -85,7 +85,7 @@ let startMoongose = function(){
 
 let startRedis =  function (){
     return new Promise((resolve, reject) => {
-        instanceRedis = redis.createClient(config.redis.port,config.redis.host);
+        instanceRedis = redis.createClient(config.database.redis.port,config.database.redis.host);
         instanceRedis.on('connect', function(err){
             if(err){
                 reject(err);

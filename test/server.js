@@ -1,10 +1,10 @@
 "use strict";
 
 let assert = require('assert');
-let config = require('./../config.json');
+const config = require('./../config.js');
 let server = require('./../server.js');
 
-describe(config.name, function() {
+describe(config.app.name, function() {
 
     describe("APP server", function() {
 
@@ -31,7 +31,7 @@ describe(config.name, function() {
         });
 
         it("Cheked port", function (done) {
-            let configPort =  config.port,
+            let configPort =  config.app.port,
                 serverPort = null;
 
             serverAPP.startApp()
@@ -62,7 +62,7 @@ describe(config.name, function() {
     describe("MongoDB", function() {
 
         let mongodbInstance;
-        let configPort = config.mongodb.port;
+        let configPort = config.database.mongodb.port;
 
         beforeEach(function(done){
             mongodbInstance = undefined;
@@ -110,7 +110,7 @@ describe(config.name, function() {
     describe("Redis", function(){
 
         let redisInstance;
-        let configRedisPort = config.redis.port;
+        let configRedisPort = config.database.redis.port;
 
         beforeEach(function(done){
             redisInstance = undefined;
