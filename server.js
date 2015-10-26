@@ -37,23 +37,23 @@ app.use(errorHandler);
 //Routers
 app.use('/auth',authenticationController);
 
-function start(){
+let start = () =>{
     Promise.all([
         startApp(),
         startMoongose(),
         startRedis()
     ])
-        .then(function(data){
+        .then((data)=>{
             data.forEach(function(response){
                 utils.consoleLogWithTick(response.msg);
             })
         })
-        .catch(function (error){
+        .catch((error)=>{
             console.log('Error' + error);
         });
-}
+};
 
-let startApp = function(){
+let startApp = () => {
     return new Promise((resolve, reject) => {
         instanceApp = app.listen(config.app.port, function(err){
             if(err){
@@ -69,7 +69,7 @@ let startApp = function(){
 };
 
 
-let startMoongose = function(){
+let startMoongose = () => {
     return new Promise((resolve, reject) => {
         instanceMoongose =  mongoose.connect(config.database.mongodb.host, function(err) {
             if(err){
@@ -83,7 +83,7 @@ let startMoongose = function(){
     })
 };
 
-let startRedis =  function (){
+let startRedis = () => {
     return new Promise((resolve, reject) => {
         instanceRedis = redis.createClient(config.database.redis.port,config.database.redis.host);
         instanceRedis.on('connect', function(err){
@@ -99,7 +99,7 @@ let startRedis =  function (){
 };
 
 
-let stop = function(){
+let stop = () => {
     Promise.all([
         stopApp(),
         stopMongoose(),
@@ -115,7 +115,7 @@ let stop = function(){
         });
 };
 
-let stopApp = function(){
+let stopApp = () => {
     return new Promise((resolve, reject) => {
         instanceApp.close(function(error){
             let msg;
@@ -130,7 +130,7 @@ let stopApp = function(){
     })
 };
 
-let stopMongoose = function(){
+let stopMongoose = () => {
     return new Promise((resolve, reject) => {
         instanceMoongose.disconnect(function(error){
             let msg;
@@ -145,7 +145,7 @@ let stopMongoose = function(){
     })
 };
 
-let stopRedis = function(){
+let stopRedis = () => {
     return new Promise((resolve, reject) => {
         instanceRedis.disconnect(function(error){
             let msg;
