@@ -4,12 +4,12 @@ var service = require('./../services');
 var UserTest = require('./../modules/user');
 var jwt = ('jwt');
 
-exports.signUp = function(req, res, err) {
+exports.signUp = (req, res, err) => {
 
     var oUser = new UserTest();
     oUser.SaveToRedis();
 
-    oUser.parseJsonToUserModel(req,function(error){
+    oUser.parseJsonToUserModel(req,(error)=>{
         if(error){
             err = error;
         }
@@ -19,7 +19,7 @@ exports.signUp = function(req, res, err) {
 
     console.log("jwt:" + encriptado);
 
-    User.save(function(err){
+    User.save((err)=>{
         if (err) {
             console.error(err);
             return res.status(500).send('Something is going wrong');
@@ -32,8 +32,8 @@ exports.signUp = function(req, res, err) {
 
 };
 
-exports.signIn = function(req, res) {
-    User.findOne({email: req.body.email.toLowerCase()}, function(err, user) {
+exports.signIn = (req, res) => {
+    User.findOne({email: req.body.email.toLowerCase()}, (err, user) => {
         return res
             .status(200)
             .send({token: service.createToken(user)});

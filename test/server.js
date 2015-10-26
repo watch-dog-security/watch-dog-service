@@ -127,6 +127,7 @@ describe(config.app.name, function() {
         });
 
         it.skip("It's down", function (done){
+            //TODO
             server.startRedis()
                 .then(function(response){
                     redisInstance = response.instance;

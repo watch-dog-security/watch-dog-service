@@ -44,7 +44,7 @@ let start = () =>{
         startRedis()
     ])
         .then((data)=>{
-            data.forEach(function(response){
+            data.forEach((response)=>{
                 utils.consoleLogWithTick(response.msg);
             })
         })
@@ -55,7 +55,7 @@ let start = () =>{
 
 let startApp = () => {
     return new Promise((resolve, reject) => {
-        instanceApp = app.listen(config.app.port, function(err){
+        instanceApp = app.listen(config.app.port, (err)=>{
             if(err){
                 reject(err);
             }else{
@@ -71,7 +71,7 @@ let startApp = () => {
 
 let startMoongose = () => {
     return new Promise((resolve, reject) => {
-        instanceMoongose =  mongoose.connect(config.database.mongodb.host, function(err) {
+        instanceMoongose =  mongoose.connect(config.database.mongodb.host, (err)=>{
             if(err){
                 reject(err);
             }else{
@@ -86,7 +86,7 @@ let startMoongose = () => {
 let startRedis = () => {
     return new Promise((resolve, reject) => {
         instanceRedis = redis.createClient(config.database.redis.port,config.database.redis.host);
-        instanceRedis.on('connect', function(err){
+        instanceRedis.on('connect', (err)=>{
             if(err){
                 reject(err);
             }else{
@@ -105,19 +105,19 @@ let stop = () => {
         stopMongoose(),
         stopRedis()
     ])
-        .then(function(data){
+        .then((data)=>{
             data.forEach(function(msg){
                 utils.consoleLogWithTick(msg);
             })
         })
-        .catch(function (error){
+        .catch((error)=>{
             console.log('Error' + error);
         });
 };
 
 let stopApp = () => {
     return new Promise((resolve, reject) => {
-        instanceApp.close(function(error){
+        instanceApp.close((error) => {
             let msg;
             if(error){
                 msg = error.toString();
@@ -132,7 +132,7 @@ let stopApp = () => {
 
 let stopMongoose = () => {
     return new Promise((resolve, reject) => {
-        instanceMoongose.disconnect(function(error){
+        instanceMoongose.disconnect((error) =>{
             let msg;
             if(error){
                 msg = error.toString();
@@ -147,7 +147,7 @@ let stopMongoose = () => {
 
 let stopRedis = () => {
     return new Promise((resolve, reject) => {
-        instanceRedis.disconnect(function(error){
+        instanceRedis.disconnect((error) => {
             let msg;
             if(error){
                 msg = error.toString();

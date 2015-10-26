@@ -3,11 +3,11 @@
 var exports = module.exports = {};
 let colors = require('colors');
 
-exports.consoleLogWithTick = function(str){
+exports.consoleLogWithTick = (str)=>{
     console.log(" \u2714 " + colors.cyan(str));
 };
 
-exports.getArrayResponseForInstances = function(instance,msg){
+exports.getArrayResponseForInstances = (instance,msg)=>{
     return {
         instance:instance,
         msg:msg
