@@ -1,7 +1,14 @@
 'use strict';
 
-let typeHeader = 'token_type';
-let tokenHeader = 'access_token';
+// Requires
+let jwt = require('../modules/jwt');
+
+// Headers
+const typeHeader = 'token_type';
+const tokenHeader = 'access_token';
+
+// Others
+const correctType = 'Bearer';
 
 module.exports = () => {
     return (req, res, next) => {
@@ -9,10 +16,17 @@ module.exports = () => {
         let token = req.headers[tokenHeader];
 
         if(type !== undefined && token !== undefined){
-            next();
+            if(type === correctType){
+                res.status(200);
+                res.send('All okey!');
+                next();
+            }else{
+                res.status(400);
+                res.send('You must to add the headers, incorrect call.');
+            }
         }else{
             res.status(400);
-            res.send("No headers!");
+            res.send('You must to add the headers, incorrect call.');
         }
     }
 };

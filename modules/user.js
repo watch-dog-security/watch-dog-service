@@ -1,29 +1,46 @@
-var User = require("./../models/user");
+'use strict';
 
-var UserManager = function() {};
+let User = require("./../models/user");
 
-//UserManager.prototype = new
+let UserManager = function() {};
 
-UserManager.prototype.SaveToRedis = function(){
+/**UserManager.prototype.SaveToRedis = function(){
     console.log("save to redis");
 };
 
-UserManager.prototype.getPayload = function(){
+UserManager.prototype.getPayload = function(user){
     return {
         name:this.name,
         username:this.username
     };
 };
+**/
 
-UserManager.prototype.parseJsonToUserModel = function(req,callback) {
-    console.log("Prueba parse");
-    var oUserJson = JSON.parse(req);
+UserManager.parseJsonToUserModel = function(req) {
 
-    this.name = oUserJson.name;
-    this.username = oUserJson.username;
-    this.password = oUserJson.password;
+    let oUserJson = JSON.parse(
+        JSON.stringify(req.body)
+    );
 
-    callback(error);
+    return new User({
+        name: oUserJson.name,
+        username: oUserJson.username,
+        password: oUserJson.password
+    });
+
 };
 
+UserManager.parseJsonAndGetUserFromDB = function(req) {
+
+    let oUserJson = JSON.parse(
+        JSON.stringify(req.body)
+    );
+
+    return new User({
+        name: oUserJson.name,
+        username: oUserJson.username,
+        password: oUserJson.password
+    });
+
+};
 module.exports = UserManager;

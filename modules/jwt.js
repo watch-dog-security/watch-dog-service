@@ -1,13 +1,14 @@
-var jwt = require('jwt-simple');
-var config = require('./../config.json');
+'use strict';
 
-exports.encrypt = function(payload){
-    var secret = config.jwt.secret;
-    var token = jwt.encode(payload, secret);
-    return token;
-}
+let jwt = require('jwt-simple');
+const config = require('./../config.js');
 
+exports.encrypt = (payload) => {
+    let secret = config.jwt.secret;
+    return jwt.encode(payload, secret);
+};
 
-
-
-
+exports.decrypt = (token) => {
+    let secret = config.jwt.secret;
+    return jwt.encode(token, secret);
+};

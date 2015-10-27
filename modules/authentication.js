@@ -1,42 +1,29 @@
-var mongoose = require('mongoose');
-var User = require("./../models/user");
-var service = require('./../services');
-var UserTest = require('./../modules/user');
-var jwt = ('jwt');
+'use strict';
 
-exports.signUp = (req, res, err) => {
+let mongoose = require('mongoose');
+let service = require('./../services');
+let User = require('./../models/user');
+let UserManager = require('./../modules/user');
+let jwt = require('./../modules/jwt');
 
-    var oUser = new UserTest();
-    oUser.SaveToRedis();
+exports.signup = (() => {
+    return (req, res, next) => {
 
-    oUser.parseJsonToUserModel(req,(error)=>{
-        if(error){
-            err = error;
-        }
-    });
+        let oUser = UserManager.parseJsonToUserModel(req);
 
-    var encriptado = jwt.encrypt(User.getPayload());
+        oUser.save((err)=>{
+            if (err) {
+                res.status(500).send('Something is going wrong');
+            }else{
+                res.status(200).send('User saved successfully!');
+                next();
+            }
+        });
+    };
+})();
 
-    console.log("jwt:" + encriptado);
-
-    User.save((err)=>{
-        if (err) {
-            console.error(err);
-            return res.status(500).send('Something is going wrong');
-        }else{
-            console.log('User saved successfully!');
-            return res.status(200);
-        }
-    });
-
-
-};
-
-exports.signIn = (req, res) => {
-    User.findOne({email: req.body.email.toLowerCase()}, (err, user) => {
-        return res
-            .status(200)
-            .send({token: service.createToken(user)});
-    });
-};
-
+exports.signin = (() => {
+    return (req, res, next) => {
+        //TODO
+    };
+})();
