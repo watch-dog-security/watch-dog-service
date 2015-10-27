@@ -16,7 +16,7 @@ UserManager.prototype.getPayload = function(user){
 };
 **/
 
-UserManager.parseJsonToUserModel = function(req) {
+UserManager.parseJsonToUserModel = (req) => {
 
     let oUserJson = JSON.parse(
         JSON.stringify(req.body)
@@ -30,17 +30,19 @@ UserManager.parseJsonToUserModel = function(req) {
 
 };
 
-UserManager.parseJsonAndGetUserFromDB = function(req) {
+UserManager.parseJsonAndCheckUserFromDB = (req) => {
+    return new Promise((resolve, reject) => {
+        let oUserJson = JSON.parse(
+            JSON.stringify(req.body)
+        );
 
-    let oUserJson = JSON.parse(
-        JSON.stringify(req.body)
-    );
-
-    return new User({
-        name: oUserJson.name,
-        username: oUserJson.username,
-        password: oUserJson.password
+        User.find({ username: oUserJson.username }, (err, user) => {
+            if(err){
+                reject(err);
+            }
+            resolve(user);
+        });
     });
-
 };
+
 module.exports = UserManager;

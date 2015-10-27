@@ -18,12 +18,19 @@ exports.signup = (() => {
                 res.status(200).send('User saved successfully!');
                 next();
             }
+
         });
     };
+
 })();
 
 exports.signin = (() => {
     return (req, res, next) => {
-        //TODO
+        let oUser = UserManager.parseJsonAndCheckUserFromDB(req)
+            .then((user)=>{
+                res.status(200).send('User from db');
+                console.log(user);
+                next();
+            });
     };
 })();
