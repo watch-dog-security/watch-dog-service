@@ -6,7 +6,7 @@ let router = express.Router();
 
 router.post('/signup', function(req, res) {
     authentication.signUp(req,res);
-    res.send('signup')
+    res.send('signup');
 });
 
 router.post('/signin', function(req, res) {

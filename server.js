@@ -13,12 +13,10 @@ const config = require('./config.js');
 let utils = require('./utils.js');
 let serverEvents = require('./events/server.js');
 let authentication = require('./modules/authentication');
-let middleware = require('./middleware');
-let logErrors = require('./middleware/logErrors');
-let errorHandler = require('./middleware/errorHandler');
+let jwtMiddleware = require('./middleware/jwt');
 
-//controllers
-let authenticationController = require('./controllers/authentication.js');
+//Routers
+let authenticationRouter = require('./routers/authentication.js');
 
 //Variables
 let app = express();
@@ -31,11 +29,10 @@ let instanceRedis = undefined;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
-app.use(logErrors);
-app.use(errorHandler);
+app.use(jwtMiddleware());
 
 //Routers
-app.use('/auth',authenticationController);
+app.use('/auth',authenticationRouter);
 
 let start = () =>{
     Promise.all([
