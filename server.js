@@ -12,7 +12,7 @@ let colors = require('colors');
 const config = require('./config.js');
 let utils = require('./utils.js');
 let serverEvents = require('./events/server.js');
-let jwtMiddleware = require('./middleware/jwt/jwt');
+let jwtMiddleware = require('./middlewares/jwt/watcher');
 
 //Routers
 let authenticationRouter = require('./routers/authentication.js');

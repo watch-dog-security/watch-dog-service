@@ -1,17 +1,14 @@
 'use strict';
 
 let User = require("./../../models/user");
-
 let UserManager = function() {};
 
-/**
-UserManager.prototype.getPayload = function(user){
+UserManager.getPayload = function(user){
     return {
-        name:this.name,
-        username:this.username
+        name:user.name,
+        username:user.username
     };
 };
-**/
 
 UserManager.parseJsonToUserModel = (req) => {
 

@@ -10,7 +10,8 @@ module.exports = (() => {
         let oUser = UserManager.parseJsonAndCheckUserFromDB(req)
             .then((user)=>{
                 if(user.length !== 0){
-                    res.status(200).send('User from db' + user + ';');
+                    req.signin = {};
+                    req.signin.user = JSON.stringify(user);
                     next();
                 }else{
                     res.status(200).send('Not found');

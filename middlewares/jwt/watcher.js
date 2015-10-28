@@ -17,12 +17,10 @@ module.exports = () => {
 
         if(type !== undefined && token !== undefined){
             if(type === correctType){
-                res.status(200);
-                res.send('All okey!');
                 next();
             }else{
                 res.status(400);
-                res.send('You must to add the headers, incorrect call.');
+                res.send('You must to add the correct type, incorrect call.');
             }
         }else{
             res.status(400);

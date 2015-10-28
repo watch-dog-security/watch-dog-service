@@ -11,7 +11,6 @@ module.exports = (() => {
 
         oUser.save((err)=>{
             if (err) {
-                console.log(err);
                 res.status(500).send('Something is going wrong');
             }else{
                 res.status(200).send('User saved successfully!');
