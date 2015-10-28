@@ -18,19 +18,20 @@ exports.signup = (() => {
                 res.status(200).send('User saved successfully!');
                 next();
             }
-
         });
     };
-
 })();
 
 exports.signin = (() => {
     return (req, res, next) => {
         let oUser = UserManager.parseJsonAndCheckUserFromDB(req)
             .then((user)=>{
-                res.status(200).send('User from db');
-                console.log(user);
-                next();
+                if(user.length !== 0){
+                    res.status(200).send('User from db' + user + ';');
+                    next();
+                }else{
+                    res.status(200).send('Not found');
+                }
             });
     };
 })();

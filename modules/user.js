@@ -39,8 +39,9 @@ UserManager.parseJsonAndCheckUserFromDB = (req) => {
         User.find({ username: oUserJson.username }, (err, user) => {
             if(err){
                 reject(err);
+            }else{
+                resolve(user);
             }
-            resolve(user);
         });
     });
 };
