@@ -1,13 +1,10 @@
 'use strict';
 
-let User = require("./../models/user");
+let User = require("./../../models/user");
 
 let UserManager = function() {};
 
-/**UserManager.prototype.SaveToRedis = function(){
-    console.log("save to redis");
-};
-
+/**
 UserManager.prototype.getPayload = function(user){
     return {
         name:this.name,

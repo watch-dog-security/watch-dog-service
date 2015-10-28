@@ -1,7 +1,7 @@
 'use strict';
 
 // Requires
-let jwt = require('../modules/jwt');
+let jwt = require('../../modules/jwt/jwt');
 
 // Headers
 const typeHeader = 'token_type';

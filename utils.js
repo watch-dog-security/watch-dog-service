@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var exports = module.exports = {};
 let colors = require('colors');

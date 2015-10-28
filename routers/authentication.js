@@ -1,10 +1,9 @@
 'use strict';
 
 let express = require('express');
-let authentication = require('../modules/authentication');
 let router = express.Router();
-let signup = authentication.signup;
-let signin = authentication.signin;
+let signup = require('./signup');
+let signin = require('./signin');
 
 router.post('/signup', signup);
 router.post('/signin', signin);

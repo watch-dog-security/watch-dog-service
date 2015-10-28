@@ -1,7 +1,7 @@
 'use strict';
 
 let jwt = require('jwt-simple');
-const config = require('./../config.js');
+const config = require('./../../config.js');
 
 exports.encrypt = (payload) => {
     let secret = config.jwt.secret;
