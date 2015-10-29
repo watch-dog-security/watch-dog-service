@@ -4,38 +4,38 @@ let assert = require('assert');
 const config = require('./../config.js');
 let server = require('./../server.js');
 
-describe(config.app.name, function() {
+describe("Server status", () => {
 
-    describe("APP server", function() {
+    describe("APP server", () => {
 
         let serverInstance;
         let serverAPP;
 
-        beforeEach(function(done){
+        beforeEach((done) => {
             serverInstance = undefined;
             serverAPP = server;
             done();
         });
 
-        afterEach(function(done){
+        afterEach((done) => {
             done();
         });
 
-        it("Server UP", function (done) {
+        it("Server UP", (done) => {
             serverAPP.startApp()
-                .then(function(response){
+                .then((response) => {
                     serverInstance = response.instance;
                     assert.notEqual(serverInstance, undefined);
                     serverInstance.close(done);
                 });
         });
 
-        it("Cheked port", function (done) {
+        it("Cheked port", (done) => {
             let configPort =  config.app.port,
                 serverPort = null;
 
             serverAPP.startApp()
-                .then(function(response){
+                .then((response) => {
                     serverInstance = response.instance;
                     serverPort = serverInstance.address().port;
 
@@ -46,12 +46,12 @@ describe(config.app.name, function() {
                 });
         });
 
-        it("Server down", function (done){
+        it("Server down", (done) => {
             serverAPP.startApp()
-                .then(function(response){
+                .then((response) => {
                     serverInstance = response.instance;
                     serverAPP.stopApp()
-                        .then(function(msg){
+                        .then((msg) => {
                             assert(msg);
                             done();
                         });
@@ -59,42 +59,42 @@ describe(config.app.name, function() {
         });
     });
 
-    describe("MongoDB", function() {
+    describe("MongoDB", () => {
 
         let mongodbInstance;
         let configPort = config.database.mongodb.port;
 
-        beforeEach(function(done){
+        beforeEach((done) => {
             mongodbInstance = undefined;
             done();
         });
 
-        it("It's up", function (done){
+        it("It's up", (done) => {
             server.startMoongose()
-                .then(function(response){
+                .then((response) => {
                     mongodbInstance = response.instance;
                     assert.notEqual(mongodbInstance, undefined);
                     mongodbInstance.disconnect(done);
                 });
         });
 
-        it("It's down", function (done){
+        it("It's down", (done) => {
             server.startMoongose()
-                .then(function(response){
+                .then((response) => {
                     mongodbInstance = response.instance;
                     server.stopMongoose()
-                        .then(function(msg){
+                        .then((msg) => {
                             assert(msg);
                             done();
                         });
                 });
         });
 
-        it("Cheked port", function (done){
+        it("Cheked port", (done) => {
             let mongodbPort;
 
             server.startMoongose()
-                .then(function(response){
+                .then((response) => {
                     mongodbInstance = response.instance;
                     mongodbPort = mongodbInstance.connection.port;
                     assert(mongodbPort);
@@ -107,26 +107,26 @@ describe(config.app.name, function() {
         });
     });
 
-    describe("Redis", function(){
+    describe("Redis", () => {
 
         let redisInstance;
         let configRedisPort = config.database.redis.port;
 
-        beforeEach(function(done){
+        beforeEach((done) => {
             redisInstance = undefined;
             done();
         });
 
-        it("It's up", function (done){
+        it("It's up", (done) => {
             server.startRedis()
-                .then(function(response){
+                .then((response) => {
                     redisInstance = response.instance;
                     assert.notEqual(redisInstance,undefined);
                     done();
                 });
         });
 
-        it("It's down", function (done){
+        it("It's down", (done) =>{
             //TODO
             done();
 
@@ -141,11 +141,11 @@ describe(config.app.name, function() {
                 });**/
         });
 
-        it("Cheked port", function (done){
+        it("Cheked port", (done) => {
             let redisPort;
 
             server.startRedis()
-                .then(function(response){
+                .then((response) => {
                     redisInstance = response.instance;
                     redisPort = redisInstance.connectionOption.port;
                     assert(redisPort);
