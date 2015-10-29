@@ -10,7 +10,7 @@ let colors = require('colors');
 
 //Own files
 const config = require('./config.js');
-let utils = require('./utils.js');
+let utils = require('./modules/utils/utils.js');
 let serverEvents = require('./events/server.js');
 let jwtMiddleware = require('./middlewares/jwt/watcher');
 
