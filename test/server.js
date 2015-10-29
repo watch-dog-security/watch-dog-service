@@ -1,7 +1,7 @@
 "use strict";
 
 let assert = require('assert');
-const config = require('./../config.js');
+const config = require('./../config/server/config.js');
 let server = require('./../server.js');
 
 describe("Server status", () => {

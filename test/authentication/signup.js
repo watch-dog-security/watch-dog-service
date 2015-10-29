@@ -1,7 +1,7 @@
 "use strict";
 
 let assert = require('assert');
-const config = require('./../../config.js');
+const config = require('./../../config/server/config.js');
 let signUpMiddleware = require('./../../middlewares/authentication/signup');
 
 describe("SignUp", () => {

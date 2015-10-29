@@ -1,7 +1,7 @@
 "use strict";
 
 //Modules
-const config = require('./../config.js');
+const config = require('./../config/server/config.js');
 
 //Variables
 let appInstance;

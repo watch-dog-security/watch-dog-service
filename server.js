@@ -9,7 +9,7 @@ let cors = require('cors');
 let colors = require('colors');
 
 //Own files
-const config = require('./config.js');
+const config = require('./config/server/config.js');
 let utils = require('./modules/utils/utils.js');
 let serverEvents = require('./events/server.js');
 let jwtMiddleware = require('./middlewares/jwt/watcher');
