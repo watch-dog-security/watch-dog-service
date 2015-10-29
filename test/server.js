@@ -4,9 +4,8 @@ let assert = require('assert');
 const config = require('./../config/server/config.js');
 let server = require('./../server.js');
 
-describe("Server status", () => {
-
-    describe("APP server", () => {
+describe('Server', () => {
+    describe('APP', () => {
 
         let serverInstance;
         let serverAPP;
