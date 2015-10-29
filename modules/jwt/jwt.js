@@ -8,7 +8,7 @@ exports.encrypt = (payload) => {
     return jwt.encode(payload, secret);
 };
 
-exports.decrypt = (token) => {
+exports.decode = (token) => {
     let secret = config.jwt.secret;
-    return jwt.encode(token, secret);
+    return jwt.decode(token, secret);
 };
