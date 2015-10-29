@@ -1,13 +1,15 @@
 'use strict';
 
 let User = require("./../../models/user");
-let UserManager = function() {};
+let payload = require('./../../modules/jwt/payload');
+let UserManager = () => {};
 
 UserManager.getPayload = function(user){
-    return {
-        name:user.name,
-        username:user.username
-    };
+    return payload.createPayload(
+        user.username,
+        user.created_at,
+        user.updated_at
+    );
 };
 
 UserManager.parseJsonToUserModel = (req) => {
