@@ -1,14 +1,52 @@
 "use strict";
 
 let assert = require('assert');
-const config = require('./../../config/server/config.js');
+let request = require('request');
 let signUpMiddleware = require('./../../middlewares/authentication/signup');
+const config = require('./../../config/server/config.js');
 
-describe("SignUp", () => {
+describe('SignUp', () => {
+
+    let dataUserRequest;
+    let dataUserRequestWithoutPassword;
+    let dataUserRequestWithoutName;
+    let dataUserRequestWithoutUsername;
+    const urlBase = config.app.host + ":" + config.app.port;
+    const urlPostSignUp = urlBase + "/auth/signup";
+
+    before(() => {
+        dataUserRequest = {
+            'name':'test signup',
+            'username':'testsignup',
+            'password':'signuptest'
+        };
+
+        dataUserRequestWithoutPassword = {
+            'name':'test signupWithoutPassword',
+            'username':'testsignupWithoutPassword',
+            'password':''
+        };
+
+        dataUserRequestWithoutName = {
+            'name':'',
+            'username':'testsignupWithoutName',
+            'password':'signuptestWithoutName'
+        };
+
+        dataUserRequestWithoutUsername = {
+            'name':'test signup WithoutUsername',
+            'username':'',
+            'password':'SignUpTestWithoutUsername'
+        };
+    });
+
     describe("Create users", () => {
+
         it("Normal user request", (done) => {
-            //TODO
-            done();
+            request.post(urlPostSignUp , dataUserRequest, (err,httpResponse,body) =>{
+                console.log('prueba:'+err);
+                done();
+            });
         });
 
         it("Request without any password", (done) => {
