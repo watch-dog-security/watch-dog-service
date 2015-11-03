@@ -12,7 +12,7 @@ describe('SignUp', () => {
     let dataUserRequestWithoutName;
     let dataUserRequestWithoutUsername;
     const urlBase = config.app.host + ":" + config.app.port;
-    const urlPostSignUp = urlBase + "/auth/signup";
+    const urlPostSignUp = urlBase + "/authentication/signup";
 
     before(() => {
         dataUserRequest = {

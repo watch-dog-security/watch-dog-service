@@ -5,11 +5,10 @@ let jwt = require('../../modules/jwt/jwt');
 
 module.exports = (() => {
     return (req, res, next) => {
-        let token = req.signin.jwtoken;
+        let token = undefined;
         let decodeToken;
 
         if(token){
-
             decodeToken = jwt.decode(token);
             if(decodeToken){
                 //TODO

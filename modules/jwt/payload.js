@@ -13,16 +13,15 @@ exports.createPayload = (_id, username) =>{
 exports.checkPayload = (payload) => {
     let bDate = checkDatePayloadWithServerDate(payload);
     let bUndefined = checkUndefinedPayload(payload);
-
     return !!(bUndefined && bDate);
 };
 
 let checkDatePayloadWithServerDate = (payload) => {
-    //TODO
+    return (payload.encripted_at === getCurrentDate());
 };
 
 let getCurrentDate = () => {
-    //TODO
+    return new Date();
 };
 
 let checkUndefinedPayload = (payload) => {
