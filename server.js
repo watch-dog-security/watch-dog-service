@@ -12,10 +12,10 @@ let colors = require('colors');
 const config = require('./config/server/config.js');
 let utils = require('./modules/utils/utils.js');
 let serverEvents = require('./events/server.js');
-let jwtMiddleware = require('./middlewares/jwt/watcher');
 
 //Routers
-let authenticationRouter = require('./routers/authentication.js');
+let authenticationRouter = require('./routers/authentication');
+let gatewayRouter = require('./routers/gway');
 
 //Variables
 let app = express();
@@ -31,6 +31,7 @@ app.use(cors());
 
 //Routers
 app.use('/auth',authenticationRouter);
+app.use(gatewayRouter);
 
 let start = () =>{
     Promise.all([

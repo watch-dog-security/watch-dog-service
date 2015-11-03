@@ -1,7 +1,7 @@
 'use strict';
 
 let UserManager = require('./../../modules/users/user');
-let jwt = require('../../modules/jwt/jwt')
+let jwt = require('../../modules/jwt/jwt');
 
 module.exports = (() => {
     return (req, res, next) => {

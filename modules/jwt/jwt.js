@@ -12,3 +12,4 @@ exports.decode = (token) => {
     let secret = config.jwt.secret;
     return jwt.decode(token, secret);
 };
+

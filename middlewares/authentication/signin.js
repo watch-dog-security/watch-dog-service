@@ -1,13 +1,11 @@
 'use strict';
 
-let mongoose = require('mongoose');
-let User = require('./../../models/user');
 let UserManager = require('./../../modules/users/user');
 let jwt = require('./../../modules/jwt/jwt');
 
 module.exports = (() => {
     return (req, res, next) => {
-        let oUser = UserManager.parseJsonAndCheckUserFromDB(req)
+        let oUser = UserManager.checkUserFromDB(req)
             .then((user)=>{
                 if(user.length !== 0){
                     req.signin = {user : JSON.stringify(user)};
