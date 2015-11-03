@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 
 //Routers
-app.use('/authentication',authenticationRouter);
+app.use('/auth',authenticationRouter);
 app.use(gatewayRouter);
 
 let start = () =>{

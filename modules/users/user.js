@@ -12,20 +12,9 @@ UserManager.parseUserToPayload = function(user){
     );
 };
 
-UserManager.parseJsonToUserModel = (req) => {
-    let oUserJson = UserManager.parseJSON(req.body);
-
-    return new User({
-        name: oUserJson.name,
-        username: oUserJson.username,
-        password: oUserJson.password
-    });
-};
-
-UserManager.checkUserFromDB = (req) => {
+UserManager.checkUserFromDB = (userAuthHeader) => {
     return new Promise((resolve, reject) => {
-        let user = UserManager.parseJsonToUserModel(req);
-        let options = UserManager.makeOptionsWithUserModel(user);
+        let options = UserManager.makeOptionsWithUserModel(userAuthHeader);
 
         User.find(options, (err, user) => {
             if(err){
@@ -35,12 +24,6 @@ UserManager.checkUserFromDB = (req) => {
             }
         });
     });
-};
-
-UserManager.parseJSON = (json) => {
-    return JSON.parse(
-        JSON.stringify(json)
-    );
 };
 
 UserManager.makeOptionsWithUserModel = (user) => {

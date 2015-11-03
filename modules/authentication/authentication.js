@@ -8,7 +8,7 @@ exports.check = (authorizationHeader) => {
 
 exports.getUserAuthentication = (authorizationHeader) => {
     let decodedAuthHeader = this.decode(authorizationHeader);
-    return this.parseAuthRequestToUserModel(authorizationHeader);
+    return this.parseAuthRequestToUserModel(decodedAuthHeader);
 };
 
 exports.decode = (authorizationHeader) => {

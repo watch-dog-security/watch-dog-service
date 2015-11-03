@@ -10,16 +10,16 @@ module.exports = (() => {
         if(authentication.check(authRequest)){
             let userAuthentication = authentication.getUserAuthentication(authRequest);
 
-            UserManager.checkUserFromDB(req)
+            UserManager.checkUserFromDB(userAuthentication)
                 .then((user)=>{
                     if(user.length !== 0){
                         req.signin = {user : JSON.stringify(user)};
                         next();
                     }else{
-                        res.status(200).send('Not found');
+                        req.status(401).send('You must to signin on the system with the correct credencials.');
                     }
                 })
-                .reject((error) => {
+                .catch((error) => {
                     res.statusCode(500).send(error);
                 });
         }else{
