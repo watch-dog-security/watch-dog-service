@@ -3,6 +3,8 @@
 let assert = require('assert');
 let request = require('request');
 let signUpMiddleware = require('./../../middlewares/authentication/signup');
+let server = require('./../../server.js');
+let user = require('./../../models/user')
 const config = require('./../../config/server/config.js');
 
 describe('SignUp', () => {
@@ -11,77 +13,97 @@ describe('SignUp', () => {
     let dataUserRequestWithoutPassword;
     let dataUserRequestWithoutName;
     let dataUserRequestWithoutUsername;
-    const urlBase = config.app.host + ":" + config.app.port;
-    const urlPostSignUp = urlBase + "/auth/signup";
+    const userRequest = + 'testSignUp';
+    const userRequestNoPassword = 'testSignUpWithoutPassword';
+    const userRequestNoName = 'testSignUpWithoutName';
+    const userRequestNoUsername = '';
+    const urlBase = config.app.host + ':' + config.app.port;
+    const urlPostSignUp = urlBase + '/auth/signup';
 
-    before(() => {
-        dataUserRequest = {
-            'name':'test signup',
-            'username':'testsignup',
-            'password':'signuptest'
-        };
+    before((next) => {
+        server.startApp()
+            .then((response) => {
+                dataUserRequest = {
+                    'name':'test signup',
+                    'username':userRequest,
+                    'password':'SignUpTest'
+                };
 
-        dataUserRequestWithoutPassword = {
-            'name':'test signupWithoutPassword',
-            'username':'testsignupWithoutPassword',
-            'password':''
-        };
+                dataUserRequestWithoutPassword = {
+                    'name':'test signupWithoutPassword',
+                    'username':userRequestNoPassword,
+                    'password':''
+                };
 
-        dataUserRequestWithoutName = {
-            'name':'',
-            'username':'testsignupWithoutName',
-            'password':'signuptestWithoutName'
-        };
+                dataUserRequestWithoutName = {
+                    'name':'',
+                    'username':userRequestNoName,
+                    'password':'SignUpTestWithOutName'
+                };
 
-        dataUserRequestWithoutUsername = {
-            'name':'test signup WithoutUsername',
-            'username':'',
-            'password':'SignUpTestWithoutUsername'
-        };
+                dataUserRequestWithoutUsername = {
+                    'name':'test signup WithoutUsername',
+                    'username':userRequestNoUsername,
+                    'password':'SignUpTestWithOutUserName'
+                };
+                next();
+            });
+
     });
 
-    describe("Create users", () => {
+    after(()=>{
+        User.find({ username: userRequest }).then(()=>{
+           console.log('hey');
+        });
 
-        it("Normal user request", (done) => {
-            request.post(urlPostSignUp , dataUserRequest, (err,httpResponse,body) =>{
-                console.log('prueba:'+err);
+        server.stop();
+    });
+
+    describe('Create users', () => {
+
+        it('Normal user request', (done) => {
+
+            request.post(urlPostSignUp , { json: true }, (error,httpResponse,body) =>{
+                //assert(!error);
+                //assert(httpResponse.statusCode == 200)
+                console.log(httpResponse.statusCode + ' : ' + body);
                 done();
             });
         });
 
-        it("Request without any password", (done) => {
+        it('Request without any password', (done) => {
             //TODO
             done();
         });
 
-        it("Request without any username", (done) => {
+        it('Request without any username', (done) => {
             //TODO
             done();
         });
 
-        it("Request without any data", (done) => {
+        it('Request without any data', (done) => {
             //TODO
             done();
         });
     });
 
-    describe("Check created users in DB", () => {
-        it("User with all data", (done) => {
+    describe('Check created users in DB', () => {
+        it('User with all data', (done) => {
             //TODO
             done();
         });
 
-        it("User without any password", (done) => {
+        it('User without any password', (done) => {
             //TODO
             done();
         });
 
-        it("User without any username", (done) => {
+        it('User without any username', (done) => {
             //TODO
             done();
         });
 
-        it("User without any data", (done) => {
+        it('User without any data', (done) => {
             //TODO
             done();
         });
