@@ -4,35 +4,19 @@ let User = require("./../../models/user");
 let payload = require('./../../modules/jwt/payload');
 let UserManager = () => {};
 
-UserManager.getPayload = function(user){
+UserManager.parseUserToPayload = function(user){
     return payload.createPayload(
+        user._id,
         user.username,
-        user.created_at,
         user.updated_at
     );
 };
 
-UserManager.parseJsonToUserModel = (req) => {
-
-    let oUserJson = JSON.parse(
-        JSON.stringify(req.body)
-    );
-
-    return new User({
-        name: oUserJson.name,
-        username: oUserJson.username,
-        password: oUserJson.password
-    });
-
-};
-
-UserManager.parseJsonAndCheckUserFromDB = (req) => {
+UserManager.checkUserFromDB = (userAuthHeader) => {
     return new Promise((resolve, reject) => {
-        let oUserJson = JSON.parse(
-            JSON.stringify(req.body)
-        );
+        let options = UserManager.makeOptionsWithUserModel(userAuthHeader);
 
-        User.find({ username: oUserJson.username }, (err, user) => {
+        User.find(options, (err, user) => {
             if(err){
                 reject(err);
             }else{
@@ -40,6 +24,13 @@ UserManager.parseJsonAndCheckUserFromDB = (req) => {
             }
         });
     });
+};
+
+UserManager.makeOptionsWithUserModel = (user) => {
+    return {
+        username: user.username,
+        password: user.password
+    }
 };
 
 module.exports = UserManager;

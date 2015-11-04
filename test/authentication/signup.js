@@ -9,10 +9,6 @@ const config = require('./../../config/server/config.js');
 
 describe('SignUp', () => {
 
-    let dataUserRequest;
-    let dataUserRequestWithoutPassword;
-    let dataUserRequestWithoutName;
-    let dataUserRequestWithoutUsername;
     const userRequest = + 'testSignUp';
     const userRequestNoPassword = 'testSignUpWithoutPassword';
     const userRequestNoName = 'testSignUpWithoutName';

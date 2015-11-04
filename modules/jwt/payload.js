@@ -2,10 +2,30 @@
 
 const config = require('./../../config/server/config.js');
 
-exports.createPayload = (username, created_at, updated_at) =>{
+exports.createPayload = (_id, username) =>{
     return {
+        _id: _id,
         username: username,
-        created_at: created_at,
-        updated_at: updated_at
+        encripted_at: getCurrentDate()
     }
+};
+
+exports.checkPayload = (payload) => {
+    let bDate = checkDatePayloadWithServerDate(payload);
+    let bUndefined = checkUndefinedPayload(payload);
+    return !!(bUndefined && bDate);
+};
+
+let checkDatePayloadWithServerDate = (payload) => {
+    return (payload.encripted_at === getCurrentDate());
+};
+
+let getCurrentDate = () => {
+    return new Date();
+};
+
+let checkUndefinedPayload = (payload) => {
+    return !!(payload._id !== undefined &&
+    payload.username !== undefined &&
+    payload.updated_at !== undefined);
 };
