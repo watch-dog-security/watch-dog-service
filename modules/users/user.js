@@ -5,10 +5,10 @@ let payload = require('./../../modules/jwt/payload');
 let UserManager = () => {};
 
 UserManager.parseUserToPayload = function(user){
+    let _user = JSON.parse(user)[0];
     return payload.createPayload(
-        user._id,
-        user.username,
-        user.updated_at
+        _user._id,
+        _user.username
     );
 };
 

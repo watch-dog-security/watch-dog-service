@@ -6,7 +6,6 @@ let mongoose = require('mongoose');
 let redis = require('redis');
 let bodyParser = require('body-parser');
 let cors = require('cors');
-let colors = require('colors');
 
 //Own files
 const config = require('./config/server/config.js');
@@ -23,6 +22,8 @@ let instanceApp = undefined;
 let instanceMoongose = undefined;
 let instanceRedis = undefined;
 
+//Security
+app.disable('x-powered-by');
 
 //Middlewares
 app.use(bodyParser.json());
@@ -42,7 +43,7 @@ let start = () =>{
         .then((data)=>{
             data.forEach((response)=>{
                 utils.consoleLogWithTick(response.msg);
-            })
+            });
         })
         .catch((error)=>{
             console.log('Error' + error);
@@ -51,7 +52,7 @@ let start = () =>{
 
 let startApp = () => {
     return new Promise((resolve, reject) => {
-        instanceApp = app.listen(config.app.port, (err)=>{
+        app.listen(config.app.port, (err)=>{
             if(err){
                 reject(err);
             }else{
@@ -60,8 +61,8 @@ let startApp = () => {
                     utils.getArrayResponseForInstances(instanceApp, 'Server is up on port ' + instanceApp.address().port)
                 );
             }
-        })
-    })
+        });
+    });
 };
 
 
@@ -76,7 +77,7 @@ let startMoongose = () => {
                 );
             }
         });
-    })
+    });
 };
 
 let startRedis = () => {
@@ -91,7 +92,7 @@ let startRedis = () => {
                 );
             }
         });
-    })
+    });
 };
 
 
@@ -104,7 +105,7 @@ let stop = () => {
         .then((data)=>{
             data.forEach(function(msg){
                 utils.consoleLogWithTick(msg);
-            })
+            });
         })
         .catch((error)=>{
             console.log('Error' + error);
@@ -117,13 +118,13 @@ let stopApp = () => {
             let msg;
             if(error){
                 msg = error.toString();
-                reject(msg)
+                reject(msg);
             }else{
                 msg = 'APP instance is correctly stoped.';
                 resolve(msg);
             }
         });
-    })
+    });
 };
 
 let stopMongoose = () => {
@@ -132,13 +133,13 @@ let stopMongoose = () => {
             let msg;
             if(error){
                 msg = error.toString();
-                reject(msg)
+                reject(msg);
             }else{
                 msg = 'MongoDB instance is correctly stoped.';
                 resolve(msg);
             }
         });
-    })
+    });
 };
 
 let stopRedis = () => {
@@ -147,13 +148,13 @@ let stopRedis = () => {
             let msg;
             if(error){
                 msg = error.toString();
-                reject(msg)
+                reject(msg);
             }else{
                 msg = 'Redis instance is correctly stoped.';
                 resolve(msg);
             }
         });
-    })
+    });
 };
 
 module.exports = {
