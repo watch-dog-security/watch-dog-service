@@ -1,13 +1,11 @@
 'use strict';
 
-const config = require('./../../config/server/config.js');
-
 exports.createPayload = (_id, username) =>{
     return {
         _id: _id,
         username: username,
         encripted_at: getCurrentDate()
-    }
+    };
 };
 
 exports.checkPayload = (payload) => {

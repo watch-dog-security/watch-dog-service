@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 //Modules
 const config = require('./../config/server/config.js');

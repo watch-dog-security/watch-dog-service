@@ -1,7 +1,5 @@
 'use strict';
 
-let mongoose = require('mongoose');
-let User = require('./../../models/user');
 let UserManager = require('./../../modules/users/user');
 
 module.exports = (() => {

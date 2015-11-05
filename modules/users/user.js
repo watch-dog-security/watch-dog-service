@@ -1,6 +1,6 @@
 'use strict';
 
-let User = require("./../../models/user");
+let User = require('./../../models/user');
 let payload = require('./../../modules/jwt/payload');
 let UserManager = () => {};
 
@@ -30,7 +30,7 @@ UserManager.makeOptionsWithUserModel = (user) => {
     return {
         username: user.username,
         password: user.password
-    }
+    };
 };
 
 module.exports = UserManager;
