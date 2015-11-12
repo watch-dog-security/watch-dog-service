@@ -1,20 +1,20 @@
 'use strict';
 
 //Modules
-let express = require('express');
-let mongoose = require('mongoose');
-let redis = require('redis');
-let bodyParser = require('body-parser');
-let cors = require('cors');
+const express = require('express');
+const mongoose = require('mongoose');
+const redis = require('redis');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 //Own files
 const config = require('./config/server/config.js');
-let utils = require('./modules/utils/utils.js');
-let serverEvents = require('./events/server.js');
+const utils = require('./modules/utils/utils.js');
+const serverEvents = require('./events/server.js');
 
 //Routers
-let authenticationRouter = require('./routers/authentication');
-let gatewayRouter = require('./routers/gway');
+const authenticationRouter = require('./routers/authentication');
+const gatewayRouter = require('./routers/gway');
 
 //Variables
 let app = express();

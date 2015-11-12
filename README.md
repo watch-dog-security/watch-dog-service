@@ -6,12 +6,14 @@ servicios. Una de las ventajas de este modelo es la simplificación y reutilizac
 
 Las tecnologías usadas en este proyecto son:
 
-- NodeJS
-- Javascript ES6
-- JSON
-- MongoDB
-- Redis
-- Mocha TDD
+- NodeJS.
+- Javascript ES6.
+- JSON.
+- MongoDB.
+- Redis.
+- Mocha TDD.
+- Nodemon a través de traceur-runner.
+- ESLINT.
 
 How to
 ------
@@ -25,14 +27,9 @@ Para ejecutar los test utilizar el siguiente comando:
 
 La forma de poner a funcionar el proyecto es con el siguiente comando:
 
-`npm run app.js --harmony`
+`node app.js`
 
 Development Rules
 -----------------
 Si deseas particiar en el proyecto puedes hacerlo siempre a través de pull request y se supervisará de ésta forma el código
-que envies. Pero para ello debes seguir algunas normas de desarrollo bastante simples:
-
-- Comillas simples siempre, olvidate de las comillas dobles al menos que sea estrictamente necesario.
-- Usa siempre que se pueda promesas en vez de callbacks.
-- El desarrollo de una features tiene que ir con sus respectivo test bien definido.
-- Separa en módulos siempre que puedas.
+que envies. Se recomienda instalar eslint para el control de la calidad del código.
