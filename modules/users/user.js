@@ -12,6 +12,20 @@ UserManager.parseUserToPayload = function(user){
     );
 };
 
+UserManager.parseJsonToUserModel = (req) => {
+
+    let oUserJson = JSON.parse(
+        JSON.stringify(req.body)
+    );
+
+    return new User({
+        name: oUserJson.name,
+        username: oUserJson.username,
+        password: oUserJson.password
+    });
+
+};
+
 UserManager.checkUserFromDB = (userAuthHeader) => {
     return new Promise((resolve, reject) => {
         let options = UserManager.makeOptionsWithUserModel(userAuthHeader);

@@ -52,7 +52,7 @@ let start = () =>{
 
 let startApp = () => {
     return new Promise((resolve, reject) => {
-        app.listen(config.app.port, (err)=>{
+        instanceApp = app.listen(config.app.port, (err)=>{
             if(err){
                 reject(err);
             }else{
