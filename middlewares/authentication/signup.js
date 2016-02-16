@@ -1,5 +1,11 @@
 'use strict';
 
+/**
+ * @api {post} /auth/signup/ Creates a new user.
+ * @apiVersion 0.1.0
+ * @type {UserManager|exports|module.exports}
+ */
+
 let UserManager = require('./../../modules/users/user');
 
 module.exports = (() => {

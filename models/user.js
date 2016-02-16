@@ -1,7 +1,6 @@
 'use strict';
 
 let mongoose = require('mongoose');
-let crypto = require('crypto');
 let Schema = mongoose.Schema;
 
 let UserSchema = new Schema({
@@ -22,6 +21,16 @@ let UserSchema = new Schema({
         type: String,
         required: true,
         unique: true
+    },
+    codeCountryForMobilePhone: {
+        type: Number,
+        required: true,
+        validate: {
+            validator: function(v) {
+                return /+d{3}/.test(v);
+            },
+            message: '{VALUE} is not a valid phone number!'
+        }
     },
     mobilePhoneNumber: {
         type: Number,

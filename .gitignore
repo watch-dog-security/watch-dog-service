@@ -17,3 +17,8 @@ config/server/config.json
 # LOGS #
 ########
 *.log
+
+############
+# API DOCS #
+############
+apidoc/
