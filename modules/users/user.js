@@ -4,26 +4,30 @@ let User = require('./../../models/user');
 let payload = require('./../../modules/jwt/payload');
 let UserManager = () => {};
 
-UserManager.parseUserToPayload = function(user){
+UserManager.parseUserToPayload = function (user) {
     let _user = JSON.parse(user)[0];
     return payload.createPayload(
         _user._id,
-        _user.username
+        _user.userName
     );
 };
 
 UserManager.parseJsonToUserModel = (req) => {
-
-    let oUserJson = JSON.parse(
+    let userJson = JSON.parse(
         JSON.stringify(req.body)
     );
+    return this.getUserFromJSON(userJson);
+};
 
+UserManager.getUserFromJSON = (userJson) => {
     return new User({
-        name: oUserJson.name,
-        username: oUserJson.username,
-        password: oUserJson.password
+        fullName: userJson.fullName,
+        userName: userJson.userName,
+        password: userJson.password,
+        birthdate: userJson.birthdate,
+        email: userJson.email,
+        mobilePhoneNumber: userJson.mobilePhoneNumber
     });
-
 };
 
 UserManager.checkUserFromDB = (userAuthHeader) => {
@@ -31,9 +35,9 @@ UserManager.checkUserFromDB = (userAuthHeader) => {
         let options = UserManager.makeOptionsWithUserModel(userAuthHeader);
 
         User.find(options, (err, user) => {
-            if(err){
+            if (err) {
                 reject(err);
-            }else{
+            } else {
                 resolve(user);
             }
         });
@@ -42,7 +46,7 @@ UserManager.checkUserFromDB = (userAuthHeader) => {
 
 UserManager.makeOptionsWithUserModel = (user) => {
     return {
-        username: user.username,
+        userName: user.userName,
         password: user.password
     };
 };

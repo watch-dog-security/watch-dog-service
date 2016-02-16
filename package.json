@@ -1,7 +1,7 @@
 {
   "name": "watch-dog-service",
   "version": "1.0.0",
-  "description": "Proyecto de seguridad de servicios",
+  "description": "Proyecto de seguridad de micro servicios. Project of security micro-services.",
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.13.3",
