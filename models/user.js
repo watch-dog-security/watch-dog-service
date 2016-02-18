@@ -22,17 +22,11 @@ let UserSchema = new Schema({
         required: true,
         unique: true
     },
-    codeCountryForMobilePhone: {
-        type: Number,
-        required: true,
-        validate: {
-            validator: function(v) {
-                return /+d{3}/.test(v);
-            },
-            message: '{VALUE} is not a valid phone number!'
-        }
+    codeCountry: {
+        type: String,
+        required: true
     },
-    mobilePhoneNumber: {
+    mobilePhone: {
         type: Number,
         required: true,
         unique: true

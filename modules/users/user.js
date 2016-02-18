@@ -16,17 +16,20 @@ UserManager.parseJsonToUserModel = (req) => {
     let userJson = JSON.parse(
         JSON.stringify(req.body)
     );
-    return this.getUserFromJSON(userJson);
+    return UserManager.getUserFromJSON(userJson);
 };
 
 UserManager.getUserFromJSON = (userJson) => {
     return new User({
-        fullName: userJson.fullName,
-        userName: userJson.userName,
+        fullName: userJson.fullname,
+        userName: userJson.username,
         password: userJson.password,
-        birthdate: userJson.birthdate,
+        meta: {
+            birthdate: userJson.birthdate
+        },
         email: userJson.email,
-        mobilePhoneNumber: userJson.mobilePhoneNumber
+        mobilePhone: userJson.mobilephone,
+        codeCountry: userJson.codecountry
     });
 };
 
