@@ -2,6 +2,7 @@
 
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
+let UserValidator = require('./validators/user');
 
 let UserSchema = new Schema({
     fullName: {
@@ -20,11 +21,19 @@ let UserSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        validate: {
+            validator: UserValidator.validateEmail,
+            message: 'Email syntax is not correct.'
+        }
     },
     codeCountry: {
         type: String,
-        required: true
+        required: true,
+        validate: {
+            validator: UserValidator.validateCountryCode,
+            message: 'Country code is not correct.'
+        }
     },
     mobilePhone: {
         type: Number,
