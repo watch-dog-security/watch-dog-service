@@ -6,7 +6,10 @@ module.exports = {
     app: {
         name: process.env.WDS_APP_NAME || config.app.name,
         host: process.env.WDS_APP_HOST || config.app.host,
-        port: process.env.WDS_APP_PORT || config.app.port
+        port: process.env.WDS_APP_PORT || config.app.port,
+        password: {
+            check: process.env.WDS_APP_CHECK_PASS || config.app.password.check
+        }
     },
     jwt: {
         secret: process.env.WDS_JWT_SECRET || config.jwt.secret
