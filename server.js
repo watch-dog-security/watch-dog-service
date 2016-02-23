@@ -114,7 +114,7 @@ let stop = () => {
 
 let stopApp = () => {
     return new Promise((resolve, reject) => {
-        instanceApp.close((error) => {
+        instanceApp = instanceApp.close((error) => {
             let msg;
             if(error){
                 msg = error.toString();
@@ -129,7 +129,7 @@ let stopApp = () => {
 
 let stopMongoose = () => {
     return new Promise((resolve, reject) => {
-        instanceMoongose.disconnect((error) =>{
+        instanceMoongose = instanceMoongose.connection.close((error) =>{
             let msg;
             if(error){
                 msg = error.toString();
@@ -144,7 +144,7 @@ let stopMongoose = () => {
 
 let stopRedis = () => {
     return new Promise((resolve, reject) => {
-        instanceRedis.disconnect((error) => {
+        instanceRedis = instanceRedis.disconnect((error) => {
             let msg;
             if(error){
                 msg = error.toString();
