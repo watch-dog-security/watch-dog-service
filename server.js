@@ -144,7 +144,7 @@ let stopMongoose = () => {
 
 let stopRedis = () => {
     return new Promise((resolve, reject) => {
-        instanceRedis = instanceRedis.disconnect((error) => {
+        instanceRedis = instanceRedis.quit((error) => {
             let msg;
             if(error){
                 msg = error.toString();
