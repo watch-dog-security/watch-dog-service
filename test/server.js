@@ -7,54 +7,48 @@ let server = require('./../server.js');
 describe('Server', () => {
     describe('APP', () => {
 
-        let serverInstance;
-        let serverAPP;
+        let serverAppInstance = undefined;
+        let serverAppMsg = undefined;
+        const serverAppPort = config.app.port;
 
         beforeEach((done) => {
-            serverInstance = undefined;
-            serverAPP = server;
-            done();
+            server.startApp().then((response) => {
+                serverAppInstance = response.instance;
+                serverAppMsg = response.msg;
+                done();
+            });
         });
 
         afterEach((done) => {
+            if (serverAppInstance !== undefined){
+                server.stopApp().then(() => {
+                    serverAppInstance = undefined;
+                    done();
+                });
+            }else{
+                done();
+            }
+
+        });
+
+        it("App UP", (done) => {
+            assert.equal(serverAppMsg, 'Server is up on port ' + serverAppPort);
             done();
         });
 
-        it("Server UP", (done) => {
-            serverAPP.startApp()
-                .then((response) => {
-                    serverInstance = response.instance;
-                    assert.notEqual(serverInstance, undefined);
-                    serverInstance.close(done);
-                });
+        it("App Cheked port", (done) => {
+            let serverPort = serverAppInstance.address().port;
+            assert(serverPort);
+            assert.equal(serverPort, serverAppPort);
+            done();
         });
 
-        it("Cheked port", (done) => {
-            let configPort = config.app.port,
-                serverPort = null;
-
-            serverAPP.startApp()
-                .then((response) => {
-                    serverInstance = response.instance;
-                    serverPort = serverInstance.address().port;
-
-                    assert(serverPort);
-                    assert(configPort);
-                    assert.equal(serverPort, configPort);
-                    serverInstance.close(done);
-                });
-        });
-
-        it("Server down", (done) => {
-            serverAPP.startApp()
-                .then((response) => {
-                    serverInstance = response.instance;
-                    serverAPP.stopApp()
-                        .then((msg) => {
-                            assert(msg);
-                            done();
-                        });
-                });
+        it("App down", (done) => {
+            server.stopApp().then((msg) => {
+                assert.equal(msg, 'APP instance is correctly stoped.');
+                serverAppInstance = undefined;
+                done();
+            });
         });
     });
 
@@ -73,9 +67,9 @@ describe('Server', () => {
         });
 
         afterEach(function (done) {
-            if(mongodbInstance.connection._readyState === mongodbInstance.STATES.disconnected){
+            if (mongodbInstance.connection._readyState === mongodbInstance.STATES.disconnected) {
                 done();
-            }else{
+            } else {
                 server.stopMongoose().then((response) => {
                     //TODO: valorar cambiar manejador de instancias en server para que maneje las instancias como los start(response.instance)
                     mongodbInstance = undefined;
@@ -98,7 +92,7 @@ describe('Server', () => {
             server.stopMongoose(mongodbInstance).then((msg) => {
                 assert(msg);
                 //TODO: Cambiar literales a un JSON
-                assert.equal(msg,'MongoDB instance is correctly stoped.');
+                assert.equal(msg, 'MongoDB instance is correctly stoped.');
                 done();
             });
         });
