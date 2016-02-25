@@ -20,18 +20,18 @@ describe('Server', () => {
         });
 
         afterEach((done) => {
-            if (serverAppInstance !== undefined){
+            if (serverAppInstance !== undefined) {
                 server.stopApp().then(() => {
                     serverAppInstance = undefined;
                     done();
                 });
-            }else{
+            } else {
                 done();
             }
-
         });
 
         it("App UP", (done) => {
+            //TODO: Cambiar literales a un JSON
             assert.equal(serverAppMsg, 'Server is up on port ' + serverAppPort);
             done();
         });
@@ -45,6 +45,7 @@ describe('Server', () => {
 
         it("App down", (done) => {
             server.stopApp().then((msg) => {
+                //TODO: Cambiar literales a un JSON
                 assert.equal(msg, 'APP instance is correctly stoped.');
                 serverAppInstance = undefined;
                 done();
@@ -99,62 +100,56 @@ describe('Server', () => {
 
         it("Cheked port", (done) => {
             let mongodbPort = mongodbInstance.connection.port;
-
             assert(mongodbPort);
             assert(configMongoosePort);
             assert.equal(mongodbPort, configMongoosePort);
-
             done();
         });
     });
 
     describe("Redis", () => {
 
-        let redisInstance;
-        let configRedisPort = config.database.redis.port;
+        let redisServerInstance = undefined;
+        const configRedisPort = config.database.redis.port;
 
         beforeEach((done) => {
-            redisInstance = undefined;
-            done();
+            server.startRedis().then((response) => {
+                redisServerInstance = response.instance;
+                done();
+            });
+        });
+
+        afterEach((done) => {
+            if (redisServerInstance !== undefined) {
+                server.stopRedis().then((response) => {
+                    redisServerInstance = undefined;
+                    done();
+                });
+            } else {
+                done();
+            }
         });
 
         it("It's up", (done) => {
-            server.startRedis()
-                .then((response) => {
-                    redisInstance = response.instance;
-                    assert.notEqual(redisInstance, undefined);
-                    done();
-                });
+            assert.equal(redisServerInstance.connected, true);
+            done();
         });
 
         it("It's down", (done) => {
-            //TODO
-            done();
-
-            /**server.startRedis()
-             .then(function(response){
-                    redisInstance = response.instance;
-                    console.log(redisInstance);
-                    //redisInstance;
-                    //console.log(redisInstance);
-                    assert.equal(redisInstance,undefined);
-                    done();
-                });**/
+            server.stopRedis().then((msg) => {
+                //TODO: Cambiar literales a un JSON
+                assert.equal(msg, 'Redis instance is correctly stoped.');
+                redisServerInstance = undefined;
+                done();
+            });
         });
 
         it("Cheked port", (done) => {
-            let redisPort;
-
-            server.startRedis()
-                .then((response) => {
-                    redisInstance = response.instance;
-                    redisPort = redisInstance.connectionOption.port;
-                    assert(redisPort);
-                    assert(configRedisPort);
-                    assert.equal(redisPort, configRedisPort);
-                    done();
-                });
+            let redisPort = redisServerInstance.connectionOption.port;
+            assert(redisPort);
+            assert(configRedisPort);
+            assert.equal(redisPort, configRedisPort);
+            done();
         });
     });
-
 });
