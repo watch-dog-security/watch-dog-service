@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 let assert = require('assert');
 let server = require('./../server.js');
@@ -68,8 +68,6 @@ describe('Server', () => {
                 mongooseInstanceMsg = response.msg;
                 mongooseInstancePort = mongooseInstance.connection.port;
                 done();
-            }, (error) => {
-                done();
             });
         });
 
@@ -133,7 +131,7 @@ describe('Server', () => {
         afterEach((done) => {
             if (redisInstance !== undefined) {
                 server.stopRedis().then((response) => {
-                    redisInstance = undefined;
+                    redisInstance = response.instance;
                     done();
                 });
             } else {
