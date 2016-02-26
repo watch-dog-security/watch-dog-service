@@ -1,0 +1,8 @@
+{
+  "Server is up on port ": "El servidor ha iniciado en el puerto ",
+  "MongoDB is up on port ": "MongoDB ha iniciado en el puerto ",
+  "Redis is up on port ": "Redis ha iniciado en el puerto ",
+  "APP instance is correctly stoped": "La instancia de la aplicación ha parado correctamente",
+  "MongoDB instance is correctly stoped": "La instancia de MongoDB ha parado correctamente",
+  "Redis instance is correctly stoped": "La instancia del cliente de redis ha parado correctamente"
+}
