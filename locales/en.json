@@ -1,7 +1,7 @@
 {
   "Server is up on port ": "Server is up on port ",
   "MongoDB is up on port ": "MongoDB is up on port ",
-  "Redis is up on port ": "Redis is up on port",
+  "Redis is up on port ": "Redis is up on port ",
   "APP instance is correctly stoped": "APP instance is correctly stoped",
   "MongoDB instance is correctly stoped": "MongoDB instance is correctly stoped",
   "Redis instance is correctly stoped": "Redis instance is correctly stoped"
