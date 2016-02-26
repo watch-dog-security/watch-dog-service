@@ -23,8 +23,8 @@ describe('Server', () => {
 
         afterEach((done) => {
             if (serverInstance !== undefined) {
-                server.stopApp().then(() => {
-                    serverInstance = undefined;
+                server.stopApp().then((response) => {
+                    serverInstance = response.instance;
                     done();
                 });
             } else {
@@ -48,7 +48,8 @@ describe('Server', () => {
         it("App down", (done) => {
             server.stopApp().then((response) => {
                 assert.equal(response.msg, __('APP instance is correctly stoped'));
-                serverInstance = undefined;
+				assert.equal(response.instance, undefined);
+				serverInstance = response.instance;
                 done();
             });
         });
@@ -73,12 +74,11 @@ describe('Server', () => {
         });
 
         afterEach(function (done) {
-            if (mongooseInstance.connection._readyState === mongooseInstance.STATES.disconnected) {
+            if (mongooseInstance === undefined) {
                 done();
             } else {
                 server.stopMongoose().then((response) => {
-                    //TODO: valorar cambiar manejador de instancias en server para que maneje las instancias como los start(response.instance)
-                    mongooseInstance = undefined;
+                    mongooseInstance = response.instance;
                     done();
                 });
             }
@@ -97,9 +97,11 @@ describe('Server', () => {
         });
 
         it("It is down", (done) => {
-            server.stopMongoose(mongooseInstance).then((response) => {
+            server.stopMongoose().then((response) => {
                 assert(response.msg);
                 assert.equal(response.msg, __('MongoDB instance is correctly stoped'));
+				assert.equal(response.instance, undefined);
+				mongooseInstance = response.instance;
                 done();
             });
         });
@@ -149,7 +151,8 @@ describe('Server', () => {
         it("It's down", (done) => {
             server.stopRedis().then((response) => {
                 assert.equal(response.msg, __('Redis instance is correctly stoped'));
-                redisInstance = undefined;
+                assert.equal(response.instance, undefined);
+				redisInstance = response.instance;
                 done();
             });
         });
