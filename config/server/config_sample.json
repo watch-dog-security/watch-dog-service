@@ -1,21 +1,21 @@
 {
-  "app": {
-    "name": "Watch dog server",
-    "host": "http://localhost",
-    "port": "3000",
-    "password": {
-      "check": true
-    }
-  },
-  "jwt":{
-    "secret":"secreto"
-  },
-  "mongodb":{
-    "host":"mongodb://localhost",
-    "port":"27017"
-  },
-  "redis":{
-    "host":"127.0.0.1",
-    "port":"6379"
-  }
+	"app": {
+		"name": "Watch dog server",
+		"host": "http://localhost",
+		"port": "3000",
+		"password": {
+			"check": true
+		}
+	},
+	"jwt": {
+		"secret": "secreto"
+	},
+	"mongodb": {
+		"host": "mongodb://localhost",
+		"port": "27017"
+	},
+	"redis": {
+		"host": "127.0.0.1",
+		"port": "6379"
+	}
 }

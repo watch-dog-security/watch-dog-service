@@ -1,8 +1,8 @@
 "use strict";
 
 let assert = require('assert');
-const config = require('./../config/server/config.js');
 let server = require('./../server.js');
+const config = require('./../config/server/config.js');
 
 describe('Server', () => {
     describe('APP', () => {
@@ -46,8 +46,8 @@ describe('Server', () => {
         });
 
         it("App down", (done) => {
-            server.stopApp().then((msg) => {
-                assert.equal(msg, __('APP instance is correctly stoped'));
+            server.stopApp().then((response) => {
+                assert.equal(response.msg, __('APP instance is correctly stoped'));
                 serverInstance = undefined;
                 done();
             });
@@ -97,9 +97,9 @@ describe('Server', () => {
         });
 
         it("It is down", (done) => {
-            server.stopMongoose(mongooseInstance).then((msg) => {
-                assert(msg);
-                assert.equal(msg, __('MongoDB instance is correctly stoped'));
+            server.stopMongoose(mongooseInstance).then((response) => {
+                assert(response.msg);
+                assert.equal(response.msg, __('MongoDB instance is correctly stoped'));
                 done();
             });
         });
@@ -147,8 +147,8 @@ describe('Server', () => {
         });
 
         it("It's down", (done) => {
-            server.stopRedis().then((msg) => {
-                assert.equal(msg, __('Redis instance is correctly stoped'));
+            server.stopRedis().then((response) => {
+                assert.equal(response.msg, __('Redis instance is correctly stoped'));
                 redisInstance = undefined;
                 done();
             });
@@ -189,8 +189,24 @@ describe('Server', () => {
         });
 
         it("Stop all", (done) => {
-            //TODO: finish it
-            done();
+			server.stop().then((responses) => {
+
+				responses.forEach((response) => {
+					assert(response.msg);
+					assert.equal(response.instance, undefined);
+
+					if (response.name === 'APP') {
+						assert.equal(response.msg, __('APP instance is correctly stoped'));
+					} else if (response.name === 'Mongoose') {
+						assert.equal(response.msg, __('MongoDB instance is correctly stoped'));
+					} else if (response.name === 'Redis') {
+						assert.equal(response.msg, __('Redis instance is correctly stoped'));
+					}
+				});
+
+				done();
+			});
+
         });
     });
 });

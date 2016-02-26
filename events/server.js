@@ -15,7 +15,7 @@ let loadServerEvents = function(instance){
 };
 
 let closeAppEvent = function(){
-    console.log('Stopping ' + config.app.name);
+    //console.log('Stopping ' + config.app.name);
 };
 
 module.exports = {
