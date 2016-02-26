@@ -62,7 +62,7 @@ describe('Server', () => {
         const mongooseConfigPort = config.database.mongodb.port;
 
         beforeEach((done) => {
-            server.startMoongose().then((response) => {
+            server.startMongoose().then((response) => {
                 mongooseInstance = response.instance;
                 mongooseInstanceMsg = response.msg;
                 mongooseInstancePort = mongooseInstance.connection.port;
@@ -88,6 +88,7 @@ describe('Server', () => {
             let actualConnectionState = mongooseInstance.connection._readyState;
             let connectionStateDefinedByMoongose = mongooseInstance.STATES.connected;
 
+            assert(mongooseInstancePort);
             assert.notEqual(mongooseInstance, undefined);
             assert.equal(actualConnectionState, connectionStateDefinedByMoongose);
             assert.equal(mongooseInstanceMsg, __('MongoDB is up on port ') + mongooseInstancePort);
@@ -139,6 +140,7 @@ describe('Server', () => {
         });
 
         it("It's up", (done) => {
+            assert(redisInstancePort);
             assert.equal(redisInstance.connected, true);
             assert.equal(redisInstanceMsg, __('Redis is up on port ') + redisInstancePort);
             done();
@@ -156,6 +158,38 @@ describe('Server', () => {
             assert(redisInstancePort);
             assert(redisConfigPort);
             assert.equal(redisInstancePort, redisConfigPort);
+            done();
+        });
+    });
+
+    describe("Run All", () => {
+        it("Start all", (done) => {
+
+            server.start().then((responses) => {
+                responses.forEach((response) => {
+                    assert(response.msg);
+                    assert.notEqual(response.instance, undefined);
+
+                    if (response.name === 'APP') {
+                        let serverInstancePort = response.instance.address().port;
+                        assert(serverInstancePort);
+                        assert.equal(response.msg, __('Server is up on port ') + serverInstancePort);
+                    } else if (response.name === 'Mongoose') {
+                        let mongooseInstancePort = response.instance.connection.port;
+                        assert(mongooseInstancePort);
+                        assert.equal(response.msg, __('MongoDB is up on port ') + mongooseInstancePort);
+                    } else if (response.name === 'Redis') {
+                        let redisInstancePort = response.instance.connectionOption.port;
+                        assert(redisInstancePort);
+                        assert.equal(response.msg, __('Redis is up on port ') + redisInstancePort);
+                    }
+                });
+                done();
+            });
+        });
+
+        it("Stop all", (done) => {
+            //TODO: finish it
             done();
         });
     });

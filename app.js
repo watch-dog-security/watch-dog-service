@@ -1,4 +1,10 @@
 'use strict';
 
 let server = require('./server');
-server.start();
+const utils = require('./modules/utils/utils.js');
+
+server.start().then((responses) => {
+    responses.forEach((response) => {
+        utils.consoleLogWithTick(response.msg);
+    })
+});

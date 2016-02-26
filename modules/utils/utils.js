@@ -7,9 +7,10 @@ exports.consoleLogWithTick = (str)=>{
     console.log(' \u2714 ' + colors.cyan(str));
 };
 
-exports.getArrayResponseForInstances = (instance,msg)=>{
+exports.getArrayResponseForInstances = (nameOfTheService, instance, msg)=>{
     return {
-        instance:instance,
-        msg:msg
+        name: nameOfTheService,
+        instance: instance,
+        msg: msg
     };
 };

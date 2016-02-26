@@ -34,19 +34,19 @@ app.use('/auth', authenticationRouter);
 app.use(gatewayRouter);
 
 let start = () => {
-    Promise.all([
-            startApp(),
-            startMoongose(),
-            startRedis()
-        ])
-        .then((data)=> {
-            data.forEach((response)=> {
-                utils.consoleLogWithTick(response.msg);
+    return new Promise((resolve, reject) => {
+        Promise.all([
+                startApp(),
+                startMongoose(),
+                startRedis()
+            ])
+            .then((data)=> {
+                resolve(data);
+            })
+            .catch((error)=> {
+                reject(error);
             });
-        })
-        .catch((error)=> {
-            console.log('Error' + error);
-        });
+    });
 };
 
 let startApp = () => {
@@ -57,7 +57,7 @@ let startApp = () => {
             } else {
                 instanceApp = serverEvents.loadServerEvents(instanceApp);
                 resolve(
-                    utils.getArrayResponseForInstances(instanceApp, __('Server is up on port ') + instanceApp.address().port)
+                    utils.getArrayResponseForInstances('APP', instanceApp, __('Server is up on port ') + instanceApp.address().port)
                 );
             }
         });
@@ -65,14 +65,14 @@ let startApp = () => {
 };
 
 
-let startMoongose = () => {
+let startMongoose = () => {
     return new Promise((resolve, reject) => {
         instanceMoongose = mongoose.connect(config.database.mongodb.host, (err)=> {
             if (err) {
                 reject(err);
             } else {
                 resolve(
-                    utils.getArrayResponseForInstances(instanceMoongose, __('MongoDB is up on port ') + instanceMoongose.connection.port)
+                    utils.getArrayResponseForInstances('Mongoose',instanceMoongose, __('MongoDB is up on port ') + instanceMoongose.connection.port)
                 );
             }
         });
@@ -87,7 +87,7 @@ let startRedis = () => {
                 reject(err);
             } else {
                 resolve(
-                    utils.getArrayResponseForInstances(instanceRedis, __('Redis is up on port ') + instanceRedis.connectionOption.port)
+                    utils.getArrayResponseForInstances('Redis',instanceRedis, __('Redis is up on port ') + instanceRedis.connectionOption.port)
                 );
             }
         });
@@ -96,19 +96,19 @@ let startRedis = () => {
 
 
 let stop = () => {
-    Promise.all([
-            stopApp(),
-            stopMongoose(),
-            stopRedis()
-        ])
-        .then((data)=> {
-            data.forEach(function (msg) {
-                utils.consoleLogWithTick(msg);
+    return new Promise((resolve, reject) => {
+        Promise.all([
+                stopApp(),
+                stopMongoose(),
+                stopRedis()
+            ])
+            .then((data)=> {
+                resolve(data);
+            })
+            .catch((error)=> {
+                reject(error);
             });
-        })
-        .catch((error)=> {
-            console.log('Error' + error);
-        });
+    });
 };
 
 let stopApp = () => {
@@ -163,6 +163,6 @@ module.exports = {
     stopApp: stopApp,
     startRedis: startRedis,
     stopRedis: stopRedis,
-    startMoongose: startMoongose,
+    startMongoose: startMongoose,
     stopMongoose: stopMongoose
 };
