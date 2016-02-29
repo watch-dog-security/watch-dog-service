@@ -20,11 +20,11 @@ module.exports = () => {
                 next();
             }else{
                 res.status(400);
-                res.send('You must to add the correct type, incorrect call.');
+                res.send(__('You must to add the correct type, incorrect call'));
             }
         }else{
             res.status(400);
-            res.send('You must to add the headers, incorrect call.');
+            res.send(__('You must to add the headers, incorrect call'));
         }
     }
 };

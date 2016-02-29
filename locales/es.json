@@ -1,8 +1,14 @@
 {
-  "Server is up on port ": "El servidor ha iniciado en el puerto ",
-  "MongoDB is up on port ": "MongoDB ha iniciado en el puerto ",
-  "Redis is up on port ": "Redis ha iniciado en el puerto ",
-  "APP instance is correctly stoped": "La instancia de la aplicación ha parado correctamente",
-  "MongoDB instance is correctly stoped": "La instancia de MongoDB ha parado correctamente",
-  "Redis instance is correctly stoped": "La instancia del cliente de redis ha parado correctamente"
+	"Server is up on port ": "El servidor ha iniciado en el puerto ",
+	"MongoDB is up on port ": "MongoDB ha iniciado en el puerto ",
+	"Redis is up on port ": "Redis ha iniciado en el puerto ",
+	"APP instance is correctly stoped": "La instancia de la aplicación ha parado correctamente",
+	"MongoDB instance is correctly stoped": "La instancia de MongoDB ha parado correctamente",
+	"Redis instance is correctly stoped": "La instancia del cliente de redis ha parado correctamente",
+	"Something is going wrong with the data of the payload": "Algo está yendo mal en los datos que se está enviado al payload",
+	"User saved successfully": "Usuario registrado con exito",
+	"You must to signin on the system with the correct credentials": "Debes hacer login con los credenciales correctos",
+	"Not authorize": "No autorizado",
+	"You must to add the headers, incorrect call": "Debes añadir las cabeceras, llamada incorrecta",
+	"You must to add the correct type, incorrect call": "Debes añadir el tipo correcto, llamada incorrecta"
 }

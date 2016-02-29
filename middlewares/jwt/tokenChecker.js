@@ -17,7 +17,7 @@ module.exports = (() => {
             res.status(200).send(encrypt);
             next();
         }else{
-            res.status(401).send("Not autorithe");
+            res.status(401).send(__('Not authorize'));
         }
     };
 })();

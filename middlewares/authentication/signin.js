@@ -16,14 +16,14 @@ module.exports = (() => {
                         req.signin = {user : JSON.stringify(user)};
                         next();
                     }else{
-                        req.status(401).send('You must to signin on the system with the correct credencials.');
+                        req.status(401).send(__('You must to signin on the system with the correct credentials'));
                     }
                 })
                 .catch((error) => {
                     res.statusCode(500).send(error);
                 });
         }else{
-            res.statusCode(401).send('You must to signin on the system with the correct credencials.');
+            res.statusCode(401).send(__('You must to signin on the system with the correct credentials'));
         }
     };
 })();
