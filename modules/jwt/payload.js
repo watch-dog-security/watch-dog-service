@@ -8,6 +8,19 @@ exports.createPayload = (_id, username) =>{
     };
 };
 
+exports.createPayloadVerifiedPromise = (_id, username) =>{
+	return new Promise((resolve, reject) => {
+		let payload = this.createPayload(_id,username);
+		if(this.checkPayload(payload)){
+			resolve(payload);
+		}else{
+			reject(
+				new Error(__('Something is going wrong with the data of the payload'))
+			);
+		}
+	});
+};
+
 exports.checkPayload = (payload) => {
     let bDate = checkDatePayloadWithServerDate(payload);
     let bUndefined = checkUndefinedPayload(payload);
