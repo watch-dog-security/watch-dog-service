@@ -11,6 +11,25 @@ const serverEvents = require('./events/server.js');
 const authenticationRouter = require('./routers/authentication');
 const gatewayRouter = require('./routers/gway');
 const i18n = require("i18n");
+const bunyan = require('bunyan');
+const path = require('path');
+const log = bunyan.createLogger({
+	name: 'TuApp',
+	streams: [
+		{
+			level: 'info',
+			stream: process.stdout
+		},
+		{
+			level: 'warm',
+			stream: process.stdout
+		},
+		{
+			level: 'error',
+			path: path.join(__dirname, './logs') + config.app.name.replace(/\s/g, '') + '-error.log'
+		}
+	]
+});
 
 let app = express();
 let instanceApp = undefined;
@@ -19,7 +38,7 @@ let instanceRedis = undefined;
 
 i18n.configure({
 	defaultLocale: 'en',
-	directory: './locales',
+	directory: './config/locales',
 	register: global
 });
 

@@ -5,6 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.13.3",
+    "bunyan": "^1.7.1",
     "chai": "^3.5.0",
     "colors": "^1.1.2",
     "cors": "^2.7.1",
