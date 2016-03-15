@@ -75,9 +75,6 @@ let startApp = () => {
 				reject(err);
 			} else {
 				instanceApp = serverEvents.loadServerEvents(instanceApp);
-				log.info('prueba info' + path.join(__dirname + '/logs') + config.app.name.replace(/\s/g, '') + '-error.log');
-				log.warn('prueba warning');
-				log.error('prueba error');
 				resolve(
 					utils.getArrayResponseForInstances('APP', instanceApp, __('Server is up on port ') + instanceApp.address().port)
 				);

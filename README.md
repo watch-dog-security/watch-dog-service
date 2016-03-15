@@ -33,3 +33,14 @@ Development Rules
 -----------------
 Si deseas particiar en el proyecto puedes hacerlo siempre a través de pull request y se supervisará de ésta forma el código
 que envies. Se recomienda instalar eslint para el control de la calidad del código.
+
+commits
+-------
+
+Aunque no se ha llevado buenas practicas durante todo el desarrollo sobre el contenido de los commits para realizarlo correctamente recomiendo leer los siguientes artículos:
+
+- https://git-scm.com/book/ch5-2.html
+- https://github.com/erlang/otp/wiki/writing-good-commit-messages
+- http://chris.beams.io/posts/git-commit/
+
+Para pasar los pull request deberá estar todo correctamente comentado con el máximo detalle posible.
