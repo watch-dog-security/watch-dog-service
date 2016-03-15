@@ -14,19 +14,19 @@ const i18n = require("i18n");
 const bunyan = require('bunyan');
 const path = require('path');
 const log = bunyan.createLogger({
-	name: 'TuApp',
+	name: config.app.name,
 	streams: [
 		{
 			level: 'info',
 			stream: process.stdout
 		},
 		{
-			level: 'warm',
-			stream: process.stdout
+			level: 'warn',
+			path: path.join(__dirname + '/logs/') + config.app.name.replace(/\s/g, '') + '-warn.log'
 		},
 		{
 			level: 'error',
-			path: path.join(__dirname, './logs') + config.app.name.replace(/\s/g, '') + '-error.log'
+			path: path.join(__dirname + '/logs/') + config.app.name.replace(/\s/g, '') + '-error.log'
 		}
 	]
 });
@@ -75,6 +75,9 @@ let startApp = () => {
 				reject(err);
 			} else {
 				instanceApp = serverEvents.loadServerEvents(instanceApp);
+				log.info('prueba info' + path.join(__dirname + '/logs') + config.app.name.replace(/\s/g, '') + '-error.log');
+				log.warn('prueba warning');
+				log.error('prueba error');
 				resolve(
 					utils.getArrayResponseForInstances('APP', instanceApp, __('Server is up on port ') + instanceApp.address().port)
 				);
