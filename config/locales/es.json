@@ -10,5 +10,6 @@
 	"You must to signin on the system with the correct credentials": "Debes hacer login con los credenciales correctos",
 	"Not authorize": "No autorizado",
 	"You must to add the headers, incorrect call": "Debes añadir las cabeceras, llamada incorrecta",
-	"You must to add the correct type, incorrect call": "Debes añadir el tipo correcto, llamada incorrecta"
+	"You must to add the correct type, incorrect call": "Debes añadir el tipo correcto, llamada incorrecta",
+	"Authorization header is not correct": "La cabecera de autenticación no es correcta"
 }

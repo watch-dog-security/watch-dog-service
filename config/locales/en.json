@@ -10,5 +10,6 @@
 	"You must to signin on the system with the correct credentials": "You must to signin on the system with the correct credentials",
 	"Not authorize": "Not authorize",
 	"You must to add the headers, incorrect call": "You must to add the headers, incorrect call",
-	"You must to add the correct type, incorrect call": "You must to add the correct type, incorrect call"
+	"You must to add the correct type, incorrect call": "You must to add the correct type, incorrect call",
+	"Authorization header is not correct": "Authorization header is not correct."
 }
