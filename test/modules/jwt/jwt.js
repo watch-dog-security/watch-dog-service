@@ -1,8 +1,8 @@
 'use strict';
 
 let assert = require('assert');
-let jwt = require('../../modules/jwt/jwt');
-let payload = require('../../modules/jwt/payload');
+let jwt = require('jwt');
+let payload = require('payload');
 const config = require('./../../config/server/config.js');
 
 describe('JWT', ()=> {
