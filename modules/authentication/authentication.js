@@ -7,26 +7,45 @@ exports.check = (authorizationHeader) => {
 };
 
 exports.getUserAuthentication = (authorizationHeader) => {
-	let decodedAuthHeader = this.decode(authorizationHeader);
-	return this.parseAuthRequestToUserModel(decodedAuthHeader);
+	try {
+		let decodedAuthHeader = this.decode(authorizationHeader);
+		return this.parseAuthRequestToUserModel(decodedAuthHeader);
+	} catch (exception) {
+		throw exception;
+	}
 };
 
 exports.decode = (authorizationHeader) => {
-	let authorizationHeaderSplitedLenght = authorizationHeader.split(' ').length;
+	if (authorizationHeader !== undefined) {
+		let authorizationHeaderSplitedLenght = authorizationHeader.split(' ').length;
 
-	if (authorizationHeaderSplitedLenght !== 2) {
-		return new Error(__('Authorization header is not correct'));
+		if (authorizationHeaderSplitedLenght !== 2 ||
+			authorizationHeaderSplitedLenght === undefined) {
+			throw new Error(__('Authorization header is not correct'));
+		} else {
+			let authorizationHeaderSplited = authorizationHeader.split(' ');
+			let buffer = new Buffer(authorizationHeaderSplited[1], 'base64');
+			return buffer.toString();
+		}
 	} else {
-		let authorizationHeaderSplited = authorizationHeader.split(' ');
-		let buffer = new Buffer(authorizationHeaderSplited[1], 'base64');
-		return buffer.toString();
+		throw this.getAuthenticationException();
 	}
 };
 
 exports.parseAuthRequestToUserModel = (authorizationHeader) => {
-	let authorizationHeaderSplited = authorizationHeader.split(':');
-	return {
-		username: authorizationHeaderSplited[0],
-		password: authorizationHeaderSplited[1]
+	if (authorizationHeader === undefined ||
+		authorizationHeader.indexOf(':') === -1
+	) {
+		throw this.getAuthenticationException();
+	} else {
+		let authorizationHeaderSplited = authorizationHeader.split(':');
+		return {
+			username: authorizationHeaderSplited[0],
+			password: authorizationHeaderSplited[1]
+		}
 	}
+};
+
+exports.getAuthenticationException = () => {
+	return new Error(__('Authorization header is not correct'));
 };
