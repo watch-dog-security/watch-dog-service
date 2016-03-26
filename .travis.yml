@@ -3,7 +3,5 @@ node_js:
   - "5"
 before_script:
   - cp config/server/config_sample.json config/server/config.json
-  - touch logs/Watchdogserver-error.log || true
-  - touch logs/Watchdogserver-warn.log || true
 install:
   - npm install

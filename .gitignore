@@ -16,7 +16,7 @@ config/server/config.json
 ########
 # LOGS #
 ########
-*.log
+npm-debug.log
 
 ############
 # API DOCS #
