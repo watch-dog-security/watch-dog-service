@@ -3,6 +3,7 @@
 let assert = require('assert');
 let payload = require('./../../../modules/jwt/payload');
 let mock = require('./../../mocks/modules/jwt/payload');
+let server = require('./../../../server.js');
 
 describe('Payload module', ()=> {
 
@@ -62,7 +63,7 @@ describe('Payload module', ()=> {
 		it('Should promise reject by undefined _id', (done) => {
 			payload.createPayloadVerifiedPromise(undefined, mock.configuration.username)
 				.catch((error) => {
-					assert(error);
+					assert.deepEqual(error, new Error(__('Something is going wrong with the data of the payload')));
 					done();
 				});
 		});
@@ -70,7 +71,7 @@ describe('Payload module', ()=> {
 		it('Should promise reject by undefined username', (done) => {
 			payload.createPayloadVerifiedPromise(undefined, mock.configuration.username)
 				.catch((error) => {
-					assert(error);
+					assert.deepEqual(error, new Error(__('Something is going wrong with the data of the payload')));
 					done();
 				});
 		});

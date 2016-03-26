@@ -1,4 +1,5 @@
 # watch-dog-service
+[![Coverage Status](https://coveralls.io/repos/github/albertoig/watch-dog-service/badge.svg?branch=master)](https://coveralls.io/github/albertoig/watch-dog-service?branch=master)
 AVISO: El proyecto aún está en desarrollo, no recomiendo la utilización del proyecto hasta que termine la release 1.0.
 
 Pasarela de login y control de de seguridad de servicios. EL proyecto está orientado sobre todo al desarrollo de micro 
