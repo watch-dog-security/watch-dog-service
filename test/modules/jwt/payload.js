@@ -2,76 +2,77 @@
 
 let assert = require('assert');
 let payload = require('./../../../modules/jwt/payload');
+let mock = require('./../../mocks/modules/jwt/payload');
 
-describe('Payload', ()=> {
+describe('Payload module', ()=> {
 
-    let userPayload;
-	let userPayloadWithoutId;
-	let userPayloadWithoutUsername;
-	let configurationOfThePayload = {
-		_id: '1',
-		username: 'UserNamePrueba'
-	};
+	describe('check function createPayload', ()=> {
+		it('Should create a payload object', (done) => {
+			let createdPayload = payload.createPayload(mock.configuration._id, mock.configuration.username);
 
-    before((done) => {
+			assert(createdPayload);
+			assert.equal(createdPayload.username, mock.configuration.username);
+			assert.equal(createdPayload._id, mock.configuration._id);
 
-		userPayload = payload.createPayload(
-			configurationOfThePayload._id,
-			configurationOfThePayload.username
-		);
+			done();
+		});
+	});
 
-		userPayloadWithoutId = payload.createPayload(
-			undefined,
-			configurationOfThePayload.username
-		);
+	describe('check function checkUndefinedPayload', ()=> {
+		it('Should return true when payload is correct', (done) => {
+			let checkedPayload = payload.checkUndefinedPayload({
+				_id: '1',
+				username: 'UserNamePrueba',
+				encripted_at: new Date()
+			});
+			assert.equal(checkedPayload, true);
+			done();
+		});
 
-		userPayloadWithoutUsername = payload.createPayload(
-			configurationOfThePayload._id,
-			undefined
-		);
+		it('Should return false when payload have undefined _id', (done) => {
+			let checkedPayload = payload.checkUndefinedPayload(mock.payloadIdUndefined);
+			assert.equal(checkedPayload, false);
+			done();
+		});
 
-		done();
-    });
+		it('Should return false when payload have undefined username', (done) => {
+			let checkedPayload = payload.checkUndefinedPayload(mock.payloadUsernameUndefined);
+			assert.equal(checkedPayload, false);
+			done();
+		});
 
-    it("Should have all values", (done) => {
+		it('Should return false when payload have undefined encripted_at', (done) => {
+			let checkedPayload = payload.checkUndefinedPayload(mock.payloadEncriptedUndefined);
+			assert.equal(checkedPayload, false);
+			done();
+		});
+	});
 
-		let username = userPayload.username;
-		let _id = userPayload._id;
-		let encripted_at = userPayload.encripted_at;
+	describe('check function createPayloadVerifiedPromise', ()=> {
+		it('Should promise resolve with payload', (done) => {
+			payload.createPayloadVerifiedPromise(mock.configuration._id, mock.configuration.username)
+				.then((payload) => {
+					assert(payload);
+					assert.equal(payload.username, mock.configuration.username);
+					assert.equal(payload._id, mock.configuration._id);
+					done();
+				});
+		});
 
-		assert(username);
-		assert(encripted_at);
-		assert(_id);
+		it('Should promise reject by undefined _id', (done) => {
+			payload.createPayloadVerifiedPromise(undefined, mock.configuration.username)
+				.catch((error) => {
+					assert(error);
+					done();
+				});
+		});
 
-		assert.equal(username, configurationOfThePayload.username);
-		assert.equal(_id, configurationOfThePayload._id);
-
-        done();
-    });
-
-    it("Should not have username value", (done) => {
-		let username = userPayloadWithoutUsername.username;
-		let _id = userPayloadWithoutUsername._id;
-		let encripted_at = userPayloadWithoutUsername.encripted_at;
-
-		assert(encripted_at);
-		assert(_id);
-
-		assert.equal(username, undefined);
-		assert.equal(_id, configurationOfThePayload._id);
-        done();
-    });
-
-    it("Should not have create date value", (done) => {
-        userPayload.created_at = "";
-        assert(userPayload.created_at === "");
-        done();
-    });
-
-
-    it("Should not have update date value", (done) => {
-        userPayload.updated_at = "";
-        assert(userPayload.updated_at === "");
-        done();
-    });
+		it('Should promise reject by undefined username', (done) => {
+			payload.createPayloadVerifiedPromise(undefined, mock.configuration.username)
+				.catch((error) => {
+					assert(error);
+					done();
+				});
+		});
+	});
 });

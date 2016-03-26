@@ -4,14 +4,14 @@ exports.createPayload = (_id, username) =>{
     return {
         _id: _id,
         username: username,
-        encripted_at: getCurrentDate()
+        encripted_at: new Date()
     };
 };
 
 exports.createPayloadVerifiedPromise = (_id, username) =>{
 	return new Promise((resolve, reject) => {
 		let payload = this.createPayload(_id,username);
-		if(this.checkPayload(payload)){
+		if(this.checkUndefinedPayload(payload)){
 			resolve(payload);
 		}else{
 			reject(
@@ -21,22 +21,8 @@ exports.createPayloadVerifiedPromise = (_id, username) =>{
 	});
 };
 
-exports.checkPayload = (payload) => {
-    let bDate = checkDatePayloadWithServerDate(payload);
-    let bUndefined = checkUndefinedPayload(payload);
-    return !!(bUndefined && bDate);
-};
-
-let checkDatePayloadWithServerDate = (payload) => {
-    return (payload.encripted_at === getCurrentDate());
-};
-
-let getCurrentDate = () => {
-    return new Date();
-};
-
-let checkUndefinedPayload = (payload) => {
+exports.checkUndefinedPayload = (payload) => {
     return !!(payload._id !== undefined &&
     payload.username !== undefined &&
-    payload.updated_at !== undefined);
+    payload.encripted_at !== undefined);
 };

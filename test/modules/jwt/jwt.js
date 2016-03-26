@@ -3,9 +3,9 @@
 let assert = require('assert');
 let jwt = require('./../../../modules/jwt/jwt');
 let payload = require('./../../../modules/jwt/payload');
-const config = require('./../../config/server/config');
+const config = require('./../../../config/server/config');
 
-describe('JWT', ()=> {
+describe('JWT module', ()=> {
 
 	let userPayload;
 	let token = "";
@@ -22,7 +22,7 @@ describe('JWT', ()=> {
 		done();
 	});
 
-	describe('Encrypt', ()=> {
+	describe('Check function Encrypt', ()=> {
 		it("Token should be generated", (done) => {
 			assert(token === "");
 			token = jwt.encrypt(userPayload);
@@ -31,7 +31,7 @@ describe('JWT', ()=> {
 		});
 	});
 
-	describe("Decrypt", ()=> {
+	describe("Check function Decrypt", ()=> {
 		it("Token should be correct", (done) => {
 			assert(token);
 			let data = jwt.decode(token);
