@@ -1,7 +1,7 @@
 'use strict';
 
 let assert = require('assert');
-let payload = require('payload');
+let payload = require('./../../../modules/jwt/payload');
 
 describe('Payload', ()=> {
 
