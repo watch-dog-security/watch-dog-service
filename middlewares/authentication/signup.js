@@ -10,8 +10,14 @@ let UserManager = require('./../../modules/users/user');
 
 module.exports = (() => {
     return (req, res, next) => {
+		let oUser;
 
-        let oUser = UserManager.parseJsonToUserModel(req);
+		try {
+			oUser = UserManager.parseJsonToUserModel(req);
+		} catch (exception) {
+			//TODO: Could be fine to make an ERROR provider to responses
+			res.status(500).send(exception.message);
+		}
 
         oUser.save((err)=>{
             if (err) {

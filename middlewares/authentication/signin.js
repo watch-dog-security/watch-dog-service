@@ -8,7 +8,14 @@ module.exports = (() => {
         let authRequest = req.headers['authorization'];
 
         if(authentication.check(authRequest)){
-            let userAuthentication = authentication.getUserAuthentication(authRequest);
+			let userAuthentication;
+
+			try {
+				userAuthentication = authentication.getUserAuthentication(authRequest);
+			} catch (exception) {
+				//TODO: Could be fine to make an ERROR provider to responses
+				res.statusCode(500).send(exception.message);
+			}
 
             UserManager.checkUserFromDB(userAuthentication)
                 .then((user)=>{

@@ -21,7 +21,7 @@ exports.decode = (authorizationHeader) => {
 
 		if (authorizationHeaderSplitedLenght !== 2 ||
 			authorizationHeaderSplitedLenght === undefined) {
-			throw new Error(__('Authorization header is not correct'));
+			throw this.getAuthenticationException();
 		} else {
 			let authorizationHeaderSplited = authorizationHeader.split(' ');
 			let buffer = new Buffer(authorizationHeaderSplited[1], 'base64');

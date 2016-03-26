@@ -11,5 +11,8 @@
 	"Not authorize": "Not authorize",
 	"You must to add the headers, incorrect call": "You must to add the headers, incorrect call",
 	"You must to add the correct type, incorrect call": "You must to add the correct type, incorrect call",
-	"Authorization header is not correct": "Authorization header is not correct."
+	"Authorization header is not correct": "Authorization header is not correct.",
+	"User options is not correct": "User options is not correct",
+	"User json formation is not correct": "User json formation is not correct",
+	"Body to parse to JSON is undefined": "Body to parse to JSON is undefined"
 }

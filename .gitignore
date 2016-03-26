@@ -22,3 +22,8 @@ config/server/config.json
 # API DOCS #
 ############
 apidoc/
+
+############
+# COVERAGE #
+############
+coverage/
