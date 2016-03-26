@@ -5,3 +5,5 @@ before_script:
   - cp config/server/config_sample.json config/server/config.json
 install:
   - npm install
+after_success:
+  - coveralls
