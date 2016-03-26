@@ -2,8 +2,8 @@ language: node_js
 node_js:
   - "5"
 before_script:
-  - cp config/server/config_sample.json config/server/config.json
-  - cp config/server/config_sample.json logs/Watchdogserver-error.log
-  - cp config/server/config_sample.json logs/Watchdogserver-warn.log
+  - cp config/server/config_sample.json config/server/config.json || true
+  - cp config/server/config_sample.json logs/Watchdogserver-error.log || true
+  - cp config/server/config_sample.json logs/Watchdogserver-warn.log || true
 install:
   - npm install
