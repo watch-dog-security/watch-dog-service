@@ -3,6 +3,6 @@ node_js:
   - "5"
 install:
   - cp config/server/config_sample.json config/server/config.json
-  - touch logs/Watchdogserver-error.log
-  - touch logs/Watchdogserver-warn.log
+  - > logs/Watchdogserver-error.log
+  - > logs/Watchdogserver-warn.log
   - npm install
