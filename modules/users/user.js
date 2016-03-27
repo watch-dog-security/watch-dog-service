@@ -8,7 +8,7 @@ let UserManager = () => {
 UserManager.parseUserToPayload = function (user) {
 	return new Promise((resolve, reject) => {
 		let _user = JSON.parse(user)[0];
-		payload.createPayloadVerifiedPromise(_user._id, _user.userName).then((payload) => {
+		payload.createPayloadVerifiedPromise(_user._id, _user.username).then((payload) => {
 			resolve(payload);
 		}).catch((error) => {
 			reject(error);

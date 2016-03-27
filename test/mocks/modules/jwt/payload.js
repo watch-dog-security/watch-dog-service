@@ -5,17 +5,17 @@ let mocks = () => {
 
 mocks.configuration = {
 	_id: '1',
-	userName: 'UserNamePrueba'
+	username: 'UserNamePrueba'
 };
 
 mocks.configurationUndefinedId = {
 	_id: undefined,
-	userName: 'UserNamePrueba'
+	username: 'UserNamePrueba'
 };
 
 mocks.configurationUndefinedUsername = {
 	_id: '1',
-	userName: undefined
+	username: undefined
 };
 
 mocks.payload = {

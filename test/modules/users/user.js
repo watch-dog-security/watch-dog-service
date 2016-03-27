@@ -209,7 +209,7 @@ describe('User module', () => {
 		it('should promiss resolve with a payload', (done) => {
 			UserManager.parseUserToPayload(mockPayload.userJSON).then((payload) => {
 				assert.equal(payload._id, JSON.parse(mockPayload.userJSON)[0]._id);
-				assert.equal(payload.userName, JSON.parse(mockPayload.userJSON)[0].username);
+				assert.equal(payload.username, JSON.parse(mockPayload.userJSON)[0].username);
 				assert(payload.encripted_at);
 				done();
 			});
