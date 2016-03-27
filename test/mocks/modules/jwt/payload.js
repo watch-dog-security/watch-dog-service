@@ -5,7 +5,17 @@ let mocks = () => {
 
 mocks.configuration = {
 	_id: '1',
-	username: 'UserNamePrueba'
+	userName: 'UserNamePrueba'
+};
+
+mocks.configurationUndefinedId = {
+	_id: undefined,
+	userName: 'UserNamePrueba'
+};
+
+mocks.configurationUndefinedUsername = {
+	_id: '1',
+	userName: undefined
 };
 
 mocks.payload = {
@@ -31,5 +41,17 @@ mocks.payloadEncriptedUndefined = {
 	username: 'UserNamePrueba',
 	encripted_at: undefined
 };
+
+mocks.userJSON =  JSON.stringify([
+	mocks.configuration
+]);
+
+mocks.userJSONUndefinedId =  JSON.stringify([
+	mocks.configurationUndefinedId
+]);
+
+mocks.userJSONUndefinedUsername = JSON.stringify([
+	mocks.configurationUndefinedUsername
+]);
 
 module.exports = mocks;

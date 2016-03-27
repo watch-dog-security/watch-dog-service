@@ -8,6 +8,7 @@ let chai = require('chai');
 let server = require('./../../../server.js');
 let expect = chai.expect;
 let mock = require('./../../mocks/modules/users/user.js');
+let mockPayload = require('./../../mocks/modules/jwt/payload');
 
 describe('User module', () => {
 	describe('Check Function makeOptionsWithUserModel', () => {
@@ -205,8 +206,27 @@ describe('User module', () => {
 	});
 
 	describe('Check Function parseUserToPayload', () => {
-		it('should return an object with a full information', (done) => {
-			done();
+		it('should promiss resolve with a payload', (done) => {
+			UserManager.parseUserToPayload(mockPayload.userJSON).then((payload) => {
+				assert.equal(payload._id, JSON.parse(mockPayload.userJSON)[0]._id);
+				assert.equal(payload.userName, JSON.parse(mockPayload.userJSON)[0].username);
+				assert(payload.encripted_at);
+				done();
+			});
+		});
+
+		it('should promiss reject with a _id undefined', (done) => {
+			UserManager.parseUserToPayload(mockPayload.userJSONUndefinedId).catch((error) => {
+				assert.equal(error.message, __('Something is going wrong with the data of the payload'));
+				done();
+			});
+		});
+
+		it('should promiss reject with a _id undefined', (done) => {
+			UserManager.parseUserToPayload(mockPayload.userJSONUndefinedId).catch((error) => {
+				assert.equal(error.message, __('Something is going wrong with the data of the payload'));
+				done();
+			});
 		});
 	});
 
