@@ -39,7 +39,7 @@ mocks.userJson = {
 	birthdate: '01/01/2001',
 	email: 'alberto.uchiha@gmail.com',
 	mobilephone: '666555444',
-	codecountry: '34'
+	codecountry: '+34'
 };
 
 mocks.userJsonFullNameFormation = {

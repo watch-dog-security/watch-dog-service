@@ -1,6 +1,8 @@
 language: node_js
 node_js:
   - "5"
+services:
+  - mongodb
 before_script:
   - cp config/server/config_sample.json config/server/config.json
 script: "npm run-script test-travis"

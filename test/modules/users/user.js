@@ -55,6 +55,12 @@ describe('User module', () => {
 
 	describe('Check Function parseJsonToUserModel', () => {
 		it('should return User object', (done) => {
+			let userFromManager = UserManager.parseJsonToUserModel({
+				body: mock.userJson
+			});
+
+			//todo: improve asserts
+			assert(userFromManager);
 			done();
 		});
 
@@ -231,15 +237,27 @@ describe('User module', () => {
 	});
 
 	describe('Check Function checkUserFromDB', () => {
+		let userFromManager;
+
 		before((done)=>{
 			server.startMongoose().then((data) =>{
-				done();
+				userFromManager = UserManager.parseJsonToUserModel({
+					body: mock.userJson
+				});
+
+				userFromManager.save((err)=>{
+					if (!err) {
+						done();
+					}
+				});
 			});
 		});
 
 		after((done)=>{
-			server.stopMongoose().then((data) =>{
-				done();
+			User.findOneAndRemove({"username":"albertoig","password":"1234"},(err, user) => {
+				server.stopMongoose().then((data) =>{
+					done();
+				});
 			});
 		});
 
