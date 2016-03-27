@@ -4,15 +4,19 @@ let mocks = () => {
 };
 
 mocks.optionsVerified = {
-	userName: 'prueba',
+	username: 'prueba',
 	password: 'prueba'
 };
 mocks.userOptions = {
-	userName: 'prueba',
+	username: 'prueba',
 	password: 'prueba'
 };
+mocks.userOptionsNoExist = {
+	username: 'pruebaadfasdf2',
+	password: 'prueasdfadsfba2'
+};
 mocks.userOptionsUserNameNotCorrect = {
-	username: 'prueba',
+	userName: 'prueba',
 	password: 'prueba'
 };
 mocks.userOptionsUserNameUndefined = {
@@ -20,11 +24,11 @@ mocks.userOptionsUserNameUndefined = {
 	password: 'prueba'
 };
 mocks.userOptionsPasswordNotCorrect = {
-	userName: 'prueba',
+	username: 'prueba',
 	paSSword: 'prueba'
 };
 mocks.userOptionsPasswordUndefined = {
-	userName: 'prueba',
+	username: 'prueba',
 	password: undefined
 };
 
@@ -180,7 +184,7 @@ mocks.userJsonBirthdateIsUndefined = {
 
 mocks.correctUser = {
 	fullName: mocks.userJson.fullname,
-	userName: mocks.userJson.username,
+	username: mocks.userJson.username,
 	password: mocks.userJson.password,
 	meta: {
 		birthdate: mocks.userJson.birthdate

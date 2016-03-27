@@ -82,7 +82,7 @@ UserManager.checkUserFromJSON = (userJson) => {
 UserManager.makeUserFromJSON = (userJson) => {
 	return {
 		fullName: userJson.fullname,
-		userName: userJson.username,
+		username: userJson.username,
 		password: userJson.password,
 		meta: {
 			birthdate: userJson.birthdate
@@ -106,14 +106,14 @@ UserManager.checkUserFromDB = (userAuthHeader) => {
 		try {
 			options = UserManager.makeOptionsWithUserModel(userAuthHeader);
 		} catch (exception) {
-			throw exception;
+			return reject(exception);
 		}
-
+		
 		User.find(options, (err, user) => {
 			if (err) {
-				reject(err);
+				return reject(err);
 			} else {
-				resolve(user);
+				return resolve(user);
 			}
 		});
 	});
@@ -122,15 +122,15 @@ UserManager.checkUserFromDB = (userAuthHeader) => {
 /**
  * Return options, if user is not correct will throw an Error
  * @param user
- * @returns {{userName: (string), password: (string)}}
+ * @returns {{username: (string), password: (string)}}
  */
 UserManager.makeOptionsWithUserModel = (user) => {
-	if (user.userName === undefined || user.password === undefined ||
-		user.userName.trim() === '' || user.password.trim() === '') {
+	if (user.username === undefined || user.password === undefined ||
+		user.username.trim() === '' || user.password.trim() === '') {
 		throw new Error(__('User options is not correct'));
 	} else {
 		return {
-			userName: user.userName,
+			username: user.username,
 			password: user.password
 		};
 	}

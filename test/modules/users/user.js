@@ -231,8 +231,55 @@ describe('User module', () => {
 	});
 
 	describe('Check Function checkUserFromDB', () => {
-		it('should return an object with a full information', (done) => {
-			done();
+		before((done)=>{
+			server.startMongoose().then((data) =>{
+				done();
+			});
+		});
+
+		after((done)=>{
+			server.stopMongoose().then((data) =>{
+				done();
+			});
+		});
+
+		it('should resolve when APP find a User', (done) => {
+			UserManager.checkUserFromDB(mock.userOptions).then((user) => {
+				//TODO: Check username with assert
+				assert(user[0]._id);
+				assert.equal(user[0].password, mock.userOptions.password);
+				done();
+			});
+		});
+
+		it('should resolve with no user when APP does not find a User', (done) => {
+			UserManager.checkUserFromDB(mock.userOptionsNoExist).then((user) => {
+				assert.deepEqual(user, []);
+				done();
+			});
+		});
+
+		it('should reject when error on find mongoose', (done) => {
+			sinon.stub(User, "find", (options,cb) => { cb('Error',null) });
+
+			UserManager.checkUserFromDB(mock.userOptionsNoExist).catch((error) => {
+				assert.equal(error,'Error');
+				done();
+			});
+		});
+
+		it('should throw an Exception "' +  __('User options is not correct') + '" when username is not correct', (done) => {
+			UserManager.checkUserFromDB(mock.userOptionsUserNameNotCorrect).catch((error) => {
+				assert.equal(error.message, __('User options is not correct'));
+				done();
+			});
+		});
+
+		it('should throw an Exception "' +  __('User options is not correct') + '" when password is undefined', (done) => {
+			UserManager.checkUserFromDB(mock.userOptionsPasswordUndefined).catch((error) => {
+				assert.equal(error.message, __('User options is not correct'));
+				done();
+			});
 		});
 	});
 
