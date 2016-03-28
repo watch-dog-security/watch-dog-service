@@ -1,11 +1,38 @@
 'use strict';
 
+const i18n = require("i18n");
+const express = require('express');
+const config = require('./../../../config/server/config.js');
 let assert = require('assert');
 let payload = require('./../../../modules/jwt/payload');
 let mock = require('./../../mocks/modules/jwt/payload');
-let server = require('./../../../server.js');
 
 describe('Payload module', ()=> {
+	let app;
+
+	app = express();
+	i18n.configure({
+		directory: __dirname + '/../../../config/locales',
+		locales:['en', 'es'],
+		defaultLocale: 'en',
+		register: global
+	});
+
+	app.use(i18n.init);
+
+	before((done)=> {
+		app = app.listen(config.app.port, (error)=> {
+			if (!error)
+				done();
+		});
+	});
+
+	after((done) => {
+		app.close((error) => {
+			if (!error)
+				done();
+		});
+	});
 
 	describe('check function createPayload', ()=> {
 		it('Should create a payload object', (done) => {

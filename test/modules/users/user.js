@@ -4,9 +4,6 @@ const i18n = require("i18n");
 const express = require('express');
 const config = require('./../../../config/server/config.js');
 const mongoose = require('mongoose');
-
-const bodyParser = require('body-parser');
-
 let assert = require('assert');
 let UserManager = require('./../../../modules/users/user.js');
 let User = require('./../../../models/user');
@@ -28,8 +25,6 @@ describe('User module', () => {
 	});
 
 	app.use(i18n.init);
-	app.use(bodyParser.json());
-	app.use(bodyParser.urlencoded({extended: true}));
 
 	before((done)=> {
 		app = app.listen(config.app.port, (error)=> {
