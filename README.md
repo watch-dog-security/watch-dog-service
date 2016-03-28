@@ -1,6 +1,7 @@
 # watch-dog-service
-[![Coverage Status](https://coveralls.io/repos/github/albertoig/watch-dog-service/badge.svg?branch=master)](https://coveralls.io/github/albertoig/watch-dog-service?branch=master)
-AVISO: El proyecto aún está en desarrollo, no recomiendo la utilización del proyecto hasta que termine la release 1.0.
+[![Coverage Status](https://coveralls.io/repos/github/albertoig/watch-dog-service/badge.svg?branch=master)](https://coveralls.io/github/albertoig/watch-dog-service?branch=master) [![Build Status](https://travis-ci.org/albertoig/watch-dog-service.svg?branch=master)](https://travis-ci.org/albertoig/watch-dog-service)
+
+AVISO: El proyecto aún está en desarrollo, no se recomienda la utilización del proyecto hasta que termine la release 1.0-beta.
 
 Pasarela de login y control de de seguridad de servicios. EL proyecto está orientado sobre todo al desarrollo de micro 
 servicios. Una de las ventajas de este modelo es la simplificación y reutilización, ya que las llamadas están desacopladas.
