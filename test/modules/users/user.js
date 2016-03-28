@@ -218,7 +218,7 @@ describe('User module', () => {
 			var mockedCorrectUser = new User(mock.correctUser);
 			mockedCorrectUser._doc._id = userFromJson._doc._id;
 
-			assert.equal(JSON.stringify(userFromJson), JSON.stringify(mockedCorrectUser));
+			assert.deepEqual(JSON.stringify(userFromJson), JSON.stringify(mockedCorrectUser));
 
 			done();
 		});
