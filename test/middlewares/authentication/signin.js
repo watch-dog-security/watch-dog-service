@@ -2,7 +2,7 @@
 
 let assert = require('assert');
 const config = require('./../../config/server/config.js');
-let signInMiddleware = require('./../../middlewares/authentication/signin');
+let signInMiddleware = require('./signin');
 
 describe("SignIn", () => {
     describe("Login request", () => {

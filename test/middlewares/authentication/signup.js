@@ -2,7 +2,7 @@
 
 let assert = require('assert');
 let request = require('request');
-let signUpMiddleware = require('./../../middlewares/authentication/signup');
+let signUpMiddleware = require('./signup');
 let server = require('./../../server.js');
 let user = require('./../../models/user');
 let expect = require('Chai').expect;
