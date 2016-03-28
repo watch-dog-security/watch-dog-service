@@ -6,7 +6,6 @@
 	"dependencies": {
 		"body-parser": "^1.13.3",
 		"bunyan": "^1.7.1",
-		"chai": "^3.5.0",
 		"colors": "^1.1.2",
 		"cors": "^2.7.1",
 		"eslint": "^1.8.0",
@@ -25,7 +24,8 @@
 		"mocha": "^2.4.5",
 		"mocha-lcov-reporter": "^1.2.0",
 		"sinon": "^1.17.3",
-		"supertest": "^1.2.0"
+		"supertest": "^1.2.0",
+		"chai": "^3.5.0"
 	},
 	"scripts": {
 		"test": "./node_modules/mocha/bin/mocha test/modules --recursive",

@@ -42,6 +42,21 @@ mocks.userJson = {
 	codecountry: '+34'
 };
 
+mocks.userOptionsJson = {
+	username: 'albertoig',
+	password: '1234'
+};
+
+mocks.userJsonPrueba = {
+	fullname: 'Alberto Iglesias',
+	username: 'prueba',
+	password: 'prueba',
+	birthdate: '01/01/2001',
+	email: 'alberto.uchihaaaa@gmail.com',
+	mobilephone: '66655545544',
+	codecountry: '+34'
+};
+
 mocks.userJsonFullNameFormation = {
 	fullName: 'Alberto Iglesias',
 	username: 'albertoig',
