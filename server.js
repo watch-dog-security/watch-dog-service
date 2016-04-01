@@ -106,7 +106,7 @@ let startRedis = () => {
 				reject(err);
 			} else {
 				resolve(
-					utils.getArrayResponseForInstances('Redis', instanceRedis, __('Redis is up on port ') + instanceRedis.connectionOption.port)
+					utils.getArrayResponseForInstances('Redis', instanceRedis, __('Redis is up on port ') + instanceRedis.connection_options.port)
 				);
 			}
 		});

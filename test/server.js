@@ -143,7 +143,7 @@ describe(config.app.name + ' server', () => {
             server.startRedis().then((response) => {
                 redisInstance = response.instance;
                 redisInstanceMsg = response.msg;
-                redisInstancePort = redisInstance.connectionOption.port;
+                redisInstancePort = redisInstance.connection_options.port;
                 done();
             });
         });
@@ -210,7 +210,7 @@ describe(config.app.name + ' server', () => {
                         assert(mongooseInstancePort);
                         assert.equal(response.msg, __('MongoDB is up on port ') + mongooseInstancePort);
                     } else if (response.name === 'Redis') {
-                        let redisInstancePort = response.instance.connectionOption.port;
+                        let redisInstancePort = response.instance.connection_options.port;
                         assert(redisInstancePort);
                         assert.equal(response.msg, __('Redis is up on port ') + redisInstancePort);
                     }
@@ -234,7 +234,6 @@ describe(config.app.name + ' server', () => {
 						assert.equal(response.msg, __('Redis instance is correctly stoped'));
 					}
 				});
-
 				done();
 			});
         });
