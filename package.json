@@ -6,10 +6,10 @@
   "dependencies": {
     "body-parser": "^1.13.3",
     "bunyan": "^1.8.0",
-    "colors": "*",
-    "cors": "*",
+    "colors": "^1.1.2",
+    "cors": "^2.7.1",
     "eslint": "^2.5.3",
-    "express": "*",
+    "express": "^4.13.4",
     "http-proxy": "^1.13.2",
     "i18n": "^0.8.1",
     "jwt-simple": "^0.5.0",
