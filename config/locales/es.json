@@ -14,5 +14,7 @@
 	"Authorization header is not correct": "La cabecera de autenticación no es correcta",
 	"User options is not correct": "Las opciones de usuario no son correctas",
 	"User json formation is not correct": "La formación del JSON no es correcta",
-	"Body to parse to JSON is undefined": "El cuerpo para parsear a JSON es undefined"
+	"Body to parse to JSON is undefined": "El cuerpo para parsear a JSON es undefined",
+	"Email syntax is not correct": "El email no es correcto",
+	"Country code is not correct": "El codigo de país no es correcto"
 }

@@ -1,8 +1,15 @@
 'use strict';
 
+const i18n = require("i18n");
+
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 let UserValidator = require('./validators/user');
+
+i18n.configure({
+	locales:['en', 'de'],
+	directory: __dirname + '/locales'
+});
 
 let UserSchema = new Schema({
     fullName: {
@@ -24,7 +31,7 @@ let UserSchema = new Schema({
         unique: true,
         validate: {
             validator: UserValidator.validateEmail,
-            message: 'Email syntax is not correct.'
+            message: i18n.__('Email syntax is not correct')
         }
     },
     codeCountry: {
@@ -32,7 +39,7 @@ let UserSchema = new Schema({
         required: true,
         validate: {
             validator: UserValidator.validateCountryCode,
-            message: 'Country code is not correct.'
+            message: i18n.__('Country code is not correct')
         }
     },
     mobilePhone: {

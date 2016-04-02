@@ -2,10 +2,10 @@
 
 let mocks = () => {};
 
-mocks.validUser = {
+mocks.validUserEmail = {
 	fullName: 'Alberto Iglesias Gallego',
-	userName: 'albertoig',
-	password: 'EnjoyWD8',
+	username: 'albertoig',
+	password: 'EnjoyWDS',
 	meta: {
 		birthdate: '02/06/1988'
 	},
@@ -14,21 +14,34 @@ mocks.validUser = {
 	codeCountry: '+34'
 };
 
+mocks.validUserUsername = {
+	fullName: 'Ryan Reynolds',
+	username: 'deadpool',
+	password: 'critic',
+	meta: {
+		birthdate: '08/02/2016'
+	},
+	email: 'ryan.reynols@gmail.com',
+	mobilePhone: '111222333',
+	codeCountry: '+1'
+};
+
+mocks.reapetedUserUsername = mocks.validUserUsername;
+
 mocks.userWithoutEmail = {
 	fullName: 'Mr.Robot',
-	userName: 'mrrobot',
+	username: 'mrrobot',
 	password: 'ImCr4zy',
 	meta: {
 		birthdate: '12/05/1981'
 	},
-	email: 'sami.malek@gmail.com',
 	mobilePhone: '606554433',
 	codeCountry: '+34'
 };
 
 mocks.userWrongEmail = {
 	fullName: 'Christian Bale',
-	userName: 'cristbale',
+	username: 'cristbale',
 	password: 'AmericanPsyc0',
 	meta: {
 		birthdate: '30/01/1974'
@@ -36,6 +49,39 @@ mocks.userWrongEmail = {
 	email: 'christian.balegmail.com',
 	mobilePhone: '617913444',
 	codeCountry: '+1'
+};
+
+mocks.userWithoutUsername = {
+	fullName: 'Alberto Iglesias Gallego',
+	password: 'EnjoyWDS',
+	meta: {
+		birthdate: '02/06/1988'
+	},
+	email: 'alberto.uchiha@gmail.com',
+	mobilePhone: '606554433',
+	codeCountry: '+34'
+};
+
+mocks.userWithoutPhone = {
+	fullName: 'Alberto Iglesias Gallego',
+	username: 'albertoig',
+	password: 'EnjoyWDS',
+	meta: {
+		birthdate: '02/06/1988'
+	},
+	email: 'alberto.uchiha@gmail.com',
+	codeCountry: '+34'
+};
+
+mocks.userWithoutCodeCountry = {
+	fullName: 'Alberto Iglesias Gallego',
+	username: 'albertoig',
+	password: 'EnjoyWDS',
+	meta: {
+		birthdate: '02/06/1988'
+	},
+	email: 'alberto.uchiha@gmail.com',
+	mobilePhone: '606554433'
 };
 
 module.exports = mocks;
