@@ -1,7 +1,7 @@
 'use strict';
 
-const config = require('./../../config/server/config.js');
-const mockUserModel = require('./../mocks/models/user.js');
+const config = require('./../../config/server/config');
+const mockUserModel = require('./../mocks/models/user');
 const mongoose = require('mongoose');
 const i18n = require("i18n");
 const express = require('express');

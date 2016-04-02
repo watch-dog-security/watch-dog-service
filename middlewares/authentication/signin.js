@@ -20,7 +20,7 @@ module.exports = (() => {
             UserManager.checkUserFromDB(userAuthentication)
                 .then((user)=>{
                     if(user.length !== 0){
-                        req.signin = {user : JSON.stringify(user)};
+                        req.body.signin = {user : JSON.stringify(user)};
                         next();
                     }else{
                         req.status(401).send(__('You must to signin on the system with the correct credentials'));

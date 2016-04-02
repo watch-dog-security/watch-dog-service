@@ -7,8 +7,8 @@ let Schema = mongoose.Schema;
 let UserValidator = require('./validators/user');
 
 i18n.configure({
-	locales:['en', 'de'],
-	directory: __dirname + '/locales'
+	locales:['en', 'es'],
+	directory: __dirname + '/../config/locales'
 });
 
 let UserSchema = new Schema({
