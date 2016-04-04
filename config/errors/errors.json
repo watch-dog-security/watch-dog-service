@@ -1,0 +1,14 @@
+{
+	"TEST": {
+		"id": "1",
+		"type": "INTERNAL",
+		"code": "404",
+		"message": "Producido por bla bla bla"
+	},
+	"DEFAULT": {
+		"id": "2",
+		"type": "UNEXPECTED",
+		"code": "404",
+		"message": "Producido por bla bla bla"
+	}
+}
