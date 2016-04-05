@@ -16,5 +16,7 @@
 	"User json formation is not correct": "La formación del JSON no es correcta",
 	"Body to parse to JSON is undefined": "El cuerpo para parsear a JSON es undefined",
 	"Email syntax is not correct": "El email no es correcto",
-	"Country code is not correct": "El codigo de país no es correcto"
+	"Country code is not correct": "El codigo de país no es correcto",
+	"INTERNAL": "INTERNO",
+	"UNEXPECTED": "INESPERADO"
 }

@@ -16,5 +16,8 @@
 	"User json formation is not correct": "User json formation is not correct",
 	"Body to parse to JSON is undefined": "Body to parse to JSON is undefined",
 	"Email syntax is not correct": "Email syntax is not correct",
-	"Country code is not correct": "Country code is not correct"
+	"Country code is not correct": "Country code is not correct",
+	"Error desconocido": "Error desconocido",
+	"UNEXPECTED": "UNEXPECTED",
+	"INTERNAL": "INTERNAL"
 }

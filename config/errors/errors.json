@@ -1,14 +1,32 @@
 {
-	"TEST": {
+	"CONTRY_CODE_NOT_CORRECT": {
 		"id": "1",
 		"type": "INTERNAL",
 		"code": "404",
-		"message": "Producido por bla bla bla"
+		"message": "Country code is not correct"
 	},
-	"DEFAULT": {
+	"USER_OPTIONS": {
 		"id": "2",
-		"type": "UNEXPECTED",
+		"type": "INTERNAL",
 		"code": "404",
-		"message": "Producido por bla bla bla"
+		"message": "User options is not correct"
+	},
+	"EMAIL_NOT_CORRECT": {
+		"id": "3",
+		"type": "INTERNAL",
+		"code": "404",
+		"message": "Email syntax is not correct"
+	},
+	"BODY_UNDEFINED": {
+		"id": "4",
+		"type": "INTERNAL",
+		"code": "404",
+		"message": "Body to parse to JSON is undefined"
+	},
+	"AUTH_HEADER_NOT_CORRECT": {
+		"id": "5",
+		"type": "INTERNAL",
+		"code": "500",
+		"message": "Authorization header is not correct"
 	}
 }

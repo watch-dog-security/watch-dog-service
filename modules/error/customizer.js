@@ -1,15 +1,23 @@
 'use strict';
 
 const errorsJSON = require('./../../config/errors/errors.json');
+const i18n = require("i18n");
+
+i18n.configure({
+	directory: __dirname + '/../../config/locales',
+	locales: ['en', 'es'],
+	defaultLocale: 'en',
+	register: global
+});
 
 let AppError = (settings) => {
-	var self = new Error(settings.message);
+	var self = new Error(i18n.__(settings.message));
 	if (self.__proto__) {
 		self.__proto__ = AppError.protoype
 	}
 
 	self.code = settings.code;
-	self.type = settings.type;
+	self.type = i18n.__(settings.type);
 	self.id = settings.id;
 
 	self.toString = () => {

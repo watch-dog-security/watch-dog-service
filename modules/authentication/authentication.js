@@ -1,6 +1,7 @@
 'use strict';
 
 const config = require('./../../config/server/config.js');
+let AppError = require('./../error/customizer');
 
 exports.check = (authorizationHeader) => {
 	return !!(authorizationHeader !== undefined && authorizationHeader.trim() !== '');
@@ -47,5 +48,5 @@ exports.parseAuthRequestToUserModel = (authorizationHeader) => {
 };
 
 exports.getAuthenticationException = () => {
-	return new Error(__('Authorization header is not correct'));
+	return AppError('AUTH_HEADER_NOT_CORRECT');
 };
