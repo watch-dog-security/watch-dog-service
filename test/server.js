@@ -72,7 +72,8 @@ describe(config.app.name + ' server', () => {
         let mongooseInstancePort = undefined;
         const mongooseConfigPort = config.database.mongodb.port;
 
-        beforeEach((done) => {
+		//TODO: check how to change to Each beacuse that produce and error when server stop and start fast
+        before((done) => {
             server.startMongoose().then((response) => {
                 mongooseInstance = response.instance;
                 mongooseInstanceMsg = response.msg;
@@ -81,7 +82,7 @@ describe(config.app.name + ' server', () => {
             });
         });
 
-        afterEach(function (done) {
+        after(function (done) {
             if (mongooseInstance === undefined) {
                 done();
             } else {
