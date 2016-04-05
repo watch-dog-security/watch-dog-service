@@ -5,6 +5,7 @@ const mockUserModel = require('./../mocks/models/user');
 const mongoose = require('mongoose');
 const i18n = require("i18n");
 const express = require('express');
+const expect = require('chai').expect;
 
 let assert = require('assert');
 let User = require('./../../models/user');
@@ -97,12 +98,14 @@ describe('User Model', ()=> {
 				});
 			});
 
-			it('Should not save a user with a repeted username "' + JSON.stringify(mockUserModel.reapetedUserUsername) + '"', function (done) {
+			it('Should not save a user with a repeated username "' + JSON.stringify(mockUserModel.reapetedUserUsername) + '"', function (done) {
 				let user = new User(mockUserModel.reapetedUserUsername);
 
 				user.save((error) => {
 					//TODO: convert default mesagges to i18n
-					assert.equal(error.message,  'E11000 duplicate key error index: test.users.$username_1 dup key: { : "' + mockUserModel.reapetedUserUsername.username + '" }');
+					expect(error.message).to.contain('test.users.$username_1');
+					expect(error.message).to.contain('E11000 duplicate key error index');
+
 					if (error)
 						done();
 				});
@@ -159,7 +162,9 @@ describe('User Model', ()=> {
 
 				user.save((error) => {
 					//TODO: convert default mesagges to i18n
-					assert.equal(error.message,  'E11000 duplicate key error index: test.users.$mobilePhone_1 dup key: { : ' + mockUserModel.reapetedUserPhone.mobilePhone + ' }');
+					expect(error.message).to.contain('test.users.$mobilePhone_1');
+					expect(error.message).to.contain('E11000 duplicate key error index');
+
 					if (error)
 						done();
 				});
@@ -198,12 +203,13 @@ describe('User Model', ()=> {
 				});
 			});
 
-			it('Should not save a user with a incorrect code country "' + JSON.stringify(mockUserModel.userWithoutCodeCountry) + '"', function (done) {
-				let user = new User(mockUserModel.reapetedUserPhone);
+			it('Should not save a user with a incorrect code country "' + JSON.stringify(mockUserModel.userWrongCodeCountry) + '"', function (done) {
+				let user = new User(mockUserModel.userWrongCodeCountry);
 
 				user.save((error) => {
 					//TODO: convert default mesagges to i18n
-					assert.equal(error.message,  'E11000 duplicate key error index: test.users.$mobilePhone_1 dup key: { : ' + mockUserModel.reapetedUserPhone.mobilePhone + ' }');
+					assert.equal(error.errors.codeCountry.message, i18n.__('Country code is not correct'));
+
 					if (error)
 						done();
 				});
