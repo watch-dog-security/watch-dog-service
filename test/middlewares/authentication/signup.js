@@ -65,7 +65,6 @@ describe('SignUp', () => {
 			request.post(urlPostSignUp, {json: true}, (error, httpResponse, body) => {
 				//assert(!error);
 				//assert(httpResponse.statusCode == 200)
-				console.log(httpResponse.statusCode + ' : ' + body);
 				done();
 			});
 		});
