@@ -29,8 +29,13 @@ describe('User Model', ()=> {
 			if (!error) {
 				mongoose.connect(config.database.mongodb.host, (error)=> {
 					if (!error) {
-						done();
+						User.ensureIndexes(function (err) {
+							if (!err) {
+								done();
+							}
+						});
 					}
+
 				});
 			}
 		});
@@ -102,9 +107,9 @@ describe('User Model', ()=> {
 				let user = new User(mockUserModel.reapetedUserUsername);
 
 				user.save((error) => {
-					//TODO: convert default mesagges to i18n
-					expect(error.message).to.contain('test.users.$username_1');
-					expect(error.message).to.contain('E11000 duplicate key error index');
+
+					expect(error.message).to.contain('username');
+					assert.equal(error.code, 11000);
 
 					if (error)
 						done();
@@ -161,9 +166,8 @@ describe('User Model', ()=> {
 				let user = new User(mockUserModel.reapetedUserPhone);
 
 				user.save((error) => {
-					//TODO: convert default mesagges to i18n
-					expect(error.message).to.contain('test.users.$mobilePhone_1');
-					expect(error.message).to.contain('E11000 duplicate key error index');
+					expect(error.message).to.contain('mobilePhone');
+					assert.equal(error.code, 11000);
 
 					if (error)
 						done();

@@ -2,6 +2,7 @@
 
 let assert = require('assert');
 let server = require('./../server.js');
+let User = require('./../models/user');
 const config = require('./../config/server/config.js');
 
 describe(config.app.name + ' server', () => {
@@ -75,10 +76,14 @@ describe(config.app.name + ' server', () => {
 		//TODO: check how to change to Each beacuse that produce and error when server stop and start fast
         before((done) => {
             server.startMongoose().then((response) => {
-                mongooseInstance = response.instance;
-                mongooseInstanceMsg = response.msg;
-                mongooseInstancePort = mongooseInstance.connection.port;
-                done();
+				User.ensureIndexes(function (error) {
+					if (!error){
+						mongooseInstance = response.instance;
+						mongooseInstanceMsg = response.msg;
+						mongooseInstancePort = mongooseInstance.connection.port;
+						done();
+					}
+				});
             });
         });
 
@@ -86,10 +91,10 @@ describe(config.app.name + ' server', () => {
             if (mongooseInstance === undefined) {
                 done();
             } else {
-                server.stopMongoose().then((response) => {
-                    mongooseInstance = response.instance;
-                    done();
-                });
+				server.stopMongoose().then((response) => {
+					mongooseInstance = response.instance;
+					done();
+				});
             }
         });
 
