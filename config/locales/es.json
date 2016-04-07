@@ -17,6 +17,7 @@
 	"Body to parse to JSON is undefined": "El cuerpo para parsear a JSON es undefined",
 	"Email syntax is not correct": "El email no es correcto",
 	"Country code is not correct": "El codigo de país no es correcto",
+	"Unexpected error, please contact with admin service": "Error inesperado, por favor ponte en contacto con el administrador del servicio",
 	"INTERNAL": "INTERNO",
 	"UNEXPECTED": "INESPERADO"
 }

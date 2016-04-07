@@ -1,7 +1,7 @@
 'use strict';
 
 const config = require('./../../config/server/config.js');
-let AppError = require('./../error/customizer');
+let AppError = require('./../error/manager');
 
 exports.check = (authorizationHeader) => {
 	return !!(authorizationHeader !== undefined && authorizationHeader.trim() !== '');

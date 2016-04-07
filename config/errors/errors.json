@@ -28,5 +28,11 @@
 		"type": "INTERNAL",
 		"code": "500",
 		"message": "Authorization header is not correct"
+	},
+	"DEFAULT": {
+		"id": "5",
+		"type": "UNEXPECTED",
+		"code": "500",
+		"message": "Unexpected error, please contact with admin service"
 	}
 }
