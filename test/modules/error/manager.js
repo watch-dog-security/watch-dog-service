@@ -13,7 +13,7 @@ describe('Error manager module', () => {
 	i18n.configure({
 		directory: __dirname + '/../../../config/locales',
 		locales: ['en', 'es'],
-		defaultLocale: 'es',
+		defaultLocale: 'en',
 		register: global
 	});
 

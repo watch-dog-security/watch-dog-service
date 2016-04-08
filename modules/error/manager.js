@@ -46,7 +46,7 @@ let getErrorByTag = (tag) => {
 				"id": "0",
 				"type": "UNEXPECTED",
 				"code": "500",
-				"message": "Error desconocido"
+				"message": "Unexpected error, please contact with admin service"
 			})
 		}
 	}
