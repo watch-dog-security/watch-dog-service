@@ -6,9 +6,26 @@ let AppError = require('./../../../modules/error/manager.js');
 let sinon = require('sinon');
 let chai = require('chai');
 let expect = chai.expect;
-let mock = require('./../../mocks/modules/error/manager.js');
+let mockery = require('mockery');
 
 describe('Error manager module', () => {
+
+	i18n.configure({
+		directory: __dirname + '/../../../config/locales',
+		locales: ['en', 'es'],
+		defaultLocale: 'es',
+		register: global
+	});
+
+	before((done) => {
+		done();
+	});
+
+	after((done) => {
+		mockery.disable();
+		done();
+	});
+
 	describe('Check Object AppError', () => {
 		it('should return an error object', (done) => {
 			let bodyError = AppError('BODY_UNDEFINED');
@@ -30,25 +47,32 @@ describe('Error manager module', () => {
 
 		it('should return a string with toString function', (done) => {
 			let bodyError = AppError('DEFAULT');
-//TODO: do mock to this
-			assert.equal(bodyError.toString(), )
-			done();
-		});
-	});
-
-	describe('Check function getErrorByTag', () => {
-		it('should return an error by tag', (done) => {
-
+			expect(bodyError.toString()).to.be.a('string');
 			done();
 		});
 
-		it('should return a default error when tag not exist', (done) => {
+		it('should return a default error if TAG does not exist on JSON', (done) => {
+			let defaultError = AppError('DEFAULT2');
 
+			expect(() => {
+				throw defaultError;
+			}).to.throw(i18n.__('Unexpected error, please contact with admin service'));
 			done();
 		});
 
-		it('should return a default error if not exist on JSON when tag not exist', (done) => {
+		it('should return a default error if default TAG does not exist on JSON', (done) => {
 
+			mockery.enable({
+				useCleanCache: true,
+				warnOnReplace: false,
+				warnOnUnregistered: false
+			});
+			mockery.registerMock('./../../config/errors/errors.json', './../../../config/errors/fake.json');
+
+			let defaultError = require('./../../../modules/error/manager.js')('DEFAULT2');
+			expect(() => {
+				throw defaultError;
+			}).to.throw(i18n.__('Unexpected error, please contact with admin service'));
 			done();
 		});
 	});

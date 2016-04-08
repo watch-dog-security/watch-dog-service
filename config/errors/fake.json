@@ -1,0 +1,8 @@
+{
+	"CONTRY_CODE_NOT_CORRECT": {
+		"id": "1",
+		"type": "INTERNAL",
+		"code": "404",
+		"message": "Country code is not correct"
+	}
+}
