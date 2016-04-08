@@ -12,10 +12,7 @@ i18n.configure({
 
 let AppError = (settings) => {
 	var self = new Error(i18n.__(settings.message));
-	if (self.__proto__) {
-		self.__proto__ = AppError.protoype
-	}
-
+	self.__proto__ = AppError.protoype
 	self.code = settings.code;
 	self.type = i18n.__(settings.type);
 	self.id = settings.id;
