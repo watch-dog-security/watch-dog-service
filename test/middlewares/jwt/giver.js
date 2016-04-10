@@ -52,18 +52,25 @@ describe('Middleware: Giver', () => {
 	it('should return 401 response when request is undefined', (done) => {
 		request(app)
 			.post('/')
+			.send(undefined)
+			.expect(401, done);
+	});
+
+	it('should return 401 response when request.signin is undefined', (done) => {
+		request(app)
+			.post('/')
 			.send(mock.undefinedSingin)
 			.expect(401, done);
 	});
 
-	it('should return 401 response when request._id is undefined', (done) => {
+	it('should return 401 response when request.signin._id is undefined', (done) => {
 		request(app)
 			.post('/')
 			.send(mock.undefinedSinginId)
 			.expect(401, done);
 	});
 
-	it('should return 401 response when request.signin is undefined', (done) => {
+	it('should return 401 response when request.signin.username is undefined', (done) => {
 		request(app)
 			.post('/')
 			.send(mock.undefinedSinginUsername)
