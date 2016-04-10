@@ -90,7 +90,7 @@ describe('Payload module', ()=> {
 		it('Should promise reject by undefined _id', (done) => {
 			payload.createPayloadVerifiedPromise(undefined, mock.configuration.username)
 				.catch((error) => {
-					assert.deepEqual(error, new Error(__('Something is going wrong with the data of the payload')));
+					assert.equal(error.message, __('Something is going wrong with the data of the payload'));
 					done();
 				});
 		});
@@ -98,7 +98,7 @@ describe('Payload module', ()=> {
 		it('Should promise reject by undefined username', (done) => {
 			payload.createPayloadVerifiedPromise(undefined, mock.configuration.username)
 				.catch((error) => {
-					assert.deepEqual(error, new Error(__('Something is going wrong with the data of the payload')));
+					assert.deepEqual(error.message, __('Something is going wrong with the data of the payload'));
 					done();
 				});
 		});

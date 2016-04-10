@@ -8,15 +8,23 @@ mocks.configuration = {
 	username: 'UserNamePrueba'
 };
 
+mocks.correctUserFromRequest = mocks.configuration;
+
 mocks.configurationUndefinedId = {
 	_id: undefined,
 	username: 'UserNamePrueba'
 };
 
+mocks.userFromRequestWithUndefinedId = mocks.configurationUndefinedId;
+
 mocks.configurationUndefinedUsername = {
 	_id: '1',
 	username: undefined
 };
+
+mocks.userFromRequestWithUndefinedUsername = mocks.configurationUndefinedUsername;
+
+mocks.userFromRequestUndefined = undefined;
 
 mocks.payload = {
 	_id: '1',
@@ -42,9 +50,9 @@ mocks.payloadEncriptedUndefined = {
 	encripted_at: undefined
 };
 
-mocks.userJSON =  JSON.stringify([
+mocks.userJSON =  JSON.stringify(
 	mocks.configuration
-]);
+);
 
 mocks.userJSONUndefinedId =  JSON.stringify([
 	mocks.configurationUndefinedId
