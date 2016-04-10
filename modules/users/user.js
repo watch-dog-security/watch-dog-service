@@ -13,7 +13,7 @@ let UserManager = () => {
  */
 UserManager.parseUserToPayload = (userFromRequest) => {
 	return new Promise((resolve, reject) => {
-		if(UserManager.checkUserFromRequest(userFromRequest) === false) {
+		if(!UserManager.checkUserFromRequest(userFromRequest)) {
 			reject(AppError('WRONG_USER_FROM_REQUEST'));
 		}
 

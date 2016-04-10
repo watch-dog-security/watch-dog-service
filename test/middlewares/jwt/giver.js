@@ -3,10 +3,13 @@
 let express = require('express');
 let request = require('supertest');
 let assert = require('assert');
-let payload = require('../../../modules/jwt/payload.js');
-let jwt = require('../../../modules/jwt/jwt.js');
-let giver = require('../../../middlewares/jwt/giver.js');
+let giver = require('./../../../middlewares/jwt/giver.js');
+let User = require('./../../../models/user');
+
 const bodyParser = require('body-parser');
+const mock = require('./../../mocks/middlewares/jwt/giver');
+const mongoose = require('mongoose');
+const config = require('./../../../config/server/config');
 
 describe('Middleware: Giver', () => {
 	let app;
@@ -15,39 +18,55 @@ describe('Middleware: Giver', () => {
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({extended: true}));
 		app.use(giver);
-		done();
+
+		mongoose.connect(config.database.mongodb.host, (error)=> {
+			if (!error) {
+				User.ensureIndexes(function (err) {
+					if (!err) {
+						done();
+					}
+				});
+			}
+
+		});
 	});
 
 	after((done) => {
-		done();
+		mongoose.connection.db.dropCollection('users', (error, result) => {
+			if (!error) {
+				mongoose.connection.close((error) => {
+					if (!error)
+						done();
+				});
+			}
+		});
 	});
 
-	it('should return 200 response', (done) => {
-		let user = {
-			"_id": "1",
-			"username": "test"
-		};
-
-		let req = {signin: {user: JSON.stringify(user)}};
-		console.log(JSON.stringify(req));
-		let payloadTest = payload.createPayload(user._id, user.username);
-		let encriptedPayloadTest = jwt.encrypt(payloadTest);
-
+	it('should return 200 response when request is correct', (done) => {
 		request(app)
 			.post('/')
-			.set(req)
-			.send(req)
-			.expect(200)
-			.expect(encriptedPayloadTest)
-			.end((error, response) => {
-				assert(error);
-				console.log('error: ' + error.message);
-				console.log('response: ' + JSON.stringify(response));
-				done();
-			});
+			.send(mock.validRequest)
+			.expect(200,done);
 	});
 
-	it('should return 401 response', (done) => {
-		done();
+	it('should return 401 response when request is undefined', (done) => {
+		request(app)
+			.post('/')
+			.send(mock.undefinedSingin)
+			.expect(401, done);
+	});
+
+	it('should return 401 response when request._id is undefined', (done) => {
+		request(app)
+			.post('/')
+			.send(mock.undefinedSinginId)
+			.expect(401, done);
+	});
+
+	it('should return 401 response when request.signin is undefined', (done) => {
+		request(app)
+			.post('/')
+			.send(mock.undefinedSinginUsername)
+			.expect(401, done);
 	});
 });
