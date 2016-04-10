@@ -249,7 +249,6 @@ describe('User module', () => {
 	describe('Check Function parseUserToPayload', () => {
 		it('should promiss resolve with a payload', (done) => {
 			UserManager.parseUserToPayload(mockPayload.configuration).then((payload) => {
-				console.log("Payload3: " + payload);
 				assert.equal(payload._id, mockPayload.configuration._id);
 				assert.equal(payload.username, mockPayload.configuration.username);
 				assert(payload.encripted_at);
@@ -259,7 +258,6 @@ describe('User module', () => {
 
 		it('should promiss reject with a _id undefined', (done) => {
 			UserManager.parseUserToPayload(mockPayload.configurationUndefinedId).catch((error) => {
-				console.log(error);
 				assert.equal(error.message, i18n.__('Something is going wrong with the data of the user from request'));
 				done();
 			});

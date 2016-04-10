@@ -128,11 +128,8 @@ UserManager.checkUserFromDB = (userAuthHeader) => {
 		} catch (exception) {
 			return reject(exception);
 		}
-		console.log('llega a checkUserFromDB');
-		User.find(options, (error, user) => {
-			console.log('error on mongo:' + error);
-			console.log('user on mongo:' + user);
 
+		User.find(options, (error, user) => {
 			if (error) {
 				return reject(error);
 			} else {
