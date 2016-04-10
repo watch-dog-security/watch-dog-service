@@ -2,35 +2,53 @@
 	"CONTRY_CODE_NOT_CORRECT": {
 		"id": "1",
 		"type": "INTERNAL",
-		"code": "404",
+		"code": "401",
 		"message": "Country code is not correct"
 	},
 	"USER_OPTIONS": {
 		"id": "2",
 		"type": "INTERNAL",
-		"code": "404",
+		"code": "401",
 		"message": "User options is not correct"
 	},
 	"EMAIL_NOT_CORRECT": {
 		"id": "3",
 		"type": "INTERNAL",
-		"code": "404",
+		"code": "401",
 		"message": "Email syntax is not correct"
 	},
 	"BODY_UNDEFINED": {
 		"id": "4",
 		"type": "INTERNAL",
-		"code": "404",
+		"code": "401",
 		"message": "Body to parse to JSON is undefined"
 	},
 	"AUTH_HEADER_NOT_CORRECT": {
 		"id": "5",
 		"type": "INTERNAL",
-		"code": "500",
+		"code": "401",
 		"message": "Authorization header is not correct"
 	},
-	"DEFAULT": {
+	"JSON_FORMATION": {
 		"id": "6",
+		"type": "INTERNAL",
+		"code": "401",
+		"message": "User json formation is not correct"
+	},
+	"WRONG_PAYLOAD": {
+		"id": "7",
+		"type": "INTERNAL",
+		"code": "401",
+		"message": "Something is going wrong with the data of the payload"
+	},
+	"WRONG_USER_FROM_REQUEST": {
+		"id": "8",
+		"type": "INTERNAL",
+		"code": "401",
+		"message": "Something is going wrong with the data of the user from request"
+	},
+	"DEFAULT": {
+		"id": "9",
 		"type": "UNEXPECTED",
 		"code": "500",
 		"message": "Unexpected error, please contact with admin service"

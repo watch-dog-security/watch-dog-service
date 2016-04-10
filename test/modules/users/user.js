@@ -248,24 +248,26 @@ describe('User module', () => {
 
 	describe('Check Function parseUserToPayload', () => {
 		it('should promiss resolve with a payload', (done) => {
-			UserManager.parseUserToPayload(mockPayload.userJSON).then((payload) => {
-				assert.equal(payload._id, JSON.parse(mockPayload.userJSON)[0]._id);
-				assert.equal(payload.username, JSON.parse(mockPayload.userJSON)[0].username);
+			UserManager.parseUserToPayload(mockPayload.configuration).then((payload) => {
+				console.log("Payload3: " + payload);
+				assert.equal(payload._id, mockPayload.configuration._id);
+				assert.equal(payload.username, mockPayload.configuration.username);
 				assert(payload.encripted_at);
 				done();
 			});
 		});
 
 		it('should promiss reject with a _id undefined', (done) => {
-			UserManager.parseUserToPayload(mockPayload.userJSONUndefinedId).catch((error) => {
-				assert.equal(error.message, i18n.__('Something is going wrong with the data of the payload'));
+			UserManager.parseUserToPayload(mockPayload.configurationUndefinedId).catch((error) => {
+				console.log(error);
+				assert.equal(error.message, i18n.__('Something is going wrong with the data of the user from request'));
 				done();
 			});
 		});
 
-		it('should promiss reject with a _id undefined', (done) => {
-			UserManager.parseUserToPayload(mockPayload.userJSONUndefinedId).catch((error) => {
-				assert.equal(error.message, i18n.__('Something is going wrong with the data of the payload'));
+		it('should promiss reject with a username undefined', (done) => {
+			UserManager.parseUserToPayload(mockPayload.configurationUndefinedUsername).catch((error) => {
+				assert.equal(error.message, i18n.__('Something is going wrong with the data of the user from request'));
 				done();
 			});
 		});
@@ -354,6 +356,59 @@ describe('User module', () => {
 				UserManager.getParsedBodyJSON(undefined);
 			}).to.throw(i18n.__('Body to parse to JSON is undefined'));
 
+			done();
+		});
+	});
+
+	describe('Check Function checkUserFromRequest', () => {
+		it('should return true when user from request is correct', (done) => {
+			var checkedUserFromRequest = UserManager.checkUserFromRequest(mockPayload.correctUserFromRequest);
+			assert.equal(checkedUserFromRequest, true);
+			done();
+		});
+
+		it('should return false when user from request is undefined', (done) => {
+			var checkedUserFromRequest = UserManager.checkUserFromRequest(mockPayload.userFromRequestUndefined);
+			assert.equal(checkedUserFromRequest, false);
+			done();
+		});
+
+		it('should return false when user._id is undefined', (done) => {
+			var checkedUserFromRequest = UserManager.checkUserFromRequest(mockPayload.userFromRequestWithUndefinedId);
+			assert.equal(checkedUserFromRequest, false);
+			done();
+		});
+
+		it('should return false when user.username is undefined', (done) => {
+			var checkedUserFromRequest = UserManager.checkUserFromRequest(mockPayload.userFromRequestWithUndefinedUsername);
+			assert.equal(checkedUserFromRequest, false);
+			done();
+		});
+	});
+
+
+	describe('Check Function checkUserFromOptions', () => {
+		it('should return true when user from options is correct', (done) => {
+			var checkedUserFromOptions = UserManager.checkUserFromOptions(mock.userOptions);
+			assert.equal(checkedUserFromOptions, true);
+			done();
+		});
+
+		it('should return false when user from options is undefined', (done) => {
+			var checkedUserFromOptions = UserManager.checkUserFromOptions(mock.userOptionsUndefined);
+			assert.equal(checkedUserFromOptions, false);
+			done();
+		});
+
+		it('should return false when user.password is undefined', (done) => {
+			var checkedUserFromOptions = UserManager.checkUserFromOptions(mock.userOptionsUserNameUndefined);
+			assert.equal(checkedUserFromOptions, false);
+			done();
+		});
+
+		it('should return false when user.username is undefined', (done) => {
+			var checkedUserFromOptions = UserManager.checkUserFromOptions(mock.userOptionsUserNameUndefined);
+			assert.equal(checkedUserFromOptions, false);
 			done();
 		});
 	});

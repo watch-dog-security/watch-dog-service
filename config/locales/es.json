@@ -5,7 +5,7 @@
 	"APP instance is correctly stoped": "La instancia de la aplicación ha parado correctamente",
 	"MongoDB instance is correctly stoped": "La instancia de MongoDB ha parado correctamente",
 	"Redis instance is correctly stoped": "La instancia del cliente de redis ha parado correctamente",
-	"Something is going wrong with the data of the payload": "Algo está yendo mal en los datos que se está enviado al payload",
+	"Something is going wrong with the data of the payload": "Algo está mal en los datos que se está enviado al payload",
 	"User saved successfully": "Usuario registrado con exito",
 	"You must to signin on the system with the correct credentials": "Debes hacer login con los credenciales correctos",
 	"Not authorize": "No autorizado",
@@ -19,5 +19,7 @@
 	"Country code is not correct": "El codigo de país no es correcto",
 	"Unexpected error, please contact with admin service": "Error inesperado, por favor ponte en contacto con el administrador del servicio",
 	"INTERNAL": "INTERNO",
-	"UNEXPECTED": "INESPERADO"
+	"UNEXPECTED": "INESPERADO",
+	"Something is going wrong with the data of the user from request": "Algo está mal en los datos de la petición del usuario"
+
 }

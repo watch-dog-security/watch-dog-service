@@ -2,18 +2,38 @@
 
 let User = require('./../../models/user');
 let payload = require('./../../modules/jwt/payload');
+let AppError = require('./../../modules/error/manager');
 let UserManager = () => {
 };
 
-UserManager.parseUserToPayload = function (user) {
+/**
+ * Parse User header from json to
+ * @param userFromRequest
+ * @returns Promise
+ */
+UserManager.parseUserToPayload = (userFromRequest) => {
 	return new Promise((resolve, reject) => {
-		let _user = JSON.parse(user)[0];
-		payload.createPayloadVerifiedPromise(_user._id, _user.username).then((payload) => {
+		if(UserManager.checkUserFromRequest(userFromRequest) === false) {
+			reject(AppError('WRONG_USER_FROM_REQUEST'));
+		}
+
+		payload.createPayloadVerifiedPromise(userFromRequest._id, userFromRequest.username).then((payload) => {
 			resolve(payload);
 		}).catch((error) => {
 			reject(error);
 		});
 	});
+};
+
+/**
+ * Function to check if userFromRequest is undefined or values are empty
+ * @param userFromRequest
+ * @returns {boolean}
+ */
+UserManager.checkUserFromRequest = (userFromRequest) => {
+	return !!(userFromRequest &&
+	userFromRequest._id &&
+	userFromRequest.username);
 };
 
 /**
@@ -36,8 +56,8 @@ UserManager.parseJsonToUserModel = (req) => {
  * @return JSON
  */
 UserManager.getParsedBodyJSON = (body) => {
-	if(body === undefined){
-		throw new Error(__('Body to parse to JSON is undefined'));
+	if (body === undefined) {
+		throw AppError('BODY_UNDEFINED');
 	}
 
 	return body;
@@ -51,7 +71,7 @@ UserManager.getParsedBodyJSON = (body) => {
  */
 UserManager.getUserFromJSON = (userJson) => {
 	if (!UserManager.checkUserFromJSON(userJson)) {
-		throw new Error(__('User json formation is not correct'));
+		throw AppError('JSON_FORMATION');
 	}
 	return new User(UserManager.makeUserFromJSON(userJson));
 };
@@ -108,10 +128,13 @@ UserManager.checkUserFromDB = (userAuthHeader) => {
 		} catch (exception) {
 			return reject(exception);
 		}
-		
-		User.find(options, (err, user) => {
-			if (err) {
-				return reject(err);
+		console.log('llega a checkUserFromDB');
+		User.find(options, (error, user) => {
+			console.log('error on mongo:' + error);
+			console.log('user on mongo:' + user);
+
+			if (error) {
+				return reject(error);
 			} else {
 				return resolve(user);
 			}
@@ -121,19 +144,29 @@ UserManager.checkUserFromDB = (userAuthHeader) => {
 
 /**
  * Return options, if user is not correct will throw an Error
- * @param user
+ * @param UserOptions
  * @returns {{username: (string), password: (string)}}
  */
-UserManager.makeOptionsWithUserModel = (user) => {
-	if (user.username === undefined || user.password === undefined ||
-		user.username.trim() === '' || user.password.trim() === '') {
-		throw new Error(__('User options is not correct'));
+UserManager.makeOptionsWithUserModel = (UserOptions) => {
+	if (!UserManager.checkUserFromOptions(UserOptions)) {
+		throw AppError('USER_OPTIONS');
 	} else {
 		return {
-			username: user.username,
-			password: user.password
+			username: UserOptions.username,
+			password: UserOptions.password
 		};
 	}
+};
+
+/**
+ * check if userOptions are empty or without string value
+ * @param UserOptions
+ * @returns {boolean}
+ */
+UserManager.checkUserFromOptions = (UserOptions) => {
+	return !!(UserOptions &&
+			UserOptions.username &&
+			UserOptions.password);
 };
 
 module.exports = UserManager;

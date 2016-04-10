@@ -7,26 +7,33 @@ mocks.optionsVerified = {
 	username: 'prueba',
 	password: 'prueba'
 };
+
 mocks.userOptions = {
 	username: 'prueba',
 	password: 'prueba'
 };
+
 mocks.userOptionsNoExist = {
 	username: 'pruebaadfasdf2',
 	password: 'prueasdfadsfba2'
 };
+
 mocks.userOptionsUserNameNotCorrect = {
 	userName: 'prueba',
 	password: 'prueba'
 };
+
 mocks.userOptionsUserNameUndefined = {
 	username: undefined,
 	password: 'prueba'
 };
+mocks.userOptionsUndefined = undefined;
+
 mocks.userOptionsPasswordNotCorrect = {
 	username: 'prueba',
 	paSSword: 'prueba'
 };
+
 mocks.userOptionsPasswordUndefined = {
 	username: 'prueba',
 	password: undefined

@@ -20,5 +20,5 @@
 	"Unexpected error, please contact with admin service": "Unexpected error, please contact with admin service",
 	"UNEXPECTED": "UNEXPECTED",
 	"INTERNAL": "INTERNAL",
-	"Error desconocido": "Error desconocido"
+	"Something is going wrong with the data of the user from request": "Something is going wrong with the data of the user from request"
 }
