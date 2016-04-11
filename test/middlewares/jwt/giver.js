@@ -11,7 +11,7 @@ const mock = require('./../../mocks/middlewares/jwt/giver');
 const mongoose = require('mongoose');
 const config = require('./../../../config/server/config');
 
-describe('Middleware: Giver', () => {
+describe('Middleware Giver: ', () => {
 	let app;
 	before((done) => {
 		app = express();

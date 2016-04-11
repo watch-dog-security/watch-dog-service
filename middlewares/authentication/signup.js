@@ -19,9 +19,9 @@ module.exports = (() => {
 			res.status(500).send(exception.message);
 		}
 
-        oUser.save((err)=>{
-            if (err) {
-                res.status(500).send(err);
+        oUser.save((error)=>{
+            if (error) {
+                res.status(500).send(error);
             }else{
                 res.status(200).send(__('User saved successfully'));
                 next();
