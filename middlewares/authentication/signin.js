@@ -13,7 +13,7 @@ module.exports = (() => {
 			try {
 				userAuthentication = authentication.getUserAuthentication(authRequest);
 			} catch (exception) {
-				res.status(exception.code).send(exception.message);
+				return res.status(exception.code).send(exception.message);
 			}
 
 			UserManager.checkUserFromDB(userAuthentication).then((user)=> {
@@ -21,14 +21,14 @@ module.exports = (() => {
 						req.body.signin = {user: JSON.stringify(user)};
 						return next();
 					} else {
-						req.status(401).send(__('You must to signin on the system with the correct credentials'));
+						return res.status(401).send(__('You must to signin on the system with the correct credentials'));
 					}
 				})
 				.catch((error) => {
-					res.status(error.code).send(error.message);
+					return res.status(error.code).send(error.message);
 				});
 		} else {
-			res.status(401).send(__('You must to signin on the system with the correct credentials'));
+			return res.status(401).send(__('You must to signin on the system with the correct credentials'));
 		}
 	};
 })();

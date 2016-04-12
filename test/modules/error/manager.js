@@ -67,6 +67,7 @@ describe('Error manager module', () => {
 				warnOnReplace: false,
 				warnOnUnregistered: false
 			});
+			//TODO: change fake.json to mock folder
 			mockery.registerMock('./../../config/errors/errors.json', './../../../config/errors/fake.json');
 
 			let defaultError = require('./../../../modules/error/manager.js')('DEFAULT2');
