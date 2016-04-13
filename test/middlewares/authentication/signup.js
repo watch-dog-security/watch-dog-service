@@ -1,109 +1,79 @@
 'use strict';
 
+let express = require('express');
+let request = require('supertest');
 let assert = require('assert');
-let request = require('request');
-let signUpMiddleware = require('./signup');
-let server = require('./../../server.js');
-let user = require('./../../models/user');
-let expect = require('chai').expect;
+let signup = require('./../../../middlewares/authentication/signup');
+let User = require('./../../../models/user');
+let AppError = require('./../../../modules/error/manager');
 
-const config = require('./../../../config/server/config.js');
+const bodyParser = require('body-parser');
+const mock = require('./../../mocks/modules/users/user');
+const mongoose = require('mongoose');
+const config = require('./../../../config/server/config');
 
-describe('SignUp', () => {
-/**
-	const userRequest = +'testSignUp';
-	const userRequestNoPassword = 'testSignUpWithoutPassword';
-	const userRequestNoName = 'testSignUpWithoutName';
-	const userRequestNoUsername = '';
-	const urlBase = config.app.host + ':' + config.app.port;
-	const urlPostSignUp = urlBase + '/auth/signup';
-
-	let dataUserRequest;
-	let dataUserRequestWithoutPassword;
-	let dataUserRequestWithoutName;
-	let dataUserRequestWithoutUsername;
-
+describe('Middleware: Signup', () => {
+	let app;
 	before((done) => {
-		server.startApp()
-			.then((response) => {
-				dataUserRequest = {
-					'name': 'test signup',
-					'username': userRequest,
-					'password': 'SignUpTest'
-				};
+		app = express();
+		app.use(bodyParser.json());
+		app.use(bodyParser.urlencoded({extended: true}));
+		app.use(signup);
 
-				dataUserRequestWithoutPassword = {
-					'name': 'test signupWithoutPassword',
-					'username': userRequestNoPassword,
-					'password': ''
-				};
+		mongoose.connect(config.database.mongodb.host, (error)=> {
+			if (!error) {
+				User.ensureIndexes(function (err) {
+					if (!err) {
 
-				dataUserRequestWithoutName = {
-					'name': '',
-					'username': userRequestNoName,
-					'password': 'SignUpTestWithOutName'
-				};
+						done();
+					}
+				});
+			}
 
-				dataUserRequestWithoutUsername = {
-					'name': 'test signup WithoutUsername',
-					'username': userRequestNoUsername,
-					'password': 'SignUpTestWithOutUserName'
-				};
-				done(response);
-			});
-
-	});
-
-	after(()=> {
-		server.stopApp().then((response) => {
-			done(response);
 		});
 	});
 
-	describe('Create users', () => {
-		it('Normal user request', (done) => {
-			request.post(urlPostSignUp, {json: true}, (error, httpResponse, body) => {
-				//assert(!error);
-				//assert(httpResponse.statusCode == 200)
-				done();
-			});
-		});
-
-		it('Request without any password', (done) => {
-			//TODO
-			done();
-		});
-
-		it('Request without any username', (done) => {
-			//TODO
-			done();
-		});
-
-		it('Request without any data', (done) => {
-			//TODO
-			done();
+	after((done) => {
+		mongoose.connection.db.dropCollection('users', (error, result) => {
+			if (!error) {
+				mongoose.connection.close((error) => {
+					if (!error)
+						done();
+				});
+			}
 		});
 	});
 
-	describe('Check created users in DB', () => {
-		it('User with all data', (done) => {
-			//TODO
-			done();
-		});
+	it('should return 200 response if user request save user on mongodb', (done) => {
+		request(app)
+			.post('/')
+			.send(
+				mock.userJson
+			)
+			.expect(200)
+			.expect(__('User saved successfully'),done);
+	});
 
-		it('User without any password', (done) => {
-			//TODO
-			done();
-		});
+	it('should return 401 response when body request is undefined', (done) => {
+		request(app)
+			.post('/')
+			.send(undefined)
+			.expect(401)
+			.expect(AppError('BODY_UNDEFINED').message, done);
+	});
 
-		it('User without any username', (done) => {
-			//TODO
-			done();
-		});
+	it('should return 401 response when json formation is incorrect', (done) => {
+		request(app)
+			.post('/')
+			.send(mock.userJSONUndefinedUsername)
+			.expect(401)
+			.expect(AppError('JSON_FORMATION').message, done);
+	});
 
-		it('User without any data', (done) => {
-			//TODO
-			done();
-		});
-	});**/
+	it('should return 500 response when mongo can not save the user, repeated username', (done) => {
+		request(app)
+			.post('/')
+			.send(mock.userJson)
+			.expect(500, done);
+	});
 });

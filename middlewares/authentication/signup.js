@@ -15,16 +15,14 @@ module.exports = (() => {
 		try {
 			oUser = UserManager.parseJsonToUserModel(req);
 		} catch (exception) {
-			//TODO: Could be fine to make an ERROR provider to responses
-			res.status(500).send(exception.message);
+			return res.status(exception.code).send(exception.message);
 		}
 
         oUser.save((error)=>{
             if (error) {
-                res.status(500).send(error);
+                return res.status(500).send(error.message);
             }else{
-                res.status(200).send(__('User saved successfully'));
-                next();
+                return res.status(200).send(__('User saved successfully'));
             }
         });
     };

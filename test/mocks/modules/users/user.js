@@ -49,6 +49,16 @@ mocks.userJson = {
 	codecountry: '+34'
 };
 
+mocks.userJSONUndefinedUsername = {
+	fullname: undefined,
+	username: 'albertoig',
+	password: '1234',
+	birthdate: '01/01/2001',
+	email: 'alberto.uchiha@gmail.com',
+	mobilephone: '666555444',
+	codecountry: '+34'
+};
+
 mocks.userOptionsJson = {
 	username: 'albertoig',
 	password: '1234'

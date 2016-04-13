@@ -56,7 +56,7 @@ UserManager.parseJsonToUserModel = (req) => {
  * @return JSON
  */
 UserManager.getParsedBodyJSON = (body) => {
-	if (body === undefined) {
+	if (body === undefined || Object.keys(body).length === 0 ) {
 		throw AppError('BODY_UNDEFINED');
 	}
 
@@ -70,7 +70,7 @@ UserManager.getParsedBodyJSON = (body) => {
  * @returns {User}
  */
 UserManager.getUserFromJSON = (userJson) => {
-	if (!UserManager.checkUserFromJSON(userJson)) {
+	if (!UserManager.checkUserFromJSON(userJson) && userJson) {
 		throw AppError('JSON_FORMATION');
 	}
 	return new User(UserManager.makeUserFromJSON(userJson));
