@@ -69,20 +69,16 @@ let start = () => {
 };
 
 let startApp = () => {
-	return new Promise((resolve, reject) => {
-		instanceApp = app.listen(config.app.port, (err)=> {
-			if (err) {
-				reject(err);
-			} else {
-				instanceApp = serverEvents.loadServerEvents(instanceApp);
-				resolve(
-					utils.getArrayResponseForInstances('APP', instanceApp, __('Server is up on port ') + instanceApp.address().port)
-				);
-			}
-		});
+	//TODO: check how to close properly connection task
+	return new Promise((resolve) => {
+		instanceApp = app.listen(config.app.port, () => {
+			instanceApp = serverEvents.loadServerEvents(instanceApp);
+			resolve(
+				utils.getArrayResponseForInstances('APP', instanceApp, __('Server is up on port ') + instanceApp.address().port)
+			);
+		})
 	});
 };
-
 
 let startMongoose = () => {
 	return new Promise((resolve, reject) => {
@@ -101,18 +97,16 @@ let startMongoose = () => {
 let startRedis = () => {
 	return new Promise((resolve, reject) => {
 		instanceRedis = redis.createClient(config.database.redis.port, config.database.redis.host);
-		instanceRedis.on('connect', (err)=> {
-			if (err) {
-				reject(err);
-			} else {
-				resolve(
-					utils.getArrayResponseForInstances('Redis', instanceRedis, __('Redis is up on port ') + instanceRedis.connection_options.port)
-				);
-			}
+
+		instanceRedis.on("error", function (err) {
+			return reject(err);
+		}).on('connect', ()=> {
+			return resolve(
+				utils.getArrayResponseForInstances('Redis', instanceRedis, __('Redis is up on port ') + instanceRedis.connection_options.port)
+			);
 		});
 	});
 };
-
 
 let stop = () => {
 	return new Promise((resolve, reject) => {
@@ -133,17 +127,11 @@ let stop = () => {
 let stopApp = () => {
 	return new Promise((resolve, reject) => {
 		instanceApp.close((error) => {
-			let msg;
-			if (error) {
-				msg = error.toString();
-				reject(msg);
-			} else {
-				msg = __('APP instance is correctly stoped');
-				instanceApp = undefined;
-				resolve(
-					utils.getArrayResponseForInstances('APP', instanceApp, msg)
-				);
-			}
+			const msg = __('APP instance is correctly stoped');
+			instanceApp = undefined;
+			resolve(
+				utils.getArrayResponseForInstances('APP', instanceApp, msg)
+			);
 		});
 	});
 };
@@ -167,19 +155,13 @@ let stopMongoose = () => {
 };
 
 let stopRedis = () => {
-	return new Promise((resolve, reject) => {
-		instanceRedis.quit((error) => {
-			let msg;
-			if (error) {
-				msg = error.toString();
-				reject(msg);
-			} else {
-				msg = __('Redis instance is correctly stoped');
-				instanceRedis = undefined;
-				resolve(
-					utils.getArrayResponseForInstances('Redis', instanceRedis, msg)
-				);
-			}
+	return new Promise((resolve) => {
+		instanceRedis.quit(() => {
+			let msg = __('Redis instance is correctly stoped');
+			instanceRedis = undefined;
+			return resolve(
+				utils.getArrayResponseForInstances('Redis', instanceRedis, msg)
+			);
 		});
 	});
 };
