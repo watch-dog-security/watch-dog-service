@@ -124,13 +124,6 @@ describe(config.app.name + ' server', () => {
 				done();
 			});
 		});
-
-		it("Should promise stopMongoose reject with an Error", (done) => {
-			server.stopMongoose().catch((error) => {
-				assert(error);
-				done();
-			});
-		});
 	});
 
 	describe("Redis service", () => {
@@ -252,7 +245,14 @@ describe(config.app.name + ' server', () => {
 		});
 
 		it("Should reject mongoose when start all services", (done) => {
-			done();
+			server.stop().then((responses) => {
+				server.startMongoose().then((response) => {
+					server.start().catch((error) => {
+						assert(error);
+						done();
+					});
+				});
+			});
 		});
 	});
 
@@ -277,7 +277,14 @@ describe(config.app.name + ' server', () => {
 		});
 
 		it("Should reject mongoose when start all services", (done) => {
-			done();
+			server.start().then((responses) => {
+				server.stopMongoose().then((response) => {
+					server.stop().catch((error) => {
+						assert(error);
+						done();
+					});
+				});
+			});
 		});
 	});
 });

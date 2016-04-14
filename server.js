@@ -139,17 +139,11 @@ let stopApp = () => {
 let stopMongoose = () => {
 	return new Promise((resolve, reject) => {
 		instanceMoongose.connection.close((error) => {
-			let msg;
-			if (error) {
-				msg = error.toString();
-				reject(msg);
-			} else {
-				msg = __('MongoDB instance is correctly stoped');
-				instanceMoongose = undefined;
-				resolve(
-					utils.getArrayResponseForInstances('Mongoose', instanceMoongose, msg)
-				);
-			}
+			let msg = __('MongoDB instance is correctly stoped');
+			instanceMoongose = undefined;
+			resolve(
+				utils.getArrayResponseForInstances('Mongoose', instanceMoongose, msg)
+			);
 		});
 	});
 };
