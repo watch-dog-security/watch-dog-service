@@ -84,9 +84,7 @@ describe('User module', () => {
 
 	describe('Check Function parseJsonToUserModel', () => {
 		it('should return User object', (done) => {
-			let userFromManager = UserManager.parseJsonToUserModel({
-				body: mock.userJson
-			});
+			let userFromManager = UserManager.parseJsonToUserModel(mock.userJson);
 
 			//todo: improve asserts
 			assert(userFromManager);
@@ -95,9 +93,7 @@ describe('User module', () => {
 
 		it('should throw an Exception "' + i18n.__('Body to parse to JSON is undefined') + '"', (done) => {
 			expect(() => {
-				UserManager.parseJsonToUserModel({
-					body: undefined
-				});
+				UserManager.parseJsonToUserModel(undefined);
 			}).to.throw(i18n.__('Body to parse to JSON is undefined'));
 			done();
 		});
@@ -277,9 +273,7 @@ describe('User module', () => {
 		before((done)=> {
 			mongoose.connect(config.database.mongodb.host, (error)=> {
 				if (!error) {
-					userFromManager = UserManager.parseJsonToUserModel({
-						body: mock.userJson
-					});
+					userFromManager = UserManager.parseJsonToUserModel(mock.userJson);
 
 					userFromManager.save((err)=> {
 						if (!err) {

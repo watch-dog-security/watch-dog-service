@@ -38,13 +38,13 @@ UserManager.checkUserFromRequest = (userFromRequest) => {
 
 /**
  * Parse JSON request to User Model
- * @param req
+ * @param userJson
  * @returns {User}
  */
-UserManager.parseJsonToUserModel = (req) => {
+UserManager.parseJsonToUserModel = (userJson) => {
 	try {
-		let userJson = UserManager.getParsedBodyJSON(req.body);
-		return UserManager.getUserFromJSON(userJson);
+		let userParsedJson = UserManager.getParsedBodyJSON(userJson);
+		return UserManager.getUserFromJSON(userParsedJson);
 	} catch (exception) {
 		throw exception;
 	}
@@ -52,15 +52,15 @@ UserManager.parseJsonToUserModel = (req) => {
 
 /**
  *º Parse body to JSON or throw exception when is undefined
- * @param body
+ * @param userJson
  * @return JSON
  */
-UserManager.getParsedBodyJSON = (body) => {
-	if (body === undefined || Object.keys(body).length === 0 ) {
+UserManager.getParsedBodyJSON = (userJson) => {
+	if (userJson === undefined || Object.keys(userJson).length === 0 ) {
 		throw AppError('BODY_UNDEFINED');
 	}
 
-	return body;
+	return userJson;
 };
 
 /**

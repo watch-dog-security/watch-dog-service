@@ -13,17 +13,16 @@ module.exports = (() => {
 		let oUser;
 
 		try {
-			oUser = UserManager.parseJsonToUserModel(req);
+			oUser = UserManager.parseJsonToUserModel(req.body);
 		} catch (exception) {
 			return res.status(exception.code).send(exception.message);
 		}
 
         oUser.save((error)=>{
-            if (error) {
+            if(error) {
                 return res.status(500).send(error.message);
-            }else{
-                return res.status(200).send(__('User saved successfully'));
             }
+			return res.status(200).send(__('User saved successfully'));
         });
     };
 })();
