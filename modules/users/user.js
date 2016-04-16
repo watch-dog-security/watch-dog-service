@@ -132,9 +132,8 @@ UserManager.checkUserFromDB = (userAuthHeader) => {
 		User.findOne(options, (error, user) => {
 			if (error) {
 				return reject(error);
-			} else {
-				return resolve(user);
 			}
+			return resolve(user);
 		});
 	});
 };

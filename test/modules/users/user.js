@@ -295,21 +295,21 @@ describe('User module', () => {
 
 		it('should resolve when APP find a User', (done) => {
 			UserManager.checkUserFromDB(mock.userOptionsJson).then((user) => {
-				assert(user[0]._id);
-				assert.equal(user[0].password, mock.userOptionsJson.password);
+				assert(user._id);
+				assert.equal(user.password, mock.userOptionsJson.password);
 				done();
 			});
 		});
 
 		it('should resolve with no user when APP does not find a User', (done) => {
 			UserManager.checkUserFromDB(mock.userOptionsNoExist).then((user) => {
-				assert.deepEqual(user, []);
+				assert.deepEqual(user, null);
 				done();
 			});
 		});
 
 		it('should reject when error on find mongoose', (done) => {
-			sinon.stub(User, "find", (options, cb) => {
+			sinon.stub(User, "findOne", (options, cb) => {
 				cb('Error', null)
 			});
 

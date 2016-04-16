@@ -17,7 +17,7 @@ module.exports = (() => {
 			}
 
 			UserManager.checkUserFromDB(userAuthentication).then((user)=> {
-					if (user.length !== 0) {
+					if (user !== null && user.length !== 0) {
 						req.body.signin = {user: user};
 						return next();
 					} else {

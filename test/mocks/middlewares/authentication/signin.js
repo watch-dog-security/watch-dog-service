@@ -17,6 +17,6 @@ mocks.validUserToMongoose = {
 mocks.validAuthenticationHeader = 'Basic YWxiZXJ0b2lnOkVuam95V0RT==';
 mocks.invalidFormatedAuthenticationHeader = 'Basic cHJ1ZWJhOg==';
 mocks.invalidAuthenticationHeader = 'Basic YWxiZXJ0b2l nOkVuam95V0RT==';
-mocks.notExistAuthenticationHeader = 'Basic YWxiZ342b2tnOkVuam95V0RT==';
+mocks.notExistAuthenticationHeader = 'Basic WWxiZ342b2tnOkVuam95V0RT==';
 
 module.exports = mocks;
