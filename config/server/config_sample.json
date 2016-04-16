@@ -8,7 +8,8 @@
 		}
 	},
 	"jwt": {
-		"secret": "secreto"
+		"secret": "secreto",
+		"verification": true
 	},
 	"mongodb": {
 		"host": "mongodb://localhost",
