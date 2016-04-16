@@ -10,23 +10,23 @@ module.exports = (() => {
 
 		UserManager.parseUserToPayload(userFromRequest).then((payload) => {
 			let encrypt = jwt.encrypt(payload);
-			res.status(200).send(encrypt);
-			next();
+
+			return res.status(200).send(encrypt);
 		}).catch((error) => {
-			res.status(error.code).send(error.message);
+			return res.status(error.code).send(error.message);
 		});
 	};
 })();
-
-let checkBody = (req) =>{
-	return !!(req.body &&
-			req.body.signin &&
-			req.body.signin.user)
-};
 
 let getUserFromRequest = (req) => {
 	if(checkBody(req)){
 		return req.body.signin.user;
 	}
 	return undefined;
+};
+
+let checkBody = (req) =>{
+	return !!(req.body &&
+	req.body.signin &&
+	req.body.signin.user)
 };

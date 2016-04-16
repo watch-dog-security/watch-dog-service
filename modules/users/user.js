@@ -14,13 +14,13 @@ let UserManager = () => {
 UserManager.parseUserToPayload = (userFromRequest) => {
 	return new Promise((resolve, reject) => {
 		if(!UserManager.checkUserFromRequest(userFromRequest)) {
-			reject(AppError('WRONG_USER_FROM_REQUEST'));
+			return reject(AppError('WRONG_USER_FROM_REQUEST'));
 		}
 
 		payload.createPayloadVerifiedPromise(userFromRequest._id, userFromRequest.username).then((payload) => {
-			resolve(payload);
+			return resolve(payload);
 		}).catch((error) => {
-			reject(error);
+			return reject(error);
 		});
 	});
 };
@@ -129,7 +129,7 @@ UserManager.checkUserFromDB = (userAuthHeader) => {
 			return reject(exception);
 		}
 
-		User.find(options, (error, user) => {
+		User.findOne(options, (error, user) => {
 			if (error) {
 				return reject(error);
 			} else {

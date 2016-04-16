@@ -27,9 +27,9 @@ exports.createPayloadVerifiedPromise = (_id, username) =>{
 		let payload = this.createPayload(_id,username);
 
 		if(this.checkUndefinedPayload(payload)){
-			resolve(payload);
+			return resolve(payload);
 		}else{
-			reject(
+			return reject(
 				AppError('WRONG_PAYLOAD')
 			);
 		}
