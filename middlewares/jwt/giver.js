@@ -7,11 +7,14 @@ module.exports = (() => {
 	return (req, res, next) => {
 
 		let userFromRequest = getUserFromRequest(req);
+		let redisInstance = req.app.get('redisInstance');
 
 		UserManager.parseUserToPayload(userFromRequest).then((payload) => {
-			let encrypt = jwt.encrypt(payload);
+			let encryptedJWT = jwt.encrypt(payload);
 
-			return res.status(200).send(encrypt);
+			redisInstance.hmset(payload._id.toString(), encryptedJWT);
+
+			return res.status(200).send(encryptedJWT);
 		}).catch((error) => {
 			return res.status(error.code).send(error.message);
 		});
