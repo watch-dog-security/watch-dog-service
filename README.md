@@ -1,5 +1,9 @@
-# watch-dog-service
+# Watch dog service
  [![Build Status](https://travis-ci.org/albertoig/watch-dog-service.svg?branch=master)](https://travis-ci.org/albertoig/watch-dog-service) [![Dependency Status](https://gemnasium.com/albertoig/watch-dog-service.svg)](https://gemnasium.com/albertoig/watch-dog-service) [![Coverage Status](https://coveralls.io/repos/github/albertoig/watch-dog-service/badge.svg?branch=master)](https://coveralls.io/github/albertoig/watch-dog-service?branch=master) [![Code Health](https://landscape.io/github/albertoig/watch-dog-service/master/landscape.svg?style=flat)](https://landscape.io/github/albertoig/watch-dog-service/master)
+
+<p align="center">
+	<img align="middle" src="http://www.albertchurch.com/wp-content/uploads/2016/04/wds_recortada.png" width="230" height="250">
+</p>
 
 AVISO: El proyecto aún está en desarrollo, no se recomienda la utilización del proyecto hasta que termine la release 1.0-beta.
 
