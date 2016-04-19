@@ -96,7 +96,7 @@ describe('Payload module', ()=> {
 		});
 
 		it('Should promise reject by undefined username', (done) => {
-			payload.createPayloadVerifiedPromise(undefined, mock.configuration.username)
+			payload.createPayloadVerifiedPromise( mock.configuration._id ,undefined)
 				.catch((error) => {
 					assert.deepEqual(error.message, __('Something is going wrong with the data of the payload'));
 					done();

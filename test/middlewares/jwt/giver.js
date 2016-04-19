@@ -7,12 +7,15 @@ let giver = require('./../../../middlewares/jwt/giver.js');
 let User = require('./../../../models/user');
 
 const bodyParser = require('body-parser');
-const mock = require('./../../mocks/middlewares/jwt/giver');
 const mongoose = require('mongoose');
-const config = require('./../../../config/server/config');
+const redis = require('redis');
+const config = require('./../../../config/server/config.js');
+const mock = require('./../../mocks/middlewares/jwt/giver');
 
 describe('Middleware Giver: ', () => {
 	let app;
+	let redisInstance;
+
 	before((done) => {
 		app = express();
 		app.use(bodyParser.json());
@@ -23,7 +26,13 @@ describe('Middleware Giver: ', () => {
 			if (!error) {
 				User.ensureIndexes(function (err) {
 					if (!err) {
-						done();
+
+						redisInstance = redis.createClient(config.database.redis.port, config.database.redis.host);
+
+						redisInstance.on('connect', ()=> {
+							app.set('redisInstance', redisInstance);
+							done();
+						});
 					}
 				});
 			}
@@ -35,8 +44,11 @@ describe('Middleware Giver: ', () => {
 		mongoose.connection.db.dropCollection('users', (error, result) => {
 			if (!error) {
 				mongoose.connection.close((error) => {
-					if (!error)
-						done();
+					if (!error) {
+						redisInstance.quit(() => {
+							done();
+						});
+					}
 				});
 			}
 		});

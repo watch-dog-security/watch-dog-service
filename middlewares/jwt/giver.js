@@ -12,7 +12,7 @@ module.exports = (() => {
 		UserManager.parseUserToPayload(userFromRequest).then((payload) => {
 			let encryptedJWT = jwt.encrypt(payload);
 
-			redisInstance.hmset(payload._id.toString(), encryptedJWT);
+			redisInstance.set(payload._id.toString() , encryptedJWT);
 
 			return res.status(200).send(encryptedJWT);
 		}).catch((error) => {
