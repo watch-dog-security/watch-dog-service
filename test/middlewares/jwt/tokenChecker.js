@@ -37,6 +37,7 @@ describe('Middleware tokenChecker: ', () => {
 			}
 
 		});**/
+		done();
 	});
 
 	after((done) => {
@@ -51,6 +52,7 @@ describe('Middleware tokenChecker: ', () => {
 				});
 			}
 		});**/
+		done();
 	});
 
 	it('should return 200 response when token is correct', (done) => {
