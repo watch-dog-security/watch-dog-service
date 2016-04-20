@@ -10,9 +10,16 @@ i18n.configure({
 	register: global
 });
 
+/**
+ * Create a custom Error with a code, type, stacktrace id and custom message. Have a custom function to convert
+ * everything toString.
+ * @param settings
+ * @returns {Error}
+ * @constructor
+ */
 let AppError = (settings) => {
 	var self = new Error(i18n.__(settings.message));
-	self.__proto__ = AppError.protoype
+	self.__proto__ = AppError.protoype;
 	self.code = settings.code;
 	self.type = i18n.__(settings.type);
 	self.id = settings.id;
@@ -29,6 +36,12 @@ let AppError = (settings) => {
 
 AppError.prototype = Object.create(Error.prototype);
 
+/**
+ * Get a custom error by tag defined on config/errors/errors.json everything have a i18N translations. If json is not present
+ * the function will return a default error.
+ * @param tag
+ * @returns {Error}
+ */
 let getErrorByTag = (tag) => {
 	let error = errorsJSON[tag];
 

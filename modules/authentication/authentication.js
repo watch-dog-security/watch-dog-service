@@ -47,6 +47,10 @@ exports.parseAuthRequestToUserModel = (authorizationHeader) => {
 	}
 };
 
+/**
+ * Return a cunstom error AUTH_HEADER_NOT_CORRECT
+ * @returns {AppError}
+ */
 exports.getAuthenticationException = () => {
 	return AppError('AUTH_HEADER_NOT_CORRECT');
 };
