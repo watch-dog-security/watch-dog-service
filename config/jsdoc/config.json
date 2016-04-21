@@ -1,0 +1,33 @@
+{
+	"tags": {
+		"allowUnknownTags": true,
+		"dictionaries": [
+			"jsdoc",
+			"closure"
+		]
+	},
+	"source": {
+		"include": [
+			"./modules",
+			"./config/server/config.js",
+			"./middlewares",
+			"./events"
+		],
+		"exclude": [
+			"./node_modules",
+			"./test",
+			"./coverage",
+			"./logs",
+			"./apidoc",
+			"./models",
+			"./routers"
+		],
+		"includePattern": ".+\\.js(doc)?$",
+		"excludePattern": "(^|\\/|\\\\)_"
+	},
+	"plugins": [],
+	"templates": {
+		"cleverLinks": false,
+		"monospaceLinks": false
+	}
+}

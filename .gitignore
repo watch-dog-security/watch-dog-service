@@ -22,6 +22,7 @@ npm-debug.log
 # API DOCS #
 ############
 apidoc/
+out/
 
 ############
 # COVERAGE #
