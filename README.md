@@ -7,33 +7,53 @@
 
 AVISO: El proyecto aún está en desarrollo, no se recomienda la utilización del proyecto hasta que termine la release 1.0-beta.
 
+# Descripción
 Pasarela de login y control de de seguridad de servicios. EL proyecto está orientado sobre todo al desarrollo de micro 
 servicios. Una de las ventajas de este modelo es la simplificación y reutilización, ya que las llamadas están desacopladas.
 
-Las tecnologías usadas en este proyecto son:
+# Configuración
+El proyecto consta de varios archivos JSON de configuración para manejar
+los errores generales, conexiones con los servicios con MongoDB y Redis, 
+la propia configuración de la APP, los niveles de seguridad y los tag multi-idioma.
 
-- NodeJS.
-- Javascript ES6.
-- JSON.
-- MongoDB.
-- Redis.
-- Mocha TDD.
-- Nodemon a través de traceur-runner.
-- ESLINT.
+### Configuración general
+El archivo de configuración principal no viene por defecto en la aplicación
+pero si viene un archivo config_sample.json en la siguiente ruta ./config/server/,
+para poder ejecutar la aplicación en local solo hay que copiar el archivo config_sample.json 
+y renombrarlo a config.json. 
 
-How to
-------
-Primero hay que copiar el archivo config/server/config_sample.json a config/server/config.json y rellenar la información 
-correspondiente a las caracteristicas de nuestros servidores mongodb, redis, app y jwt. 
-Además el proyecto dispone de test, por lo tanto es muy recomendable siempre ejecutarlos después de terminar la configuración.
+Las secciones de ésta configutación son:
 
-Para ejecutar los test utilizar el siguiente comando:
+* app: configuraciones referentes al host Watch dog service.
+* app.name: Nombre del servidor watch dog service.
+* app.host: Dirección del host en el que vamos a hacer funcionar nuestro servidor.
+* app.port: Puerto en el que va a funcionar nuestro servidor.
+* app.password.check: 
+* jwt: Sección de configuracion necesaria para utilizar la encriptación JWT.
+* jwt.secret: Contraseña secreta necesaria para la encriptación del token JWT.
+* jwt.verification: Si éste valor está a true hará una doble verificación del token tanto en el servidor redis como en mongoDB y 
+además comprobará su integridad, en el caso de estar a false, solo comprobará este valor en redis pero permitirá una ejecución más rápida
+de las llamadas.
+* mongodb: Sección de configuraciones relativas al servidor mongodb que necesita Watch dog service para funcionar correctamente.
+* mongodb.host: Host en el se encuentra el servidor mongodb funcionando.
+* mongodb.port: Puerto en el que se encuentra el servidor mongodb.
+* redis: Sección de configuracion del servidor redis.
+* redis.host: Host donde reside el servidor redis.
+* redis.port: Puerto donde está ejecutándose el servidor redis.
 
-`npm run test --harmony`
+# Test
+El proyecto está cubierto en su totalidad por test para garantizar el correcto
+funcionamiento y la integridad de futuros desarrollos. Sí deseas ejecutar
+los test para comprobar que el servidor se encuentra en perfectas condiciones
+puedes hacerlo a través del siguiente comando:
 
-La forma de poner a funcionar el proyecto es con el siguiente comando:
+`npm run test`
 
-`node app.js`
+Además dispone de la herramienta istanbul para obtener informes de coverage
+de la herramienta. Todos estos informes estarán en el directorio ./coverage.
+Para ejecutar estos informes hay que ejecutar el siguiente comando:
+
+`npm run test-travis`
 
 Development Rules
 -----------------
