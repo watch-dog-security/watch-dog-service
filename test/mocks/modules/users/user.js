@@ -49,6 +49,16 @@ mocks.userJson = {
 	codecountry: '+34'
 };
 
+mocks.userJsonValidTwo = {
+	fullname: 'Carlos Iglesias',
+	username: 'carlosig',
+	password: '5678',
+	birthdate: '01/01/2001',
+	email: 'carlos.uchiha@gmail.com',
+	mobilephone: '4453564334',
+	codecountry: '+34'
+};
+
 mocks.userJSONUndefinedUsername = {
 	fullname: undefined,
 	username: 'albertoig',

@@ -52,5 +52,17 @@
 		"type": "UNEXPECTED",
 		"code": "500",
 		"message": "Unexpected error, please contact with admin service"
+	},
+	"TOKEN_NOT_PRESENT": {
+		"id": "10",
+		"type": "UNEXPECTED",
+		"code": "401",
+		"message": "Token is not present, please, add it to the header token"
+	},
+	"TOKEN_NOT_VALID": {
+		"id": "11",
+		"type": "UNEXPECTED",
+		"code": "401",
+		"message": "Token is not valid, please, get other"
 	}
 }

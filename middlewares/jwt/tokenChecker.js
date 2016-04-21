@@ -1,25 +1,28 @@
 'use strict';
 
 let UserManager = require('./../../modules/users/user');
-let jwt = require('../../modules/jwt/jwt');
+let jwt = require('./../../modules/jwt/jwt');
+let AppError = require('./../../modules/error/manager');
 
 module.exports = (() => {
     return (req, res, next) => {
-		//TODO: coger el berarer del header
-        let token = req.body;
+        let token = req.headers['token'];
 		let redisInstance = req.app.get('redisInstance');
-        let decodeToken;
+		let appError;
 
         if(token){
-            decodeToken = jwt.decode(token);
-			//TODO: Check if exist on redis
-
-			//TODO: IF exist, do the proxy
-
-            res.status(200).send(encrypt);
-            next();
+            let decodeToken = jwt.decode(token);
+			//TODO: check on mongodb
+			redisInstance.get(decodeToken._id.toString(), (error, reply) => {
+				if(error || (error === null && reply === null)){
+					appError = AppError('TOKEN_NOT_VALID');
+					return res.status(appError.code).send(appError.message);
+				}
+				return next();
+			});
         }else{
-            res.status(401).send(__('Not authorize'));
+			appError = AppError('TOKEN_NOT_PRESENT');
+            return res.status(appError.code).send(appError.message);
         }
     };
 })();

@@ -20,6 +20,7 @@
 	"Unexpected error, please contact with admin service": "Error inesperado, por favor ponte en contacto con el administrador del servicio",
 	"INTERNAL": "INTERNO",
 	"UNEXPECTED": "INESPERADO",
-	"Something is going wrong with the data of the user from request": "Algo está mal en los datos de la petición del usuario"
-
+	"Something is going wrong with the data of the user from request": "Algo está mal en los datos de la petición del usuario",
+	"Token is not present, please, add it to the header token": "El token no está en la cabecera 'token', por favor, añadelo en la cabecera",
+	"Token is not valid, please, get other": "El token no es valido, por favor, solicita otro token."
 }

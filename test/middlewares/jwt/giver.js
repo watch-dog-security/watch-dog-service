@@ -45,6 +45,9 @@ describe('Middleware Giver: ', () => {
 			if (!error) {
 				mongoose.connection.close((error) => {
 					if (!error) {
+						//TODO: remove stored keys
+						//redisInstance.del(mock.validToken._id);
+						//redisInstance.del(mock.invalidToken._id);
 						redisInstance.quit(() => {
 							done();
 						});
