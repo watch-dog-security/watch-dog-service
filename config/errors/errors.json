@@ -102,9 +102,15 @@
 		"message": "Key is not present"
 	},
 	"ENTRY_PAYLOAD": {
-		"id": "17",
+		"id": "18",
 		"type": "CONTROLLED",
 		"code": "401",
 		"message": "Entry payload"
+	},
+	"MONGOOSE_USER_SAVE": {
+		"id": "19",
+		"type": "UNEXPECTED",
+		"code": "401",
+		"message": "Error when"
 	}
 }

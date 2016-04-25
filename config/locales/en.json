@@ -30,5 +30,6 @@
 	"Token is not present, please send one to server": "Token is not present, please send one to server",
 	"CONTROLLED": "CONTROLLED",
 	"Key is not present": "Key is not present",
-	"Entry payload": "Entry payload"
+	"Entry payload": "Entry payload",
+	"Error when": "Error when"
 }

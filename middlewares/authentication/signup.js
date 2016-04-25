@@ -7,22 +7,23 @@
  */
 
 let UserManager = require('./../../modules/users/user');
+let AppError = require('./../../modules/error/manager');
 
 module.exports = (() => {
-    return (req, res, next) => {
-		let oUser;
-
+	return (req, res, next) => {
 		try {
-			oUser = UserManager.parseJsonToUserModel(req.body);
-		} catch (exception) {
-			return res.status(exception.code).send(exception.message);
-		}
+			let oUser = UserManager.parseJsonToUserModel(req.body);
 
-        oUser.save((error)=>{
-            if(error) {
-                return res.status(500).send(error.message);
-            }
-			return res.status(200).send(__('User saved successfully'));
-        });
-    };
+			oUser.save((error)=> {
+				if (error) {
+					let mongoAppError = AppError('MONGOOSE_USER_SAVE');
+					mongoAppError.message = error.message;
+					return next(mongoAppError);
+				}
+				return res.status(200).send(__('User saved successfully'));
+			});
+		} catch (exception) {
+			return next(exception);
+		}
+	};
 })();
