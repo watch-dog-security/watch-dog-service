@@ -20,7 +20,7 @@ mocks.notPresentTokenOnRedis = {
 
 mocks.invalidToken = {
 	id: '3',
-	token: ''
+	token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIzIiwidXNlcm5hbWUiOiJqb25zbm93In0.eugzBPPhiMd5m9hdPsfBW_8OH6GttHryJZaYTxZcUmE'
 };
 mocks.voidObject = {};
 

@@ -1,6 +1,7 @@
 'use strict';
 
 let assert = require('assert');
+let AppError = require('./../../../modules/error/manager');
 let jwt = require('./../../../modules/jwt/jwt');
 let payload = require('./../../../modules/jwt/payload');
 const config = require('./../../../config/server/config');
@@ -8,7 +9,7 @@ const config = require('./../../../config/server/config');
 describe('JWT module', ()=> {
 
 	let userPayload;
-	let token = "";
+	let token = '';
 	let configurationOfThePayload = {
 		_id: '1',
 		username: 'UserNamePrueba'
@@ -23,16 +24,16 @@ describe('JWT module', ()=> {
 	});
 
 	describe('Check function Encrypt', ()=> {
-		it("Token should be generated", (done) => {
-			assert(token === "");
+		it('Token should be generated', (done) => {
+			assert(token === '');
 			token = jwt.encrypt(userPayload);
 			assert(token);
 			done();
 		});
 	});
 
-	describe("Check function Decrypt", ()=> {
-		it("Token should be correct", (done) => {
+	describe('Check function Decrypt', ()=> {
+		it('Should token be valid', (done) => {
 			assert(token);
 			let data = jwt.decode(token);
 			let username = data.username;
@@ -46,6 +47,31 @@ describe('JWT module', ()=> {
 			assert.equal(username, configurationOfThePayload.username);
 			assert.equal(_id, configurationOfThePayload._id);
 
+			done();
+		});
+		
+		it('Should token throw error "' + AppError('SIGNATURE_VERIFICATION').message + '"' , (done) => {
+			//TODO 
+			done();
+		});
+
+		it('Should token throw error "' + AppError('EXPIRED_TOKEN').message + '"' , (done) => {
+			//TODO
+			done();
+		});
+
+		it('Should token throw error "' + AppError('TOKEN_NOT_ACTIVE').message + '"' , (done) => {
+			//TODO
+			done();
+		});
+
+		it('Should token throw error "' + AppError('ALGORITHM_NOT_SUPPORTED').message + '"' , (done) => {
+			//TODO
+			done();
+		});
+
+		it('Should token throw error "' + AppError('TOKEN_NOT_SUPPLIED').message + '"' , (done) => {
+			//TODO
 			done();
 		});
 	});

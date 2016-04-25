@@ -61,8 +61,38 @@
 	},
 	"TOKEN_NOT_VALID": {
 		"id": "11",
-		"type": "UNEXPECTED",
+		"type": "CONTROLLED",
 		"code": "401",
 		"message": "Token is not valid, please, get other"
+	},
+	"SIGNATURE_VERIFICATION": {
+		"id": "12",
+		"type": "CONTROLLED",
+		"code": "401",
+		"message": "Signature verification is not valid"
+	},
+	"EXPIRED_TOKEN": {
+		"id": "13",
+		"type": "CONTROLLED",
+		"code": "401",
+		"message": "Token expired"
+	},
+	"TOKEN_NOT_ACTIVE": {
+		"id": "14",
+		"type": "CONTROLLED",
+		"code": "401",
+		"message": "Token is not active"
+	},
+	"ALGORITHM_NOT_SUPPORTED": {
+		"id": "15",
+		"type": "CONTROLLED",
+		"code": "401",
+		"message": "Algorithm not supported, choose a valid one"
+	},
+	"TOKEN_NOT_SUPPLIED": {
+		"id": "16",
+		"type": "CONTROLLED",
+		"code": "401",
+		"message": "Token is not present, please send one to server"
 	}
 }

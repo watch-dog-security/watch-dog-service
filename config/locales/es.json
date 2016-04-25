@@ -22,5 +22,11 @@
 	"UNEXPECTED": "INESPERADO",
 	"Something is going wrong with the data of the user from request": "Algo está mal en los datos de la petición del usuario",
 	"Token is not present, please, add it to the header token": "El token no está en la cabecera 'token', por favor, añadelo en la cabecera",
-	"Token is not valid, please, get other": "El token no es valido, por favor, solicita otro token."
+	"Token is not valid, please, get other": "El token no es valido, por favor, solicita otro token.",
+	"Signature verification is not valid": "La verificación de la firma no es valida",
+	"Token expired": "Token expirado",
+	"Token is not active": "El token no está activado",
+	"Algorithm not supported, choose a valid one": "El algoritmo no está soportado",
+	"Token is not present, please send one to server": "No hay token en la llamada, envia uno al servidor",
+	"CONTROLLED": "CONTROLADO"
 }

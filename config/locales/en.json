@@ -22,5 +22,11 @@
 	"INTERNAL": "INTERNAL",
 	"Something is going wrong with the data of the user from request": "Something is going wrong with the data of the user from request",
 	"Token is not present, please, add it to the header token": "Token is not present, please, add it to the header token",
-	"Token is not valid, please, get other": "Token is not present, please, add it to the header token"
+	"Token is not valid, please, get other": "Token is not valid, please, get other",
+	"Signature verification is not valid": "Signature verification is not valid",
+	"Token expired": "Token expired",
+	"Token is not active": "Token is not active",
+	"Algorithm not supported, choose a valid one": "Algorithm not supported, choose a valid one",
+	"Token is not present, please send one to server": "Token is not present, please send one to server",
+	"CONTROLLED": "CONTROLLED"
 }

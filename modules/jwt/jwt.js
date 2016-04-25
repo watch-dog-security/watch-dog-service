@@ -2,6 +2,7 @@
 
 let jwt = require('jwt-simple');
 const config = require('./../../config/server/config.js');
+const secret = config.jwt.secret;
 
 /**
  * Encrypt the payload to JWT enconde
@@ -9,8 +10,7 @@ const config = require('./../../config/server/config.js');
  * @returns {String}
  */
 exports.encrypt = (payload) => {
-    let secret = config.jwt.secret;
-    return jwt.encode(payload, secret);
+	return jwt.encode(payload, secret);
 };
 
 /**
@@ -19,7 +19,20 @@ exports.encrypt = (payload) => {
  * @returns {Object}
  */
 exports.decode = (token) => {
-    let secret = config.jwt.secret;
-    return jwt.decode(token, secret);
+	try {
+		return jwt.decode(token, secret);
+	} catch (error) {
+		if (error.message === 'Signature verification failed') {
+			return AppError('SIGNATURE_VERIFICATION');
+		} else if (error.message === 'Token expired') {
+			return AppError('EXPIRED_TOKEN');
+		} else if (error.message === 'Token not yet active') {
+			return AppError('TOKEN_NOT_ACTIVE');
+		} else if (error.message === 'Algorithm not supported') {
+			return AppError('ALGORITHM_NOT_SUPPORTED');
+		} else if (error.message === 'No token supplied') {
+			return AppError('TOKEN_NOT_SUPPLIED');
+		}
+	}
 };
 
