@@ -28,5 +28,6 @@
 	"Token is not active": "El token no está activado",
 	"Algorithm not supported, choose a valid one": "El algoritmo no está soportado",
 	"Token is not present, please send one to server": "No hay token en la llamada, envia uno al servidor",
-	"CONTROLLED": "CONTROLADO"
+	"CONTROLLED": "CONTROLADO",
+	"Key is not present": "La clave no está presente para la encriptación JWT"
 }

@@ -1,12 +1,13 @@
 'use strict';
 
-const i18n = require("i18n");
 let assert = require('assert');
 let AppError = require('./../../../modules/error/manager.js');
 let sinon = require('sinon');
 let chai = require('chai');
 let expect = chai.expect;
 let mockery = require('mockery');
+
+const i18n = require('i18n');
 
 describe('Error manager module', () => {
 
@@ -67,8 +68,8 @@ describe('Error manager module', () => {
 				warnOnReplace: false,
 				warnOnUnregistered: false
 			});
-			//TODO: change fake.json to mock folder
-			mockery.registerMock('./../../config/errors/errors.json', './../../../config/errors/fake.json');
+
+			mockery.registerMock('./../../config/errors/errors.json', './../../mocks/modules/errors/fake.json');
 
 			let defaultError = require('./../../../modules/error/manager.js')('DEFAULT2');
 			expect(() => {

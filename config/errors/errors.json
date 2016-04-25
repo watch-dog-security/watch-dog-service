@@ -94,5 +94,11 @@
 		"type": "CONTROLLED",
 		"code": "401",
 		"message": "Token is not present, please send one to server"
+	},
+	"KEY_NOT_SUPPLIED": {
+		"id": "17",
+		"type": "CONTROLLED",
+		"code": "401",
+		"message": "Key is not present"
 	}
 }

@@ -28,5 +28,6 @@
 	"Token is not active": "Token is not active",
 	"Algorithm not supported, choose a valid one": "Algorithm not supported, choose a valid one",
 	"Token is not present, please send one to server": "Token is not present, please send one to server",
-	"CONTROLLED": "CONTROLLED"
+	"CONTROLLED": "CONTROLLED",
+	"Key is not present": "Key is not present"
 }
