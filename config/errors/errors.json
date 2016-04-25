@@ -100,5 +100,11 @@
 		"type": "CONTROLLED",
 		"code": "401",
 		"message": "Key is not present"
+	},
+	"ENTRY_PAYLOAD": {
+		"id": "17",
+		"type": "CONTROLLED",
+		"code": "401",
+		"message": "Entry payload"
 	}
 }

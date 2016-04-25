@@ -13,7 +13,19 @@ const secret = config.jwt.secret;
  * @returns {String}
  */
 exports.encrypt = (payload) => {
-	return jwt.encode(payload, secret, algorithm);
+	if (!payload) {
+		throw AppError('ENTRY_PAYLOAD');
+	}
+
+	try {
+		return jwt.encode(payload, secret, algorithm);
+	} catch (error) {
+		if (error.message === 'Require key') {
+			throw AppError('KEY_NOT_SUPPLIED');
+		} else if (error.message === 'Algorithm not supported') {
+			throw AppError('ALGORITHM_NOT_SUPPORTED');
+		}
+	}
 };
 
 /**
@@ -23,18 +35,18 @@ exports.encrypt = (payload) => {
  */
 exports.decode = (token) => {
 	try {
-		return jwt.decode(token, secret, algorithm);
+		return jwt.decode(token, secret, false, algorithm);
 	} catch (error) {
 		if (error.message === 'Signature verification failed') {
-			return AppError('SIGNATURE_VERIFICATION');
+			throw AppError('SIGNATURE_VERIFICATION');
 		} else if (error.message === 'Token expired') {
-			return AppError('EXPIRED_TOKEN');
+			throw AppError('EXPIRED_TOKEN');
 		} else if (error.message === 'Token not yet active') {
-			return AppError('TOKEN_NOT_ACTIVE');
+			throw AppError('TOKEN_NOT_ACTIVE');
 		} else if (error.message === 'Algorithm not supported') {
-			return AppError('ALGORITHM_NOT_SUPPORTED');
+			throw AppError('ALGORITHM_NOT_SUPPORTED');
 		} else if (error.message === 'No token supplied') {
-			return AppError('TOKEN_NOT_SUPPLIED');
+			throw AppError('TOKEN_NOT_SUPPLIED');
 		}
 	}
 };
