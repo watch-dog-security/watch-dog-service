@@ -13,7 +13,8 @@ module.exports = {
     },
     jwt: {
         secret: process.env.WDS_JWT_SECRET || config.jwt.secret,
-        verification: process.env.WDS_JWT_SECRET || config.jwt.secret
+        verification: process.env.WDS_JWT_SECRET || config.jwt.secret,
+		algorithm: process.env.WDS_JWT_ALGORITHM || config.jwt.algorithm
     },
     database: {
         mongodb: {

@@ -1,7 +1,10 @@
 'use strict';
 
 let jwt = require('jwt-simple');
+let AppError = require('./../../modules/error/manager');
+
 const config = require('./../../config/server/config.js');
+const algorithm = config.jwt.algorithm;
 const secret = config.jwt.secret;
 
 /**
@@ -10,7 +13,7 @@ const secret = config.jwt.secret;
  * @returns {String}
  */
 exports.encrypt = (payload) => {
-	return jwt.encode(payload, secret);
+	return jwt.encode(payload, secret, algorithm);
 };
 
 /**
@@ -20,7 +23,7 @@ exports.encrypt = (payload) => {
  */
 exports.decode = (token) => {
 	try {
-		return jwt.decode(token, secret);
+		return jwt.decode(token, secret, algorithm);
 	} catch (error) {
 		if (error.message === 'Signature verification failed') {
 			return AppError('SIGNATURE_VERIFICATION');

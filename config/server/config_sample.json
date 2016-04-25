@@ -9,7 +9,8 @@
 	},
 	"jwt": {
 		"secret": "secreto",
-		"verification": true
+		"verification": true,
+		"algorithm": "HS512"
 	},
 	"mongodb": {
 		"host": "mongodb://localhost",

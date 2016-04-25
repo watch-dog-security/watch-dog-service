@@ -34,7 +34,10 @@ Las secciones de ésta configutación son:
 * jwt.verification: Si éste valor está a true hará una doble verificación del token tanto en el servidor redis como en mongoDB y 
 además comprobará su integridad, en el caso de estar a false, solo comprobará este valor en redis pero permitirá una ejecución más rápida
 de las llamadas.
-* mongodb: Sección de configuraciones relativas al servidor mongodb que necesita Watch dog service para funcionar correctamente.
+* jwt.algorithm: Tipo de algoritmo para códificar el token JWT, los algoritmos
+soportados para codificar y descodificar son HS256, HS384, HS512 y RS256.
+* mongodb: Sección de configuraciones relativas al servidor mongodb que 
+necesita Watch dog service para funcionar correctamente.
 * mongodb.host: Host en el se encuentra el servidor mongodb funcionando.
 * mongodb.port: Puerto en el que se encuentra el servidor mongodb.
 * redis: Sección de configuracion del servidor redis.

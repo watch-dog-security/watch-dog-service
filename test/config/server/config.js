@@ -61,5 +61,10 @@ describe('Server config', ()=> {
 			assert(config.jwt.verification);
 			done();
 		});
+
+		it('Should have algorithm value', (done) => {
+			assert(config.jwt.algorithm);
+			done();
+		});
     });
 });
