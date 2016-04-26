@@ -10,6 +10,7 @@ let User = require('./../../../models/user');
 let expect = require('chai').expect;
 let sinon  = require('sinon');
 let httpMocks  = require('node-mocks-http');
+let AppError = require('./../../../modules/error/manager');
 
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -59,6 +60,9 @@ describe('Middleware tokenChecker: ', () => {
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({extended: true}));
 		app.use(tokenChecker);
+		app.use((error, req, res, next) => {
+			return res.status(error.code).send(error.message);
+		});
 
 		mongoose.connect(config.database.mongodb.host, (error)=> {
 			if (!error) {
@@ -118,49 +122,54 @@ describe('Middleware tokenChecker: ', () => {
 		tokenChecker(req, res, spy);
 	});
 
-	it('should return 401 response when token is not present', (done) => {
+	it('should return an Error "' + AppError('TOKEN_NOT_VALID').message + '" when token is not on redis', (done) => {
+		let token = jwt.encrypt(mock.invalidUser);
+
 		request(app)
 			.post('/')
-			.send('token',mock.voidObject)
+			.set('token',token)
+			.send({})
 			.expect(401)
+			.expect(__('Token is not valid, please, get other'))
 			.end((error, response) => {
-				assert.equal(response.error.text, __('Token is not present, please, add it to the header token'));
+				expect(response.error.text).to.contain( AppError('TOKEN_NOT_VALID').message);
 				done();
 			});
 	});
 
-	it('should return 401 response when string token is void', (done) => {
+	it('should return an Error "' + AppError('SIGNATURE_VERIFICATION').message + '" when token signature is not correct', (done) => {
+		request(app)
+			.post('/')
+			.set('token',mock.tokenSignedWithOtherPassword)
+			.send({})
+			.expect(401)
+			.end((error, response) => {
+				expect(response.error.text).to.contain( AppError('SIGNATURE_VERIFICATION').message);
+				done();
+			});
+	});
+
+	it('Should return an Error "' + AppError('TOKEN_NOT_SUPPLIED').message + '" when token is not supplied' , (done) => {
 		request(app)
 			.post('/')
 			.set('token',mock.voidStringToken)
 			.send({})
 			.expect(401)
 			.end((error, response) => {
-				assert.equal(response.error.text, __('Token is not present, please, add it to the header token'));
+				expect(response.error.text).to.contain( AppError('TOKEN_NOT_SUPPLIED').message);
 				done();
 			});
 	});
 
-	it('should return 401 response when token is not on redis', (done) => {
-		//TODO
-		done();
-		/**request(app)
+	it('Should return an Error "' + AppError('TOKEN_NOT_SUPPLIED').message + '" when token is void object', (done) => {
+		request(app)
 			.post('/')
-			.set('token',mock.invalidToken.token)
-			.send({})
+			.send('token',mock.voidObject)
 			.expect(401)
-			.expect(__('Token is not valid, please, get other'))
 			.end((error, response) => {
-				console.log(response.error.text);
-				console.log( __('Token is not valid, please, get other'));
-				assert.equal(response.error.text, __('Token is not valid, please, get other'));
+				expect(response.error.text).to.contain(AppError('TOKEN_NOT_SUPPLIED').message);
 				done();
-			});**/
-	});
-
-	it('should return 401 response when token signature is not correct', (done) => {
-		//TODO:
-		done();
+			});
 	});
 
 	it('should return 401 response when token information is not on mongodb', (done) => {
