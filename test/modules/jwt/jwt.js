@@ -118,18 +118,16 @@ describe('JWT module', ()=> {
 		});
 
 		it('Should token throw error "' + AppError('EXPIRED_TOKEN').message + '"' , (done) => {
-			//TODO
-			//expect(() => {
-				//jwt.decode(mock.tokenSignedWithOtherPassword);
-			//}).to.throw(AppError('EXPIRED_TOKEN').message);
+			expect(() => {
+				jwt.decode(jwt.encrypt(mock.configurationOfThePayloadTokenExpired));
+			}).to.throw(AppError('EXPIRED_TOKEN').message);
 			done();
 		});
 
 		it('Should token throw error "' + AppError('TOKEN_NOT_ACTIVE').message + '"' , (done) => {
-			//TODO
-			//expect(() => {
-				//jwt.decode(mock.tokenSignedWithOtherPassword);
-			//}).to.throw(AppError('TOKEN_NOT_ACTIVE').message);
+			expect(() => {
+				jwt.decode(jwt.encrypt(mock.configurationOfThePayloadTokenNotActive));
+			}).to.throw(AppError('TOKEN_NOT_ACTIVE').message);
 			done();
 		});
 

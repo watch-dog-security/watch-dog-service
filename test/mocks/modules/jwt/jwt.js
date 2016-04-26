@@ -10,6 +10,18 @@ mocks.configurationOfThePayload = {
 	username: 'UserNamePrueba'
 };
 
+mocks.configurationOfThePayloadTokenNotActive = {
+	_id: '1',
+	username: 'UserNamePrueba',
+	nbf: Date.now() / 1000 + 1
+};
+
+mocks.configurationOfThePayloadTokenExpired = {
+	_id: '1',
+	username: 'UserNamePrueba',
+	exp: Date.now() / 1000 - 1
+};
+
 mocks.configurationWithoutKey = {
 	app: {
 		name: process.env.WDS_APP_NAME || config.app.name,
