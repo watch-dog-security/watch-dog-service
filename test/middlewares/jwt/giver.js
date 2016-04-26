@@ -3,8 +3,11 @@
 let express = require('express');
 let request = require('supertest');
 let assert = require('assert');
-let giver = require('./../../../middlewares/jwt/giver.js');
+let giver = require('./../../../middlewares/jwt/giver');
 let User = require('./../../../models/user');
+let AppError = require('./../../../modules/error/manager');
+let expect = require('chai').expect;
+
 
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -21,6 +24,9 @@ describe('Middleware Giver: ', () => {
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({extended: true}));
 		app.use(giver);
+		app.use((error, req, res, next) => {
+			return res.status(error.code).send(error.message);
+		});
 
 		mongoose.connect(config.database.mongodb.host, (error)=> {
 			if (!error) {
@@ -64,31 +70,43 @@ describe('Middleware Giver: ', () => {
 			.expect(200,done);
 	});
 
-	it('should return 401 response when request is undefined', (done) => {
+	it('should return an error "' + AppError('WRONG_USER_FROM_REQUEST').message + '" when request is undefined', (done) => {
 		request(app)
 			.post('/')
 			.send(undefined)
-			.expect(401, done);
+			.end((error, response) => {
+				expect(response.error.text).to.contain(AppError('WRONG_USER_FROM_REQUEST').message);
+				done();
+			});
 	});
 
-	it('should return 401 response when request.signin is undefined', (done) => {
+	it('should return an error "' + AppError('WRONG_USER_FROM_REQUEST').message + '" when request.signin is undefined', (done) => {
 		request(app)
 			.post('/')
 			.send(mock.undefinedSingin)
-			.expect(401, done);
+			.end((error, response) => {
+				expect(response.error.text).to.contain(AppError('WRONG_USER_FROM_REQUEST').message);
+				done();
+			});
 	});
 
-	it('should return 401 response when request.signin._id is undefined', (done) => {
+	it('should return an error "' + AppError('WRONG_USER_FROM_REQUEST').message + '" when request.signin._id is undefined', (done) => {
 		request(app)
 			.post('/')
 			.send(mock.undefinedSinginId)
-			.expect(401, done);
+			.end((error, response) => {
+				expect(response.error.text).to.contain(AppError('WRONG_USER_FROM_REQUEST').message);
+				done();
+			});
 	});
 
-	it('should return 401 response when request.signin.username is undefined', (done) => {
+	it('should return an error "' + AppError('WRONG_USER_FROM_REQUEST').message + '" when request.signin.username is undefined', (done) => {
 		request(app)
 			.post('/')
 			.send(mock.undefinedSinginUsername)
-			.expect(401, done);
+			.end((error, response) => {
+				expect(response.error.text).to.contain(AppError('WRONG_USER_FROM_REQUEST').message);
+				done();
+			});
 	});
 });
