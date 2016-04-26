@@ -20,7 +20,7 @@ describe('Middleware: Signup', () => {
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({extended: true}));
 		app.use(signup);
-		app.use(function logErrors(error, req, res, next) {
+		app.use((error, req, res, next) => {
 			return res.status(error.code).send(error.message);
 		});
 
@@ -83,7 +83,7 @@ describe('Middleware: Signup', () => {
 			.post('/')
 			.send(mock.userJson)
 			.end((error, response) => {
-				expect(response.error.text).to.contain('E11000 duplicate key error index');
+				expect(response.error.text).to.contain('E11000 duplicate key error');
 				done();
 			});
 	});

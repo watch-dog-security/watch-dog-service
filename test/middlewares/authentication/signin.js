@@ -5,6 +5,8 @@ let request = require('supertest');
 let assert = require('assert');
 let signin = require('./../../../middlewares/authentication/signin');
 let User = require('./../../../models/user');
+let AppError = require('./../../../modules/error/manager');
+let expect = require('chai').expect;
 
 const bodyParser = require('body-parser');
 const mock = require('./../../mocks/middlewares/authentication/signin');
@@ -18,12 +20,14 @@ describe('Middleware SignIn: ', () => {
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({extended: true}));
 		app.use(signin);
+		app.use((error, req, res, next) => {
+			return res.status(error.code).send(error.message);
+		});
 
 		mongoose.connect(config.database.mongodb.host, (error)=> {
 			if (!error) {
 				User.ensureIndexes(function (err) {
 					if (!err) {
-
 						done();
 					}
 				});
@@ -60,44 +64,52 @@ describe('Middleware SignIn: ', () => {
 		});
 	});
 
-	it('Should reject with an Error "' + __('You must to signin on the system with the correct credentials') + '" when user does not exist on mongodb', (done) => {
+	it('Should reject with an Error "' + AppError('INCORRECT_CREDENTIALS').message + '" when user does not exist on mongodb', (done) => {
 		request(app)
 			.post('/')
 			.set('Authorization', mock.notExistAuthenticationHeader)
 			.set('Content-Type', 'application/json')
 			.send({})
-			.expect(401)
-			.expect(__('You must to signin on the system with the correct credentials'), done);
+			.end((error, response) => {
+				expect(response.error.text).to.contain(AppError('INCORRECT_CREDENTIALS').message);
+				done();
+			});
 	});
 
-	it('Should reject with an Error "' + __('You must to signin on the system with the correct credentials') + '" when user does not include authentication headers', (done) => {
+	it('Should reject with an Error "' + AppError('INCORRECT_CREDENTIALS').message + '" when user does not include authentication headers', (done) => {
 		request(app)
 			.post('/')
 			.set('Authorization', '')
 			.set('Content-Type', 'application/json')
 			.send({})
-			.expect(401)
-			.expect(__('You must to signin on the system with the correct credentials'), done);
+			.end((error, response) => {
+				expect(response.error.text).to.contain(AppError('INCORRECT_CREDENTIALS').message);
+				done();
+			});
 	});
 
-	it('Should send an Error "' + __('Authorization header is not correct') + '" when authentication on base64 formation is not correct', (done) => {
+	it('Should send an Error "' + AppError('AUTH_HEADER_NOT_CORRECT').message + '" when authentication on base64 formation is not correct', (done) => {
 		request(app)
 			.post('/')
 			.set('Authorization', mock.invalidAuthenticationHeader)
 			.set('Content-Type', 'application/json')
 			.send({})
-			.expect(401)
-			.expect(__('Authorization header is not correct'), done);
+			.end((error, response) => {
+				expect(response.error.text).to.contain(AppError('AUTH_HEADER_NOT_CORRECT').message);
+				done();
+			});
 	});
 
 
-	it('Should send an Error "' + __('User options is not correct') + '" when authentication header formation is not correct', (done) => {
+	it('Should send an Error "' +  AppError('USER_OPTIONS').message + '" when authentication header formation is not correct', (done) => {
 		request(app)
 			.post('/')
 			.set('Authorization', mock.invalidFormatedAuthenticationHeader)
 			.set('Content-Type', 'application/json')
 			.send({})
-			.expect(401)
-			.expect(__('User options is not correct'), done);
+			.end((error, response) => {
+				expect(response.error.text).to.contain(AppError('USER_OPTIONS').message);
+				done();
+			});
 	});
 });

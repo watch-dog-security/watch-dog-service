@@ -111,6 +111,12 @@
 		"id": "19",
 		"type": "UNEXPECTED",
 		"code": "401",
-		"message": "Error when"
+		"message": ""
+	},
+	"INCORRECT_CREDENTIALS": {
+		"id": "20",
+		"type": "CONTROLLED",
+		"code": "401",
+		"message": "You must to signin on the system with the correct credentials"
 	}
 }

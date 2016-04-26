@@ -2,33 +2,34 @@
 
 let UserManager = require('./../../modules/users/user');
 let authentication = require('./../../modules/authentication/authentication');
+let AppError = require('./../../modules/error/manager');
 
 module.exports = (() => {
 	return (req, res, next) => {
 		let authRequest = req.headers['authorization'];
 
 		if (authentication.check(authRequest)) {
-			let userAuthentication;
-
 			try {
-				userAuthentication = authentication.getUserAuthentication(authRequest);
-			} catch (exception) {
-				return res.status(exception.code).send(exception.message);
-			}
+				let userAuthentication = authentication.getUserAuthentication(authRequest);
 
-			UserManager.checkUserFromDB(userAuthentication).then((user)=> {
-					if (user !== null && user.length !== 0) {
-						req.body.signin = {user: user};
-						return next();
-					} else {
-						return res.status(401).send(__('You must to signin on the system with the correct credentials'));
-					}
-				})
-				.catch((error) => {
-					return res.status(error.code).send(error.message);
-				});
+				UserManager.checkUserFromDB(userAuthentication)
+					.then((user)=> {
+						if (user !== null && user.length !== 0) {
+							req.body.signin = {user: user};
+							return next();
+						} else {
+							throw AppError('INCORRECT_CREDENTIALS');
+						}
+					})
+					.catch((error) => {
+						return next(error);
+					});
+
+			} catch (exception) {
+				return next(exception);
+			}
 		} else {
-			return res.status(401).send(__('You must to signin on the system with the correct credentials'));
+			return next(AppError('INCORRECT_CREDENTIALS'));
 		}
 	};
 })();
