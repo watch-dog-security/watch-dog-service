@@ -10,7 +10,8 @@
 	"jwt": {
 		"secret": "secreto",
 		"verification": true,
-		"algorithm": "HS512"
+		"algorithm": "HS512",
+		"expire": 604800
 	},
 	"mongodb": {
 		"host": "mongodb://localhost",

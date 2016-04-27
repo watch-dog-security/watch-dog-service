@@ -66,5 +66,10 @@ describe('Server config', ()=> {
 			assert(config.jwt.algorithm);
 			done();
 		});
+
+		it('Should have expire value', (done) => {
+			assert(config.jwt.expire);
+			done();
+		});
     });
 });
