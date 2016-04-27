@@ -12,11 +12,11 @@ let UserManager = () => {
  * @returns {{_id: *, username: *, encripted_at: Date}}
  */
 UserManager.parseUserToPayload = (userFromRequest) => {
-		if(!UserManager.checkUserFromRequest(userFromRequest)) {
-			throw AppError('WRONG_USER_FROM_REQUEST');
-		}
-
 		try{
+			if(!UserManager.checkUserFromRequest(userFromRequest)) {
+				throw AppError('WRONG_USER_FROM_REQUEST');
+			}
+
 			return payload.createPayload(userFromRequest._id, userFromRequest.username);
 		}catch(exception){
 			throw (exception)
