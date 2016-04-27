@@ -1,13 +1,16 @@
 'use strict';
 
-const i18n = require("i18n");
+const i18n = require('i18n');
 const express = require('express');
 const config = require('./../../../config/server/config.js');
+
 let assert = require('assert');
-let authentication = require('./../../../modules/authentication/authentication.js');
 let sinon = require('sinon');
 let chai = require('chai');
 let expect = chai.expect;
+
+let AppError = require('./../../../modules/error/manager');
+let authentication = require('./../../../modules/authentication/authentication.js');
 
 describe('Authentication module', () => {
 	let app;
@@ -69,32 +72,32 @@ describe('Authentication module', () => {
 			done();
 		});
 
-		it('should throw exception when authentication header have more than 2 parts', (done) => {
+		it('should throw an Error "' + AppError('AUTH_HEADER_NOT_CORRECT').message + '" when authentication header have more than 2 parts', (done) => {
 			var authorizationHeader = 'Basic cHJ1ZWJh OnBydWViYQ==';
 
 			expect(() => {
 				authentication.decode(authorizationHeader)
-			}).to.throw(__('Authorization header is not correct'));
+			}).to.throw(AppError('AUTH_HEADER_NOT_CORRECT').message);
 
 			done();
 		});
 
-		it('should throw exception when authentication header have less that 2 parts', (done) => {
+		it('should throw an Error "' + AppError('AUTH_HEADER_NOT_CORRECT').message + '" when authentication header have less that 2 parts', (done) => {
 			var authorizationHeader = 'BasiccHJ1ZWJhOnBydWViYQ==';
 
 			expect(() => {
 				authentication.decode(authorizationHeader)
-			}).to.throw(__('Authorization header is not correct'));
+			}).to.throw(AppError('AUTH_HEADER_NOT_CORRECT').message);
 
 			done();
 		});
 
-		it('should throw exception when authentication header is undefined', (done) => {
+		it('should throw an Error "' + AppError('AUTH_HEADER_NOT_CORRECT').message + '" when authentication header is undefined', (done) => {
 			var authorizationHeader = undefined;
 
 			expect(() => {
 				authentication.decode(authorizationHeader)
-			}).to.throw(__('Authorization header is not correct'));
+			}).to.throw(AppError('AUTH_HEADER_NOT_CORRECT').message);
 
 			done();
 		});
@@ -113,12 +116,12 @@ describe('Authentication module', () => {
 			done();
 		});
 
-		it('should throw exception when header is undefined', (done) => {
+		it('should throw an Error "' + AppError('AUTH_HEADER_NOT_CORRECT').message + '" when header is undefined', (done) => {
 			var authorizationHeader = undefined;
 
 			expect(() => {
 				authentication.getUserAuthentication(authorizationHeader)
-			}).to.throw(__('Authorization header is not correct'));
+			}).to.throw(AppError('AUTH_HEADER_NOT_CORRECT').message);
 
 			done();
 		});
@@ -137,23 +140,22 @@ describe('Authentication module', () => {
 			done();
 		});
 
-		it('should throw an Error when authoritation header is undefined', (done) => {
+		it('should throw an Error "' + AppError('AUTH_HEADER_NOT_CORRECT').message + '" when authoritation header is undefined', (done) => {
 			var authorizationHeaderDecodedOnBase64 = undefined;
 
 			expect(() => {
 				authentication.parseAuthRequestToUserModel(authorizationHeaderDecodedOnBase64)
-			}).to.throw(__('Authorization header is not correct'));
+			}).to.throw(AppError('AUTH_HEADER_NOT_CORRECT').message);
 
 			done();
 		});
 	});
 
 	describe('Check Function getAuthenticationException', () => {
-		it('should return an Error exception', (done) => {
+		it('should return an Error "' + AppError('AUTH_HEADER_NOT_CORRECT').message + '" exception', (done) => {
 			expect(() => {
 				throw authentication.getAuthenticationException()
-			}).to.throw(__('Authorization header is not correct'));
-
+			}).to.throw(AppError('AUTH_HEADER_NOT_CORRECT').message);
 			done();
 		});
 	});
