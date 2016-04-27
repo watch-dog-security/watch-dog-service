@@ -1,5 +1,7 @@
 'use strict';
 
+const config = require('./../../config/server/config.js');
+
 let AppError = require('./../../modules/error/manager');
 
 /**
@@ -18,7 +20,8 @@ exports.createPayload = (_id, username) =>{
 };
 
 /**
- * Prepare payload with _id and username
+ * Prepare payload with _id and username, this method generate the payload for JWT standard, this needs exp propery to
+ * have control of the expiration time of the token. jwt-simple library defines these standard properties.
  * @param _id
  * @param username
  * @returns {{_id: *, username: *, encripted_at: Date}}
@@ -27,7 +30,7 @@ exports.fillPayload = (_id, username) =>{
 	return {
 		_id: _id,
 		username: username,
-		encripted_at: new Date()
+		exp: new Date() + config.jwt.expire
 	};
 };
 
@@ -40,5 +43,5 @@ exports.checkPayload = (payload) => {
     return !!( payload &&
 	payload._id &&
     payload.username &&
-    payload.encripted_at);
+    payload.exp);
 };

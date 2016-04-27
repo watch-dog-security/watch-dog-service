@@ -51,7 +51,7 @@ describe('Payload module', ()=> {
 			let checkedPayload = payload.checkPayload({
 				_id: '1',
 				username: 'UserNamePrueba',
-				encripted_at: new Date()
+				exp: new Date()
 			});
 			assert.equal(checkedPayload, true);
 			done();
@@ -77,7 +77,7 @@ describe('Payload module', ()=> {
 	});
 
 	describe('check function createPayload', ()=> {
-		it('Should promise resolve with payload', (done) => {
+		it('Should return a correct payload', (done) => {
 			let oPayload = payload.createPayload(mock.configuration._id, mock.configuration.username);
 			assert(oPayload);
 			assert.equal(oPayload.username, mock.configuration.username);
@@ -85,7 +85,7 @@ describe('Payload module', ()=> {
 			done();
 		});
 
-		it('Should promise reject by undefined _id', (done) => {
+		it('Should return an error "' + __('Something is going wrong with the data of the payload') + '" when _id is undefined', (done) => {
 			try {
 				payload.createPayload(undefined, mock.configuration.username);
 			} catch(exception){
@@ -94,7 +94,7 @@ describe('Payload module', ()=> {
 			}
 		});
 
-		it('Should promise reject by undefined username', (done) => {
+		it('Should return an error "' + __('Something is going wrong with the data of the payload') + '" when username is undefined', (done) => {
 			try {
 				payload.createPayload( mock.configuration._id ,undefined);
 			} catch(exception){

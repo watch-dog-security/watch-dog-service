@@ -98,7 +98,7 @@ describe('JWT module', ()=> {
 			let decodeToken = jwt.decode(token);
 			let username = decodeToken.username;
 			let _id = decodeToken._id;
-			let encripted_at = decodeToken.encripted_at;
+			let encripted_at = decodeToken.exp;
 
 			assert(username);
 			assert(encripted_at);

@@ -19,7 +19,7 @@ mocks.configurationOfThePayloadTokenNotActive = {
 mocks.configurationOfThePayloadTokenExpired = {
 	_id: '1',
 	username: 'UserNamePrueba',
-	exp: Date.now() / 1000 - 1
+	exp: (Date.now() / 1000) - 1000
 };
 
 mocks.configurationWithoutKey = {
