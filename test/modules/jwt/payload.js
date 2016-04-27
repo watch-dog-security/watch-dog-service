@@ -3,9 +3,11 @@
 const i18n = require("i18n");
 const express = require('express');
 const config = require('./../../../config/server/config.js');
+
 let assert = require('assert');
 let payload = require('./../../../modules/jwt/payload');
 let mock = require('./../../mocks/modules/jwt/payload');
+let AppError = require('./../../../modules/error/manager');
 
 describe('Payload module', ()=> {
 	let app;
@@ -85,20 +87,20 @@ describe('Payload module', ()=> {
 			done();
 		});
 
-		it('Should return an error "' + __('Something is going wrong with the data of the payload') + '" when _id is undefined', (done) => {
+		it('Should return an error "' + AppError('WRONG_PAYLOAD').message + '" when _id is undefined', (done) => {
 			try {
 				payload.createPayload(undefined, mock.configuration.username);
 			} catch(exception){
-				assert.equal(exception.message, __('Something is going wrong with the data of the payload'));
+				assert.equal(exception.message,  AppError('WRONG_PAYLOAD').message);
 				done();
 			}
 		});
 
-		it('Should return an error "' + __('Something is going wrong with the data of the payload') + '" when username is undefined', (done) => {
+		it('Should return an error "' +  AppError('WRONG_PAYLOAD').message + '" when username is undefined', (done) => {
 			try {
 				payload.createPayload( mock.configuration._id ,undefined);
 			} catch(exception){
-				assert.equal(exception.message, __('Something is going wrong with the data of the payload'));
+				assert.equal(exception.message,  AppError('WRONG_PAYLOAD').message);
 				done();
 			}
 		});
