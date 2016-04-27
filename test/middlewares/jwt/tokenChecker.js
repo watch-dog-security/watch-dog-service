@@ -8,8 +8,8 @@ let UserManager = require('./../../../modules/users/user');
 let mock = require('./../../mocks/middlewares/jwt/tokenChecker');
 let User = require('./../../../models/user');
 let expect = require('chai').expect;
-let sinon  = require('sinon');
-let httpMocks  = require('node-mocks-http');
+let sinon = require('sinon');
+let httpMocks = require('node-mocks-http');
 let AppError = require('./../../../modules/error/manager');
 
 const bodyParser = require('body-parser');
@@ -24,34 +24,31 @@ describe('Middleware tokenChecker: ', () => {
 
 	let prepareValidToken = (callback) => {
 		let userFromManager = UserManager.parseJsonToUserModel(mock.validUser);
-		UserManager.parseUserToPayload(userFromManager).then((parsedUser) => {
-			let encryptedJWT = jwt.encrypt(parsedUser);
+		const payload = UserManager.parseUserToPayload(userFromManager);
+		const encryptedJWT = jwt.encrypt(payload);
 
-			userFromManager.save((err)=> {
-				if (!err) {
-					mock.validToken.token = encryptedJWT;
-					mock.validToken.id = userFromManager._id.toString();
+		userFromManager.save((err)=> {
+			if (!err) {
+				mock.validToken.token = encryptedJWT;
+				mock.validToken.id = userFromManager._id.toString();
 
-					redisInstance.set(mock.validToken.id, mock.validToken.token);
-					callback();
-				}
-			});
+				redisInstance.set(mock.validToken.id, mock.validToken.token);
+				callback();
+			}
 		});
-
 	};
 
 	let prepareNotRedisToken = (callback) => {
 		let userFromManager = UserManager.parseJsonToUserModel(mock.validUserForInvalidTokenOnRedis);
-		UserManager.parseUserToPayload(userFromManager).then((parsedUser) => {
-			let encryptedJWT = jwt.encrypt(parsedUser);
 
-			userFromManager.save((err)=> {
-				if (!err) {
-					mock.notPresentTokenOnRedis.token = encryptedJWT;
-					mock.notPresentTokenOnRedis.id = userFromManager._id.toString();
-					callback();
-				}
-			});
+		const payload = UserManager.parseUserToPayload(userFromManager);
+		const encryptedJWT = jwt.encrypt(payload);
+		userFromManager.save((err)=> {
+			if (!err) {
+				mock.notPresentTokenOnRedis.token = encryptedJWT;
+				mock.notPresentTokenOnRedis.id = userFromManager._id.toString();
+				callback();
+			}
 		});
 	};
 
@@ -104,11 +101,11 @@ describe('Middleware tokenChecker: ', () => {
 	it('should return true when next is called', (done) => {
 		let res = httpMocks.createResponse(app);
 		let req = httpMocks.createRequest({
-			headers:  {
+			headers: {
 				token: mock.validToken.token
 			},
 			app: {
-				get: function(name){
+				get: function (name) {
 					return app.get(name)
 				}
 			}
@@ -127,12 +124,12 @@ describe('Middleware tokenChecker: ', () => {
 
 		request(app)
 			.post('/')
-			.set('token',token)
+			.set('token', token)
 			.send({})
 			.expect(401)
 			.expect(__('Token is not valid, please, get other'))
 			.end((error, response) => {
-				expect(response.error.text).to.contain( AppError('TOKEN_NOT_VALID').message);
+				expect(response.error.text).to.contain(AppError('TOKEN_NOT_VALID').message);
 				done();
 			});
 	});
@@ -140,23 +137,23 @@ describe('Middleware tokenChecker: ', () => {
 	it('should return an Error "' + AppError('SIGNATURE_VERIFICATION').message + '" when token signature is not correct', (done) => {
 		request(app)
 			.post('/')
-			.set('token',mock.tokenSignedWithOtherPassword)
+			.set('token', mock.tokenSignedWithOtherPassword)
 			.send({})
 			.expect(401)
 			.end((error, response) => {
-				expect(response.error.text).to.contain( AppError('SIGNATURE_VERIFICATION').message);
+				expect(response.error.text).to.contain(AppError('SIGNATURE_VERIFICATION').message);
 				done();
 			});
 	});
 
-	it('Should return an Error "' + AppError('TOKEN_NOT_SUPPLIED').message + '" when token is not supplied' , (done) => {
+	it('Should return an Error "' + AppError('TOKEN_NOT_SUPPLIED').message + '" when token is not supplied', (done) => {
 		request(app)
 			.post('/')
-			.set('token',mock.voidStringToken)
+			.set('token', mock.voidStringToken)
 			.send({})
 			.expect(401)
 			.end((error, response) => {
-				expect(response.error.text).to.contain( AppError('TOKEN_NOT_SUPPLIED').message);
+				expect(response.error.text).to.contain(AppError('TOKEN_NOT_SUPPLIED').message);
 				done();
 			});
 	});
@@ -164,7 +161,7 @@ describe('Middleware tokenChecker: ', () => {
 	it('Should return an Error "' + AppError('TOKEN_NOT_SUPPLIED').message + '" when token is void object', (done) => {
 		request(app)
 			.post('/')
-			.send('token',mock.voidObject)
+			.send('token', mock.voidObject)
 			.expect(401)
 			.end((error, response) => {
 				expect(response.error.text).to.contain(AppError('TOKEN_NOT_SUPPLIED').message);
@@ -176,9 +173,9 @@ describe('Middleware tokenChecker: ', () => {
 		//TODO
 		done();
 		/**request(app)
-			.post('/')
-			.set('token',mock.invalidToken.token)
-			.send({})
-			.expect(401,done);**/
+		 .post('/')
+		 .set('token',mock.invalidToken.token)
+		 .send({})
+		 .expect(401,done);**/
 	});
 });

@@ -34,9 +34,9 @@ describe('Payload module', ()=> {
 		});
 	});
 
-	describe('check function createPayload', ()=> {
+	describe('check function fillPayload', ()=> {
 		it('Should create a payload object', (done) => {
-			let createdPayload = payload.createPayload(mock.configuration._id, mock.configuration.username);
+			let createdPayload = payload.fillPayload(mock.configuration._id, mock.configuration.username);
 
 			assert(createdPayload);
 			assert.equal(createdPayload.username, mock.configuration.username);
@@ -46,9 +46,9 @@ describe('Payload module', ()=> {
 		});
 	});
 
-	describe('check function checkUndefinedPayload', ()=> {
+	describe('check function checkPayload', ()=> {
 		it('Should return true when payload is correct', (done) => {
-			let checkedPayload = payload.checkUndefinedPayload({
+			let checkedPayload = payload.checkPayload({
 				_id: '1',
 				username: 'UserNamePrueba',
 				encripted_at: new Date()
@@ -58,49 +58,49 @@ describe('Payload module', ()=> {
 		});
 
 		it('Should return false when payload have undefined _id', (done) => {
-			let checkedPayload = payload.checkUndefinedPayload(mock.payloadIdUndefined);
+			let checkedPayload = payload.checkPayload(mock.payloadIdUndefined);
 			assert.equal(checkedPayload, false);
 			done();
 		});
 
 		it('Should return false when payload have undefined username', (done) => {
-			let checkedPayload = payload.checkUndefinedPayload(mock.payloadUsernameUndefined);
+			let checkedPayload = payload.checkPayload(mock.payloadUsernameUndefined);
 			assert.equal(checkedPayload, false);
 			done();
 		});
 
 		it('Should return false when payload have undefined encripted_at', (done) => {
-			let checkedPayload = payload.checkUndefinedPayload(mock.payloadEncriptedUndefined);
+			let checkedPayload = payload.checkPayload(mock.payloadEncriptedUndefined);
 			assert.equal(checkedPayload, false);
 			done();
 		});
 	});
 
-	describe('check function createPayloadVerifiedPromise', ()=> {
+	describe('check function createPayload', ()=> {
 		it('Should promise resolve with payload', (done) => {
-			payload.createPayloadVerifiedPromise(mock.configuration._id, mock.configuration.username)
-				.then((payload) => {
-					assert(payload);
-					assert.equal(payload.username, mock.configuration.username);
-					assert.equal(payload._id, mock.configuration._id);
-					done();
-				});
+			let oPayload = payload.createPayload(mock.configuration._id, mock.configuration.username);
+			assert(oPayload);
+			assert.equal(oPayload.username, mock.configuration.username);
+			assert.equal(oPayload._id, mock.configuration._id);
+			done();
 		});
 
 		it('Should promise reject by undefined _id', (done) => {
-			payload.createPayloadVerifiedPromise(undefined, mock.configuration.username)
-				.catch((error) => {
-					assert.equal(error.message, __('Something is going wrong with the data of the payload'));
-					done();
-				});
+			try {
+				payload.createPayload(undefined, mock.configuration.username);
+			} catch(exception){
+				assert.equal(exception.message, __('Something is going wrong with the data of the payload'));
+				done();
+			}
 		});
 
 		it('Should promise reject by undefined username', (done) => {
-			payload.createPayloadVerifiedPromise( mock.configuration._id ,undefined)
-				.catch((error) => {
-					assert.deepEqual(error.message, __('Something is going wrong with the data of the payload'));
-					done();
-				});
+			try {
+				payload.createPayload( mock.configuration._id ,undefined);
+			} catch(exception){
+				assert.equal(exception.message, __('Something is going wrong with the data of the payload'));
+				done();
+			}
 		});
 	});
 });

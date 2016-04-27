@@ -244,26 +244,29 @@ describe('User module', () => {
 
 	describe('Check Function parseUserToPayload', () => {
 		it('should promiss resolve with a payload', (done) => {
-			UserManager.parseUserToPayload(mockPayload.configuration).then((payload) => {
-				assert.equal(payload._id, mockPayload.configuration._id);
-				assert.equal(payload.username, mockPayload.configuration.username);
-				assert(payload.encripted_at);
-				done();
-			});
+			let payload = UserManager.parseUserToPayload(mockPayload.configuration);
+			assert.equal(payload._id, mockPayload.configuration._id);
+			assert.equal(payload.username, mockPayload.configuration.username);
+			assert(payload.encripted_at);
+			done();
 		});
 
 		it('should promiss reject with a _id undefined', (done) => {
-			UserManager.parseUserToPayload(mockPayload.configurationUndefinedId).catch((error) => {
-				assert.equal(error.message, i18n.__('Something is going wrong with the data of the user from request'));
+			try{
+				UserManager.parseUserToPayload(mockPayload.configurationUndefinedId);
+			}catch(exception){
+				assert.equal(exception.message, i18n.__('Something is going wrong with the data of the user from request'));
 				done();
-			});
+			}
 		});
 
 		it('should promiss reject with a username undefined', (done) => {
-			UserManager.parseUserToPayload(mockPayload.configurationUndefinedUsername).catch((error) => {
-				assert.equal(error.message, i18n.__('Something is going wrong with the data of the user from request'));
+			try{
+				UserManager.parseUserToPayload(mockPayload.configurationUndefinedUsername);
+			}catch(exception){
+				assert.equal(exception.message, i18n.__('Something is going wrong with the data of the user from request'));
 				done();
-			});
+			}
 		});
 	});
 

@@ -62,7 +62,7 @@ mocks.invalidRequest = {
 	}
 };
 
-mocks.validPayload = payload.createPayload(mocks.validUser._id, mocks.validUser.username);
+mocks.validPayload = payload.fillPayload(mocks.validUser._id, mocks.validUser.username);
 
 mocks.encriptedValidPayload = jwt.encrypt(mocks.validPayload);
 

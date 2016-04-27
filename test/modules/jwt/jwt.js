@@ -16,7 +16,7 @@ describe('JWT module', ()=> {
 		let userPayload;
 
 		beforeEach((done) => {
-			userPayload = payload.createPayload(
+			userPayload = payload.fillPayload(
 				mock.configurationOfThePayload._id,
 				mock.configurationOfThePayload.username
 			);
@@ -90,7 +90,7 @@ describe('JWT module', ()=> {
 		});
 
 		it('Should token be valid', (done) => {
-			let userPayload = payload.createPayload(
+			let userPayload = payload.fillPayload(
 				mock.configurationOfThePayload._id,
 				mock.configurationOfThePayload.username
 			);

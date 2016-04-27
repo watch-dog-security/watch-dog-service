@@ -8,24 +8,25 @@ module.exports = (() => {
 		let userFromRequest = getUserFromRequest(req);
 		let redisInstance = req.app.get('redisInstance');
 
-		UserManager.parseUserToPayload(userFromRequest).then((payload) => {
+		try {
+			let payload = UserManager.parseUserToPayload(userFromRequest);
 			let encryptedJWT = jwt.encrypt(payload);
-			redisInstance.set(payload._id.toString() , encryptedJWT);
+			redisInstance.set(payload._id.toString(), encryptedJWT);
 			return res.status(200).send(encryptedJWT);
-		}).catch((error) => {
-			return next(error);
-		});
+		} catch (exception) {
+			return next(exception);
+		}
 	};
 })();
 
 let getUserFromRequest = (req) => {
-	if(checkBody(req)){
+	if (checkBody(req)) {
 		return req.body.signin.user;
 	}
 	return undefined;
 };
 
-let checkBody = (req) =>{
+let checkBody = (req) => {
 	return !!(req.body &&
 	req.body.signin &&
 	req.body.signin.user)

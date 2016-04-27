@@ -9,20 +9,18 @@ let UserManager = () => {
 /**
  * Parse User header from json to
  * @param userFromRequest
- * @returns Promise
+ * @returns {{_id: *, username: *, encripted_at: Date}}
  */
 UserManager.parseUserToPayload = (userFromRequest) => {
-	return new Promise((resolve, reject) => {
 		if(!UserManager.checkUserFromRequest(userFromRequest)) {
-			return reject(AppError('WRONG_USER_FROM_REQUEST'));
+			throw AppError('WRONG_USER_FROM_REQUEST');
 		}
 
-		payload.createPayloadVerifiedPromise(userFromRequest._id, userFromRequest.username).then((payload) => {
-			return resolve(payload);
-		}).catch((error) => {
-			return reject(error);
-		});
-	});
+		try{
+			return payload.createPayload(userFromRequest._id, userFromRequest.username);
+		}catch(exception){
+			throw (exception)
+		}
 };
 
 /**
