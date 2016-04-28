@@ -3,7 +3,7 @@
 const config = require('./../../config/server/config');
 const mockUserModel = require('./../mocks/models/user');
 const mongoose = require('mongoose');
-const i18n = require("i18n");
+const i18n = require('i18n');
 const express = require('express');
 const expect = require('chai').expect;
 

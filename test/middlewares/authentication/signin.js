@@ -5,7 +5,7 @@ let request = require('supertest');
 let assert = require('assert');
 let signin = require('./../../../middlewares/authentication/signin');
 let User = require('./../../../models/user');
-let AppError = require('./../../../modules/error/manager');
+let appError = require('./../../../modules/error/manager');
 let expect = require('chai').expect;
 
 const bodyParser = require('body-parser');
@@ -64,51 +64,51 @@ describe('Middleware SignIn: ', () => {
 		});
 	});
 
-	it('Should reject with an Error "' + AppError('INCORRECT_CREDENTIALS').message + '" when user does not exist on mongodb', (done) => {
+	it('Should reject with an Error "' + appError('INCORRECT_CREDENTIALS').message + '" when user does not exist on mongodb', (done) => {
 		request(app)
 			.post('/')
 			.set('Authorization', mock.notExistAuthenticationHeader)
 			.set('Content-Type', 'application/json')
 			.send({})
 			.end((error, response) => {
-				expect(response.error.text).to.contain(AppError('INCORRECT_CREDENTIALS').message);
+				expect(response.error.text).to.contain(appError('INCORRECT_CREDENTIALS').message);
 				done();
 			});
 	});
 
-	it('Should reject with an Error "' + AppError('INCORRECT_CREDENTIALS').message + '" when user does not include authentication headers', (done) => {
+	it('Should reject with an Error "' + appError('INCORRECT_CREDENTIALS').message + '" when user does not include authentication headers', (done) => {
 		request(app)
 			.post('/')
 			.set('Authorization', '')
 			.set('Content-Type', 'application/json')
 			.send({})
 			.end((error, response) => {
-				expect(response.error.text).to.contain(AppError('INCORRECT_CREDENTIALS').message);
+				expect(response.error.text).to.contain(appError('INCORRECT_CREDENTIALS').message);
 				done();
 			});
 	});
 
-	it('Should send an Error "' + AppError('AUTH_HEADER_NOT_CORRECT').message + '" when authentication on base64 formation is not correct', (done) => {
+	it('Should send an Error "' + appError('AUTH_HEADER_NOT_CORRECT').message + '" when authentication on base64 formation is not correct', (done) => {
 		request(app)
 			.post('/')
 			.set('Authorization', mock.invalidAuthenticationHeader)
 			.set('Content-Type', 'application/json')
 			.send({})
 			.end((error, response) => {
-				expect(response.error.text).to.contain(AppError('AUTH_HEADER_NOT_CORRECT').message);
+				expect(response.error.text).to.contain(appError('AUTH_HEADER_NOT_CORRECT').message);
 				done();
 			});
 	});
 
 
-	it('Should send an Error "' +  AppError('USER_OPTIONS').message + '" when authentication header formation is not correct', (done) => {
+	it('Should send an Error "' +  appError('USER_OPTIONS').message + '" when authentication header formation is not correct', (done) => {
 		request(app)
 			.post('/')
 			.set('Authorization', mock.invalidFormatedAuthenticationHeader)
 			.set('Content-Type', 'application/json')
 			.send({})
 			.end((error, response) => {
-				expect(response.error.text).to.contain(AppError('USER_OPTIONS').message);
+				expect(response.error.text).to.contain(appError('USER_OPTIONS').message);
 				done();
 			});
 	});

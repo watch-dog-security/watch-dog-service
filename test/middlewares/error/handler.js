@@ -6,19 +6,19 @@ let expect = require('chai').expect;
 let sinon  = require('sinon');
 let httpMocks  = require('node-mocks-http');
 let handlerError = require('./../../../middlewares/error/handler');
-let AppError = require('./../../../modules/error/manager');
+let appError = require('./../../../modules/error/manager');
 
 describe('Middleware handler error: ', () => {
 
 
-	it('Should thrown an Error "' + AppError('EMAIL_NOT_CORRECT').message + '"', (done) => {
+	it('Should thrown an Error "' + appError('EMAIL_NOT_CORRECT').message + '"', (done) => {
 		let app = express();
 		let res = httpMocks.createResponse(app);
 		let req = httpMocks.createRequest();
 
-		handlerError(AppError('EMAIL_NOT_CORRECT'),req, res, () => {});
+		handlerError(appError('EMAIL_NOT_CORRECT'),req, res, () => {});
 
-		assert.equal(res.statusCode, AppError('EMAIL_NOT_CORRECT').code);
+		assert.equal(res.statusCode, appError('EMAIL_NOT_CORRECT').code);
 		done()
 	});
 

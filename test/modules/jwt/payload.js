@@ -7,7 +7,7 @@ const config = require('./../../../config/server/config.js');
 let assert = require('assert');
 let payload = require('./../../../modules/jwt/payload');
 let mock = require('./../../mocks/modules/jwt/payload');
-let AppError = require('./../../../modules/error/manager');
+let appError = require('./../../../modules/error/manager');
 
 describe('Payload module', ()=> {
 	let app;
@@ -78,7 +78,7 @@ describe('Payload module', ()=> {
 		});
 	});
 
-	describe('check function createPayload', ()=> {
+	describe('check function createPayload', () => {
 		it('Should return a correct payload', (done) => {
 			let oPayload = payload.createPayload(mock.configuration._id, mock.configuration.username);
 			assert(oPayload);
@@ -87,20 +87,20 @@ describe('Payload module', ()=> {
 			done();
 		});
 
-		it('Should return an error "' + AppError('WRONG_PAYLOAD').message + '" when _id is undefined', (done) => {
+		it('Should return an error "' + appError('WRONG_PAYLOAD').message + '" when _id is undefined', (done) => {
 			try {
 				payload.createPayload(undefined, mock.configuration.username);
 			} catch(exception){
-				assert.equal(exception.message,  AppError('WRONG_PAYLOAD').message);
+				assert.equal(exception.message,  appError('WRONG_PAYLOAD').message);
 				done();
 			}
 		});
 
-		it('Should return an error "' +  AppError('WRONG_PAYLOAD').message + '" when username is undefined', (done) => {
+		it('Should return an error "' +  appError('WRONG_PAYLOAD').message + '" when username is undefined', (done) => {
 			try {
 				payload.createPayload( mock.configuration._id ,undefined);
 			} catch(exception){
-				assert.equal(exception.message,  AppError('WRONG_PAYLOAD').message);
+				assert.equal(exception.message,  appError('WRONG_PAYLOAD').message);
 				done();
 			}
 		});

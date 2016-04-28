@@ -4,7 +4,7 @@ let express = require('express');
 let request = require('supertest');
 let signup = require('./../../../middlewares/authentication/signup');
 let User = require('./../../../models/user');
-let AppError = require('./../../../modules/error/manager');
+let appError = require('./../../../modules/error/manager');
 let expect = require('chai').expect;
 
 const bodyParser = require('body-parser');
@@ -57,22 +57,22 @@ describe('Middleware: Signup', () => {
 			.expect(__('User saved successfully'),done);
 	});
 
-	it('should return an error "' + AppError('JSON_FORMATION').message + '" when body request is undefined', (done) => {
+	it('should return an error "' + appError('JSON_FORMATION').message + '" when body request is undefined', (done) => {
 		request(app)
 			.post('/')
 			.send(undefined)
 			.end((error, response) => {
-				expect(response.error.text).to.contain(AppError('BODY_UNDEFINED').message);
+				expect(response.error.text).to.contain(appError('BODY_UNDEFINED').message);
 				done();
 			});
 	});
 
-	it('should return an error "' + AppError('JSON_FORMATION').message + '" when json formation is incorrect', (done) => {
+	it('should return an error "' + appError('JSON_FORMATION').message + '" when json formation is incorrect', (done) => {
 		request(app)
 			.post('/')
 			.send(mock.userJSONUndefinedUsername)
 			.end((error, response) => {
-				expect(response.error.text).to.contain(AppError('JSON_FORMATION').message);
+				expect(response.error.text).to.contain(appError('JSON_FORMATION').message);
 				done();
 			});
 	});

@@ -9,7 +9,7 @@ let User = require('./../../../models/user');
 let expect = require('chai').expect;
 let sinon = require('sinon');
 let httpMocks = require('node-mocks-http');
-let AppError = require('./../../../modules/error/manager');
+let appError = require('./../../../modules/error/manager');
 
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -118,7 +118,7 @@ describe('Middleware tokenChecker: ', () => {
 		tokenChecker(req, res, spy);
 	});
 
-	it('should return an Error "' + AppError('TOKEN_NOT_VALID').message + '" when token is not on redis', (done) => {
+	it('should return an Error "' + appError('TOKEN_NOT_VALID').message + '" when token is not on redis', (done) => {
 		let token = jwt.encrypt(mock.invalidUser);
 
 		request(app)
@@ -128,42 +128,42 @@ describe('Middleware tokenChecker: ', () => {
 			.expect(401)
 			.expect(__('Token is not valid, please, get other'))
 			.end((error, response) => {
-				expect(response.error.text).to.contain(AppError('TOKEN_NOT_VALID').message);
+				expect(response.error.text).to.contain(appError('TOKEN_NOT_VALID').message);
 				done();
 			});
 	});
 
-	it('should return an Error "' + AppError('SIGNATURE_VERIFICATION').message + '" when token signature is not correct', (done) => {
+	it('should return an Error "' + appError('SIGNATURE_VERIFICATION').message + '" when token signature is not correct', (done) => {
 		request(app)
 			.post('/')
 			.set('token', mock.tokenSignedWithOtherPassword)
 			.send({})
 			.expect(401)
 			.end((error, response) => {
-				expect(response.error.text).to.contain(AppError('SIGNATURE_VERIFICATION').message);
+				expect(response.error.text).to.contain(appError('SIGNATURE_VERIFICATION').message);
 				done();
 			});
 	});
 
-	it('Should return an Error "' + AppError('TOKEN_NOT_SUPPLIED').message + '" when token is not supplied', (done) => {
+	it('Should return an Error "' + appError('TOKEN_NOT_SUPPLIED').message + '" when token is not supplied', (done) => {
 		request(app)
 			.post('/')
 			.set('token', mock.voidStringToken)
 			.send({})
 			.expect(401)
 			.end((error, response) => {
-				expect(response.error.text).to.contain(AppError('TOKEN_NOT_SUPPLIED').message);
+				expect(response.error.text).to.contain(appError('TOKEN_NOT_SUPPLIED').message);
 				done();
 			});
 	});
 
-	it('Should return an Error "' + AppError('TOKEN_NOT_SUPPLIED').message + '" when token is void object', (done) => {
+	it('Should return an Error "' + appError('TOKEN_NOT_SUPPLIED').message + '" when token is void object', (done) => {
 		request(app)
 			.post('/')
 			.send('token', mock.voidObject)
 			.expect(401)
 			.end((error, response) => {
-				expect(response.error.text).to.contain(AppError('TOKEN_NOT_SUPPLIED').message);
+				expect(response.error.text).to.contain(appError('TOKEN_NOT_SUPPLIED').message);
 				done();
 			});
 	});

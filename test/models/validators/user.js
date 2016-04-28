@@ -4,8 +4,8 @@ let assert = require('assert');
 const mockValidatorUserModel = require('./../../mocks/models/validators/user.js');
 const validator = require('./../../../models/validators/user.js');
 
-describe('User validator', ()=> {
-	describe('Function validateEmail ', ()=> {
+describe('User validator', () => {
+	describe('Function validateEmail ', () => {
 		it('should return true when email "' + mockValidatorUserModel.validEmail + '" is correct', (done) => {
 			let validatedEmail = validator.validateEmail(mockValidatorUserModel.validEmail);
 			assert.equal(validatedEmail, true);
@@ -43,7 +43,7 @@ describe('User validator', ()=> {
 		});
 	});
 
-	describe('Function validateCountryCode ', ()=> {
+	describe('Function validateCountryCode ', () => {
 		it('should return true when country code "' + mockValidatorUserModel.validCountryCode + '" is correct', (done) => {
 			let validatedCountryCode = validator.validateCountryCode(mockValidatorUserModel.validCountryCode);
 			assert.equal(validatedCountryCode, true);
