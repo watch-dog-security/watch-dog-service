@@ -1,7 +1,7 @@
 'use strict';
 
 const errorsJSON = require('./../../config/errors/errors.json');
-const i18n = require("i18n");
+const i18n = require('i18n');
 
 i18n.configure({
 	directory: __dirname + '/../../config/locales',
@@ -53,10 +53,10 @@ let getErrorByTag = (tag) => {
 			return appError(defaultError);
 		}else{
 			return appError({
-				"id": "0",
-				"type": "UNEXPECTED",
-				"code": "500",
-				"message": "Unexpected error, please contact with admin service"
+				'id': '0',
+				'type': 'UNEXPECTED',
+				'code': '500',
+				'message': 'Unexpected error, please contact with admin service'
 			})
 		}
 	}

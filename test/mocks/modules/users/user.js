@@ -24,7 +24,6 @@ mocks.userOptionsUserNameNotCorrect = {
 };
 
 mocks.userOptionsUserNameUndefined = {
-	username: undefined,
 	password: 'prueba'
 };
 mocks.userOptionsUndefined = undefined;
@@ -35,8 +34,7 @@ mocks.userOptionsPasswordNotCorrect = {
 };
 
 mocks.userOptionsPasswordUndefined = {
-	username: 'prueba',
-	password: undefined
+	username: 'prueba'
 };
 
 mocks.userJson = {
@@ -60,7 +58,6 @@ mocks.userJsonValidTwo = {
 };
 
 mocks.userJSONUndefinedUsername = {
-	fullname: undefined,
 	username: 'albertoig',
 	password: '1234',
 	birthdate: '01/01/2001',
@@ -95,7 +92,6 @@ mocks.userJsonFullNameFormation = {
 };
 
 mocks.userJsonFullNameIsUndefined = {
-	fullname: undefined,
 	username: 'albertoig',
 	password: '1234',
 	birthdate: '01/01/2001',
@@ -117,7 +113,6 @@ mocks.userJsonPasswordFormation = {
 mocks.userJsonPasswordIsUndefined = {
 	fullname: 'Alberto Iglesias',
 	username: 'albertoig',
-	password: undefined,
 	birthdate: '01/01/2001',
 	email: 'alberto.uchiha@gmail.com',
 	mobilephone: '666555444',
@@ -136,7 +131,6 @@ mocks.userJsonUserNameFormation = {
 
 mocks.userJsonUserNameIsUndefined = {
 	fullname: 'Alberto Iglesias',
-	username: undefined,
 	password: '1234',
 	birthdate: '01/01/2001',
 	email: 'alberto.uchiha@gmail.com',
@@ -159,7 +153,6 @@ mocks.userJsonEmailIsUndefined = {
 	username: 'albertoig',
 	password: '1234',
 	birthdate: '01/01/2001',
-	email: undefined,
 	mobilephone: '666555444',
 	codecountry: '34'
 };
@@ -180,8 +173,7 @@ mocks.userJsonCodeCountryIsUndefined = {
 	password: '1234',
 	birthdate: '01/01/2001',
 	email: 'alberto.uchiha@gmail.com',
-	mobilephone: '666555444',
-	codecountry: undefined
+	mobilephone: '666555444'
 };
 
 mocks.userJsonMobilePhoneFormation = {
@@ -200,7 +192,6 @@ mocks.userJsonMobilePhoneIsUndefined = {
 	password: '1234',
 	birthdate: '01/01/2001',
 	email: 'alberto.uchiha@gmail.com',
-	mobilephone: undefined,
 	codecountry: '34'
 };
 
@@ -218,7 +209,6 @@ mocks.userJsonBirthdateIsUndefined = {
 	fullname: 'Alberto Iglesias',
 	username: 'albertoig',
 	password: '1234',
-	birthdate: undefined,
 	email: 'alberto.uchiha@gmail.com',
 	mobilephone: '666555444',
 	codecountry: '34'

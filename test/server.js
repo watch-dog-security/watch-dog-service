@@ -4,14 +4,15 @@ let assert = require('assert');
 let mockery = require('mockery');
 let server = require('./../server.js');
 let User = require('./../models/user');
+let undefinedVar;
 const config = require('./../config/server/config');
 
 describe(config.app.name + ' server', () => {
 	describe('APP service', () => {
 
-		let serverInstance = undefined;
-		let serverInstanceMsg = undefined;
-		let serverInstancePort = undefined;
+		let serverInstance;
+		let serverInstanceMsg;
+		let serverInstancePort;
 		const serverConfigPort = config.app.port;
 
 		beforeEach((done) => {
@@ -24,7 +25,7 @@ describe(config.app.name + ' server', () => {
 		});
 
 		afterEach((done) => {
-			if (serverInstance !== undefined) {
+			if (serverInstance) {
 				server.stopApp().then((response) => {
 					serverInstance = response.instance;
 					done();
@@ -34,34 +35,34 @@ describe(config.app.name + ' server', () => {
 			}
 		});
 
-		it("Should promise startApp resolve and start", (done) => {
+		it('Should promise startApp resolve and start', (done) => {
 			assert(serverInstancePort);
 			assert.equal(serverInstanceMsg, __('Server is up on port ') + serverInstancePort);
 			done();
 		});
 
-		it("Should App start on port", (done) => {
+		it('Should App start on port', (done) => {
 			assert(serverConfigPort);
 			assert(serverInstancePort);
 			assert.equal(serverInstancePort, serverConfigPort);
 			done();
 		});
 
-		it("Should promise stopApp resolve and stop App", (done) => {
+		it('Should promise stopApp resolve and stop App', (done) => {
 			server.stopApp().then((response) => {
 				assert.equal(response.msg, __('APP instance is correctly stoped'));
-				assert.equal(response.instance, undefined);
+				assert.equal(response.instance, undefinedVar);
 				serverInstance = response.instance;
 				done();
 			});
 		});
 	});
 
-	describe("Mongoose service", () => {
+	describe('Mongoose service', () => {
 
-		let mongooseInstance = undefined;
-		let mongooseInstanceMsg = undefined;
-		let mongooseInstancePort = undefined;
+		let mongooseInstance;
+		let mongooseInstanceMsg;
+		let mongooseInstancePort;
 		const mongooseConfigPort = config.database.mongodb.port;
 
 		//TODO: check how to change to Each beacuse that produce and error when server stop and start fast
@@ -78,8 +79,8 @@ describe(config.app.name + ' server', () => {
 			});
 		});
 
-		after(function (done) {
-			if (mongooseInstance === undefined) {
+		after((done) => {
+			if (!mongooseInstance) {
 				done();
 			} else {
 				server.stopMongoose().then((response) => {
@@ -89,48 +90,48 @@ describe(config.app.name + ' server', () => {
 			}
 		});
 
-		it("Should promise startMongoose resolve and listening to mongoDB", (done) => {
+		it('Should promise startMongoose resolve and listening to mongoDB', (done) => {
 			let actualConnectionState = mongooseInstance.connection._readyState;
 			let connectionStateDefinedByMoongose = mongooseInstance.STATES.connected;
 
 			assert(mongooseInstancePort);
-			assert.notEqual(mongooseInstance, undefined);
+			assert.notEqual(mongooseInstance, undefinedVar);
 			assert.equal(actualConnectionState, connectionStateDefinedByMoongose);
 			assert.equal(mongooseInstanceMsg, __('MongoDB is up on port ') + mongooseInstancePort);
 
 			done();
 		});
 
-		it("Should startMongoose be listening on port", (done) => {
+		it('Should startMongoose be listening on port', (done) => {
 			assert(mongooseInstancePort);
 			assert(mongooseConfigPort);
 			assert.equal(mongooseInstancePort, mongooseConfigPort);
 			done();
 		});
 
-		it("Should promise startMongoose reject with an Error", (done) => {
+		it('Should promise startMongoose reject with an Error', (done) => {
 			server.startMongoose().catch((error) => {
 				assert(error);
 				done();
 			});
 		});
 
-		it("Should promise stopMongoose resolve and stop listeing mongodb", (done) => {
+		it('Should promise stopMongoose resolve and stop listeing mongodb', (done) => {
 			server.stopMongoose().then((response) => {
 				assert(response.msg);
 				assert.equal(response.msg, __('MongoDB instance is correctly stoped'));
-				assert.equal(response.instance, undefined);
+				assert.equal(response.instance, undefinedVar);
 				mongooseInstance = response.instance;
 				done();
 			});
 		});
 	});
 
-	describe("Redis service", () => {
+	describe('Redis service', () => {
 
-		let redisInstance = undefined;
-		let redisInstanceMsg = undefined;
-		let redisInstancePort = undefined;
+		let redisInstance;
+		let redisInstanceMsg;
+		let redisInstancePort;
 		const redisConfigPort = config.database.redis.port;
 
 		beforeEach((done) => {
@@ -152,7 +153,7 @@ describe(config.app.name + ' server', () => {
 			mockery.deregisterAll();
 			mockery.disable();
 			server = require('./../server.js');
-			if (redisInstance !== undefined) {
+			if (!redisInstance) {
 				server.stopRedis().then((response) => {
 					redisInstance = response.instance;
 					done();
@@ -162,14 +163,14 @@ describe(config.app.name + ' server', () => {
 			}
 		});
 
-		it("Should promise startRedis resolve and listening to redis-server", (done) => {
+		it('Should promise startRedis resolve and listening to redis-server', (done) => {
 			assert(redisInstancePort);
 			assert.equal(redisInstance.connected, true);
 			assert.equal(redisInstanceMsg, __('Redis is up on port ') + redisInstancePort);
 			done();
 		});
 
-		it("Should promise startRedis reject with an Error", (done) => {
+		it('Should promise startRedis reject with an Error', (done) => {
 			mockery.registerMock('./config/server/config.js', {
 				app: {
 					name: '1',
@@ -202,29 +203,29 @@ describe(config.app.name + ' server', () => {
 			});
 		});
 
-		it("Should startRedis be listening on port", (done) => {
+		it('Should startRedis be listening on port', (done) => {
 			assert(redisInstancePort);
 			assert(redisConfigPort);
 			assert.equal(redisInstancePort, redisConfigPort);
 			done();
 		});
 
-		it("Should promise stopRedis resolve and stop listeing redis-server", (done) => {
+		it('Should promise stopRedis resolve and stop listeing redis-server', (done) => {
 			server.stopRedis().then((response) => {
 				assert.equal(response.msg, __('Redis instance is correctly stoped'));
-				assert.equal(response.instance, undefined);
+				assert.equal(response.instance, undefinedVar);
 				redisInstance = response.instance;
 				done();
 			});
 		});
 	});
 
-	describe("Start All", () => {
-		it("Should resolve when start all services", (done) => {
+	describe('Start All', () => {
+		it('Should resolve when start all services', (done) => {
 			server.start().then((responses) => {
 				responses.forEach((response) => {
 					assert(response.msg);
-					assert.notEqual(response.instance, undefined);
+					assert.notEqual(response.instance, undefinedVar);
 
 					if (response.name === 'APP') {
 						let serverInstancePort = response.instance.address().port;
@@ -244,7 +245,7 @@ describe(config.app.name + ' server', () => {
 			});
 		});
 
-		it("Should reject mongoose when start all services", (done) => {
+		it('Should reject mongoose when start all services', (done) => {
 			server.stop().then(() => {
 				server.startMongoose().then(() => {
 					server.start().catch((error) => {
@@ -256,13 +257,13 @@ describe(config.app.name + ' server', () => {
 		});
 	});
 
-	describe("Stop All", () => {
-		it("Should resolve when stop all services", (done) => {
+	describe('Stop All', () => {
+		it('Should resolve when stop all services', (done) => {
 			server.stop().then((responses) => {
 
 				responses.forEach((response) => {
 					assert(response.msg);
-					assert.equal(response.instance, undefined);
+					assert.equal(response.instance, undefinedVar);
 
 					if (response.name === 'APP') {
 						assert.equal(response.msg, __('APP instance is correctly stoped'));
@@ -276,7 +277,7 @@ describe(config.app.name + ' server', () => {
 			});
 		});
 
-		it("Should reject mongoose when start all services", (done) => {
+		it('Should reject mongoose when start all services', (done) => {
 			server.start().then(() => {
 				server.stopMongoose().then(() => {
 					server.stop().catch((error) => {

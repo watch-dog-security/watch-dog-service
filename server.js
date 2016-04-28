@@ -10,6 +10,7 @@ const utils = require('./modules/utils/utils.js');
 const authenticationRouter = require('./routers/authentication');
 const gatewayRouter = require('./routers/gway');
 const i18n = require('i18n');
+const __ = require('i18n').__;
 const bunyan = require('bunyan');
 const path = require('path');
 const log = bunyan.createLogger({
@@ -58,7 +59,7 @@ let startApp = () => {
 			resolve(
 				utils.getArrayResponseForInstances('APP', instanceApp, __('Server is up on port ') + instanceApp.address().port)
 			);
-		})
+		});
 	});
 };
 
@@ -111,7 +112,6 @@ let stopApp = () => {
 	return new Promise((resolve) => {
 		instanceApp.close(() => {
 			const msg = __('APP instance is correctly stoped');
-			instanceApp = undefined;
 			resolve(
 				utils.getArrayResponseForInstances('APP', instanceApp, msg)
 			);
@@ -123,7 +123,6 @@ let stopMongoose = () => {
 	return new Promise((resolve) => {
 		instanceMoongose.connection.close(() => {
 			let msg = __('MongoDB instance is correctly stoped');
-			instanceMoongose = undefined;
 			resolve(
 				utils.getArrayResponseForInstances('Mongoose', instanceMoongose, msg)
 			);
@@ -135,7 +134,6 @@ let stopRedis = () => {
 	return new Promise((resolve) => {
 		instanceRedis.quit(() => {
 			let msg = __('Redis instance is correctly stoped');
-			instanceRedis = undefined;
 			return resolve(
 				utils.getArrayResponseForInstances('Redis', instanceRedis, msg)
 			);
@@ -160,12 +158,12 @@ let stop = () => {
 };
 
 module.exports = {
-	start: start,
-	stop: stop,
-	startApp: startApp,
-	stopApp: stopApp,
-	startRedis: startRedis,
-	stopRedis: stopRedis,
-	startMongoose: startMongoose,
-	stopMongoose: stopMongoose
+	start,
+	stop,
+	startApp,
+	stopApp,
+	startRedis,
+	stopRedis,
+	startMongoose,
+	stopMongoose
 };

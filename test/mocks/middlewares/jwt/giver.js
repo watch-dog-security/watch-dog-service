@@ -32,7 +32,6 @@ mocks.undefinedUser = {
 };
 
 mocks.undefinedId = {
-	'_id': undefined,
 	'username': 'invalid'
 };
 
@@ -43,9 +42,7 @@ mocks.validRequest = {
 };
 
 mocks.undefinedSingin = {
-	signin: {
-		undefined
-	}
+	signin: {}
 };
 
 mocks.undefinedSinginId = {
