@@ -1,9 +1,5 @@
 'use strict';
 
-//Modules
-const config = require('./../config/server/config.js');
-
-//Variables
 let appInstance;
 
 let loadServerEvents = function(instance){
@@ -14,9 +10,7 @@ let loadServerEvents = function(instance){
     return appInstance;
 };
 
-let closeAppEvent = function(){
-    //console.log('Stopping ' + config.app.name);
-};
+let closeAppEvent = function(){};
 
 module.exports = {
     loadServerEvents : loadServerEvents

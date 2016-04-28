@@ -45,11 +45,11 @@ AppError.prototype = Object.create(Error.prototype);
 let getErrorByTag = (tag) => {
 	let error = errorsJSON[tag];
 
-	if (error != undefined) {
+	if (error !== undefined) {
 		return AppError(error);
 	} else {
 		let defaultError = errorsJSON['DEFAULT'];
-		if(defaultError != undefined){
+		if(defaultError !== undefined){
 			return AppError(defaultError);
 		}else{
 			return AppError({

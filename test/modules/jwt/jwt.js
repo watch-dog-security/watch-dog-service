@@ -8,7 +8,6 @@ let mockery = require('mockery');
 let chai = require('chai');
 let expect = chai.expect;
 
-const config = require('./../../../config/server/config');
 const mock = require('./../../mocks/modules/jwt/jwt');
 
 describe('JWT module', ()=> {

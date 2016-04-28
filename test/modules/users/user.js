@@ -290,7 +290,7 @@ describe('User module', () => {
 		});
 
 		after((done)=> {
-			User.findOneAndRemove({"username": "albertoig", "password": "1234"}, (err, user) => {
+			User.findOneAndRemove({"username": "albertoig", "password": "1234"}, () => {
 				mongoose.connection.close((error) => {
 					if (!error)
 						done();

@@ -1,6 +1,5 @@
 'use strict';
 
-let assert = require('assert');
 let AppError = require('./../../../modules/error/manager.js');
 let sinon = require('sinon');
 let chai = require('chai');

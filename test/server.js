@@ -245,7 +245,7 @@ describe(config.app.name + ' server', () => {
 		});
 
 		it("Should reject mongoose when start all services", (done) => {
-			server.stop().then((responses) => {
+			server.stop().then(() => {
 				server.startMongoose().then((response) => {
 					server.start().catch((error) => {
 						assert(error);
@@ -277,7 +277,7 @@ describe(config.app.name + ' server', () => {
 		});
 
 		it("Should reject mongoose when start all services", (done) => {
-			server.start().then((responses) => {
+			server.start().then(() => {
 				server.stopMongoose().then((response) => {
 					server.stop().catch((error) => {
 						assert(error);
