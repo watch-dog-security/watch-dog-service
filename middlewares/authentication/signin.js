@@ -13,7 +13,7 @@ module.exports = (() => {
 				let userAuthentication = authentication.getUserAuthentication(authRequest);
 
 				UserManager.checkUserFromDB(userAuthentication)
-					.then((user)=> {
+					.then((user) => {
 						if (user !== null && user.length !== 0) {
 							req.body.signin = {user: user};
 							return next();

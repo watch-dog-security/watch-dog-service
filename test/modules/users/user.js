@@ -28,8 +28,8 @@ describe('User module', () => {
 
 	app.use(i18n.init);
 
-	before((done)=> {
-		app = app.listen(config.app.port, (error)=> {
+	before((done) => {
+		app = app.listen(config.app.port, (error) => {
 			if (!error){
 				done();
 			}
@@ -277,12 +277,12 @@ describe('User module', () => {
 	describe('Check Function checkUserFromDB', () => {
 		let userFromManager;
 
-		before((done)=> {
-			mongoose.connect(config.database.mongodb.host, (error)=> {
+		before((done) => {
+			mongoose.connect(config.database.mongodb.host, (error) => {
 				if (!error) {
 					userFromManager = UserManager.parseJsonToUserModel(mock.userJson);
 
-					userFromManager.save((err)=> {
+					userFromManager.save((err) => {
 						if (!err) {
 							done();
 						}
@@ -291,7 +291,7 @@ describe('User module', () => {
 			});
 		});
 
-		after((done)=> {
+		after((done) => {
 			User.findOneAndRemove({"username": "albertoig", "password": "1234"}, () => {
 				mongoose.connection.close((error) => {
 					if (!error)

@@ -23,11 +23,11 @@ describe('User Model', () => {
 
 	app.use(i18n.init);
 
-	before((done)=> {
+	before((done) => {
 		//TODO: Add other collection to avoid delete the real db
-		app = app.listen(config.app.port, (error)=> {
+		app = app.listen(config.app.port, (error) => {
 			if (!error) {
-				mongoose.connect(config.database.mongodb.host, (error)=> {
+				mongoose.connect(config.database.mongodb.host, (error) => {
 					if (!error) {
 						User.ensureIndexes(function (err) {
 							if (!err) {

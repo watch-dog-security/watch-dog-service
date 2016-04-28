@@ -3,9 +3,9 @@
 let assert = require('assert');
 const config = require('./../../../config/server/config.js');
 
-describe('Server config', ()=> {
+describe('Server config', () => {
 
-    describe('App', ()=> {
+    describe('App', () => {
         it('Should have name of the server is declared', (done) => {
             assert(config.app.name);
             done();
@@ -27,7 +27,7 @@ describe('Server config', ()=> {
         });
     });
 
-    describe('MongoDB', ()=> {
+    describe('MongoDB', () => {
         it('Should have host value', (done) => {
             assert(config.database.mongodb.host);
             done();
@@ -39,7 +39,7 @@ describe('Server config', ()=> {
         });
     });
 
-    describe('Redis', ()=> {
+    describe('Redis', () => {
         it('Should have Host value', (done) => {
             assert(config.database.redis.host);
             done();
@@ -51,7 +51,7 @@ describe('Server config', ()=> {
         });
     });
 
-    describe('JWT', ()=> {
+    describe('JWT', () => {
         it('Should have secret code value', (done) => {
             assert(config.jwt.secret);
             done();

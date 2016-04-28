@@ -9,7 +9,7 @@ const config = require('./config/server/config.js');
 const utils = require('./modules/utils/utils.js');
 const authenticationRouter = require('./routers/authentication');
 const gatewayRouter = require('./routers/gway');
-const i18n = require("i18n");
+const i18n = require('i18n');
 const bunyan = require('bunyan');
 const path = require('path');
 const log = bunyan.createLogger({
@@ -64,7 +64,7 @@ let startApp = () => {
 
 let startMongoose = () => {
 	return new Promise((resolve, reject) => {
-		instanceMoongose = mongoose.connect(config.database.mongodb.host, (err)=> {
+		instanceMoongose = mongoose.connect(config.database.mongodb.host, (err) => {
 			if (err) {
 				reject(err);
 			} else {
@@ -80,7 +80,7 @@ let startRedis = () => {
 	return new Promise((resolve, reject) => {
 		instanceRedis = redis.createClient(config.database.redis.port, config.database.redis.host);
 
-		instanceRedis.on("error", function (err) {
+		instanceRedis.on('error', function (err) {
 			return reject(err);
 		}).on('connect', () => {
 			app.set('redisInstance', instanceRedis);
@@ -98,10 +98,10 @@ let start = () => {
 				startMongoose(),
 				startRedis()
 			])
-			.then((data)=> {
+			.then((data) => {
 				resolve(data);
 			})
-			.catch((error)=> {
+			.catch((error) => {
 				reject(error);
 			});
 	});
@@ -150,10 +150,10 @@ let stop = () => {
 				stopMongoose(),
 				stopRedis()
 			])
-			.then((data)=> {
+			.then((data) => {
 				resolve(data);
 			})
-			.catch((error)=> {
+			.catch((error) => {
 				reject(error);
 			});
 	});

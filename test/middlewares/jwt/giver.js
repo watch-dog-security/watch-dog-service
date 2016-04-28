@@ -27,7 +27,7 @@ describe('Middleware Giver: ', () => {
 			return res.status(error.code).send(error.message);
 		});
 
-		mongoose.connect(config.database.mongodb.host, (error)=> {
+		mongoose.connect(config.database.mongodb.host, (error) => {
 			if (!error) {
 				User.ensureIndexes(function (err) {
 					if (!err) {

@@ -26,7 +26,7 @@ describe('Middleware tokenChecker: ', () => {
 		const payload = UserManager.parseUserToPayload(userFromManager);
 		const encryptedJWT = jwt.encrypt(payload);
 
-		userFromManager.save((err)=> {
+		userFromManager.save((err) => {
 			if (!err) {
 				mock.validToken.token = encryptedJWT;
 				mock.validToken.id = userFromManager._id.toString();
@@ -42,7 +42,7 @@ describe('Middleware tokenChecker: ', () => {
 
 		const payload = UserManager.parseUserToPayload(userFromManager);
 		const encryptedJWT = jwt.encrypt(payload);
-		userFromManager.save((err)=> {
+		userFromManager.save((err) => {
 			if (!err) {
 				mock.notPresentTokenOnRedis.token = encryptedJWT;
 				mock.notPresentTokenOnRedis.id = userFromManager._id.toString();
@@ -60,7 +60,7 @@ describe('Middleware tokenChecker: ', () => {
 			return res.status(error.code).send(error.message);
 		});
 
-		mongoose.connect(config.database.mongodb.host, (error)=> {
+		mongoose.connect(config.database.mongodb.host, (error) => {
 			if (!error) {
 				User.ensureIndexes(function (err) {
 					if (!err) {

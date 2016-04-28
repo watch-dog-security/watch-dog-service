@@ -14,7 +14,7 @@ module.exports = (() => {
 		try {
 			let oUser = UserManager.parseJsonToUserModel(req.body);
 
-			oUser.save((error)=> {
+			oUser.save((error) => {
 				if (error) {
 					let mongoappError = appError('MONGOOSE_USER_SAVE');
 					mongoappError.message = error.message;

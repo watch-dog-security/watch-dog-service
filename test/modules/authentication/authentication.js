@@ -23,8 +23,8 @@ describe('Authentication module', () => {
 
 	app.use(i18n.init);
 
-	before((done)=> {
-		app = app.listen(config.app.port, (error)=> {
+	before((done) => {
+		app = app.listen(config.app.port, (error) => {
 			if (!error)
 				done();
 		});
