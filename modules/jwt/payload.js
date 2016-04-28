@@ -1,7 +1,6 @@
 'use strict';
 
 const config = require('./../../config/server/config.js');
-
 let AppError = require('./../../modules/error/manager');
 
 /**
@@ -10,7 +9,7 @@ let AppError = require('./../../modules/error/manager');
  * @param username
  * @returns {{_id: *, username: *, encripted_at: Date}}
  */
-exports.createPayload = (_id, username) =>{
+exports.createPayload = (_id, username) => {
 		let payload = this.fillPayload(_id,username);
 
 		if(!this.checkPayload(payload)){
@@ -26,7 +25,7 @@ exports.createPayload = (_id, username) =>{
  * @param username
  * @returns {{_id: *, username: *, encripted_at: Date}}
  */
-exports.fillPayload = (_id, username) =>{
+exports.fillPayload = (_id, username) => {
 	return {
 		_id: _id,
 		username: username,

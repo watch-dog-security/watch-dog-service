@@ -31,9 +31,9 @@ const log = bunyan.createLogger({
 });
 
 let app = express();
-let instanceApp = undefined;
-let instanceMoongose = undefined;
-let instanceRedis = undefined;
+let instanceApp;
+let instanceMoongose;
+let instanceRedis;
 
 i18n.configure({
 	defaultLocale: 'en',

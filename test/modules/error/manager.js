@@ -1,7 +1,6 @@
 'use strict';
 
 let AppError = require('./../../../modules/error/manager.js');
-let sinon = require('sinon');
 let chai = require('chai');
 let expect = chai.expect;
 let mockery = require('mockery');
