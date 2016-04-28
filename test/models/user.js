@@ -10,7 +10,7 @@ const expect = require('chai').expect;
 let assert = require('assert');
 let User = require('./../../models/user');
 
-describe('User Model', ()=> {
+describe('User Model', () => {
 	let app;
 
 	app = express();
@@ -136,7 +136,7 @@ describe('User Model', ()=> {
 			});
 		});
 
-		describe('Check Mobile phone', ()=> {
+		describe('Check Mobile phone', () => {
 			it('Should save a user with a correct mobile phone "' + JSON.stringify(mockUserModel.validUserPhone) + '"', (done) => {
 				let user = new User(mockUserModel.validUserPhone);
 

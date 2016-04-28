@@ -30,11 +30,11 @@ exports.getUserAuthentication = (authorizationHeader) => {
  * @param authorizationHeader
  */
 exports.decode = (authorizationHeader) => {
-	if (authorizationHeader !== undefined) {
+	if (authorizationHeader) {
 		let authorizationHeaderSplitedLenght = authorizationHeader.split(' ').length;
 
 		if (authorizationHeaderSplitedLenght !== 2 ||
-			authorizationHeaderSplitedLenght === undefined) {
+			!authorizationHeaderSplitedLenght) {
 			throw this.getAuthenticationException();
 		} else {
 			let authorizationHeaderSplited = authorizationHeader.split(' ');

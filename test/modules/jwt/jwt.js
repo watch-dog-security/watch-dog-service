@@ -10,8 +10,8 @@ let expect = chai.expect;
 
 const mock = require('./../../mocks/modules/jwt/jwt');
 
-describe('JWT module', ()=> {
-	describe('Check function Encrypt', ()=> {
+describe('JWT module', () => {
+	describe('Check function Encrypt', () => {
 		let userPayload;
 
 		beforeEach((done) => {
@@ -70,7 +70,7 @@ describe('JWT module', ()=> {
 		});
 	});
 
-	describe('Check function Decrypt', ()=> {
+	describe('Check function Decrypt', () => {
 
 		beforeEach((done) => {
 			mockery.enable({

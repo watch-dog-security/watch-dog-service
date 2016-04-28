@@ -54,7 +54,7 @@ UserManager.parseJsonToUserModel = (userJson) => {
  * @return JSON
  */
 UserManager.getParsedBodyJSON = (userJson) => {
-	if (userJson === undefined || Object.keys(userJson).length === 0 ) {
+	if (!userJson || Object.keys(userJson).length === 0 ) {
 		throw appError('BODY_UNDEFINED');
 	}
 
@@ -81,10 +81,10 @@ UserManager.getUserFromJSON = (userJson) => {
  * @returns {boolean}
  */
 UserManager.checkUserFromJSON = (userJson) => {
-	return !(userJson.fullname === undefined || userJson.username === undefined ||
-	userJson.password === undefined || userJson.email === undefined ||
-	userJson.codecountry === undefined || userJson.mobilephone === undefined ||
-	userJson.birthdate === undefined ||
+	return !(!userJson.fullname || !userJson.username ||
+	!userJson.password || !userJson.email ||
+	!userJson.codecountry || !userJson.mobilephone ||
+	!userJson.birthdate ||
 
 	userJson.fullname.trim() === '' || userJson.username.trim() === '' ||
 	userJson.password.trim() === '' || userJson.email.trim() === '' ||

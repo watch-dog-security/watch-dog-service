@@ -8,8 +8,8 @@ let mocks = () => {
 mocks.validUser = Object.assign({}, mocksFromUsers.userJson);
 mocks.validUserForInvalidTokenOnRedis =  Object.assign({}, mocksFromUsers.userJsonValidTwo);
 mocks.invalidUser = {
-	"_id": "5",
-	"username": "tg5tgfdgsdf"
+	'_id': '5',
+	'username': 'tg5tgfdgsdf'
 };
 
 mocks.validToken = {

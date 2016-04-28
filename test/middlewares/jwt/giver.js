@@ -34,7 +34,7 @@ describe('Middleware Giver: ', () => {
 
 						redisInstance = redis.createClient(config.database.redis.port, config.database.redis.host);
 
-						redisInstance.on('connect', ()=> {
+						redisInstance.on('connect', () => {
 							app.set('redisInstance', redisInstance);
 							done();
 						});

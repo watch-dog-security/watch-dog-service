@@ -66,7 +66,7 @@ describe('Middleware tokenChecker: ', () => {
 					if (!err) {
 						redisInstance = redis.createClient(config.database.redis.port, config.database.redis.host);
 
-						redisInstance.on('connect', ()=> {
+						redisInstance.on('connect', () => {
 							app.set('redisInstance', redisInstance);
 							prepareValidToken(() => {
 								prepareNotRedisToken(() => {

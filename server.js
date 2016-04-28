@@ -82,7 +82,7 @@ let startRedis = () => {
 
 		instanceRedis.on("error", function (err) {
 			return reject(err);
-		}).on('connect', ()=> {
+		}).on('connect', () => {
 			app.set('redisInstance', instanceRedis);
 			return resolve(
 				utils.getArrayResponseForInstances('Redis', instanceRedis, __('Redis is up on port ') + instanceRedis.connection_options.port)

@@ -17,23 +17,23 @@ mocks.validUserToMongoose = {
 };
 
 mocks.validUser = {
-	"_id": "1",
-	"username": mocks.validUserToMongoose.username
+	'_id': '1',
+	'username': mocks.validUserToMongoose.username
 };
 
 mocks.invalidUser = {
-	"_id": "2",
-	"username": 'invalid'
+	'_id': '2',
+	'username': 'invalid'
 };
 
 mocks.undefinedUser = {
-	"_id": "3",
-	"username": 'invalid'
+	'_id': '3',
+	'username': 'invalid'
 };
 
 mocks.undefinedId = {
-	"_id": undefined,
-	"username": 'invalid'
+	'_id': undefined,
+	'username': 'invalid'
 };
 
 mocks.validRequest = {

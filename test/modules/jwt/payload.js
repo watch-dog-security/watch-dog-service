@@ -9,7 +9,7 @@ let payload = require('./../../../modules/jwt/payload');
 let mock = require('./../../mocks/modules/jwt/payload');
 let appError = require('./../../../modules/error/manager');
 
-describe('Payload module', ()=> {
+describe('Payload module', () => {
 	let app;
 
 	app = express();
@@ -36,7 +36,7 @@ describe('Payload module', ()=> {
 		});
 	});
 
-	describe('check function fillPayload', ()=> {
+	describe('check function fillPayload', () => {
 		it('Should create a payload object', (done) => {
 			let createdPayload = payload.fillPayload(mock.configuration._id, mock.configuration.username);
 
@@ -48,7 +48,7 @@ describe('Payload module', ()=> {
 		});
 	});
 
-	describe('check function checkPayload', ()=> {
+	describe('check function checkPayload', () => {
 		it('Should return true when payload is correct', (done) => {
 			let checkedPayload = payload.checkPayload({
 				_id: '1',
