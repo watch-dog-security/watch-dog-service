@@ -1,6 +1,6 @@
 'use strict';
 
-let AppError = require('./../error/manager');
+let appError = require('./../error/manager');
 
 /**
  * Check if the auth header is void.
@@ -8,7 +8,7 @@ let AppError = require('./../error/manager');
  * @returns {boolean}
  */
 exports.check = (authorizationHeader) => {
-	return !!(authorizationHeader !== undefined && authorizationHeader.trim() !== '');
+	return !!(authorizationHeader && authorizationHeader.trim() !== '');
 };
 
 /**
@@ -69,8 +69,8 @@ exports.parseAuthRequestToUserModel = (authorizationHeader) => {
 
 /**
  * Return a cunstom error AUTH_HEADER_NOT_CORRECT
- * @returns {AppError}
+ * @returns {appError}
  */
 exports.getAuthenticationException = () => {
-	return AppError('AUTH_HEADER_NOT_CORRECT');
+	return appError('AUTH_HEADER_NOT_CORRECT');
 };

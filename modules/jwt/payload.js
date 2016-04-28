@@ -1,7 +1,7 @@
 'use strict';
 
 const config = require('./../../config/server/config.js');
-let AppError = require('./../../modules/error/manager');
+let appError = require('./../../modules/error/manager');
 
 /**
  * Create a payload with the _id and the username if not correct will return an Error
@@ -13,7 +13,7 @@ exports.createPayload = (_id, username) => {
 		let payload = this.fillPayload(_id,username);
 
 		if(!this.checkPayload(payload)){
-			throw AppError('WRONG_PAYLOAD');
+			throw appError('WRONG_PAYLOAD');
 		}
 		return payload;
 };

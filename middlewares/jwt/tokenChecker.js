@@ -1,7 +1,7 @@
 'use strict';
 
 let jwt = require('./../../modules/jwt/jwt');
-let AppError = require('./../../modules/error/manager');
+let appError = require('./../../modules/error/manager');
 
 module.exports = (() => {
     return (req, res, next) => {
@@ -13,7 +13,7 @@ module.exports = (() => {
 
 			redisInstance.get(decodeToken._id.toString(), (error, reply) => {
 				if(error || (error === null && reply === null)){
-					return next(AppError('TOKEN_NOT_VALID'));
+					return next(appError('TOKEN_NOT_VALID'));
 				}
 				return next();
 			});

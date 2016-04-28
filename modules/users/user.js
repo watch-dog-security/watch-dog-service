@@ -2,7 +2,7 @@
 
 let User = require('./../../models/user');
 let payload = require('./../../modules/jwt/payload');
-let AppError = require('./../../modules/error/manager');
+let appError = require('./../../modules/error/manager');
 let UserManager = () => {
 };
 
@@ -14,7 +14,7 @@ let UserManager = () => {
 UserManager.parseUserToPayload = (userFromRequest) => {
 		try{
 			if(!UserManager.checkUserFromRequest(userFromRequest)) {
-				throw AppError('WRONG_USER_FROM_REQUEST');
+				throw appError('WRONG_USER_FROM_REQUEST');
 			}
 
 			return payload.createPayload(userFromRequest._id, userFromRequest.username);
@@ -55,7 +55,7 @@ UserManager.parseJsonToUserModel = (userJson) => {
  */
 UserManager.getParsedBodyJSON = (userJson) => {
 	if (userJson === undefined || Object.keys(userJson).length === 0 ) {
-		throw AppError('BODY_UNDEFINED');
+		throw appError('BODY_UNDEFINED');
 	}
 
 	return userJson;
@@ -69,7 +69,7 @@ UserManager.getParsedBodyJSON = (userJson) => {
  */
 UserManager.getUserFromJSON = (userJson) => {
 	if (!UserManager.checkUserFromJSON(userJson) && userJson) {
-		throw AppError('JSON_FORMATION');
+		throw appError('JSON_FORMATION');
 	}
 	return new User(UserManager.makeUserFromJSON(userJson));
 };
@@ -143,7 +143,7 @@ UserManager.checkUserFromDB = (userAuthHeader) => {
  */
 UserManager.makeOptionsWithUserModel = (UserOptions) => {
 	if (!UserManager.checkUserFromOptions(UserOptions)) {
-		throw AppError('USER_OPTIONS');
+		throw appError('USER_OPTIONS');
 	} else {
 		return {
 			username: UserOptions.username,

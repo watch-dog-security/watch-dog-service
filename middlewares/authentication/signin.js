@@ -2,7 +2,7 @@
 
 let UserManager = require('./../../modules/users/user');
 let authentication = require('./../../modules/authentication/authentication');
-let AppError = require('./../../modules/error/manager');
+let appError = require('./../../modules/error/manager');
 
 module.exports = (() => {
 	return (req, res, next) => {
@@ -18,7 +18,7 @@ module.exports = (() => {
 							req.body.signin = {user: user};
 							return next();
 						} else {
-							throw AppError('INCORRECT_CREDENTIALS');
+							throw appError('INCORRECT_CREDENTIALS');
 						}
 					})
 					.catch((error) => {
@@ -29,7 +29,7 @@ module.exports = (() => {
 				return next(exception);
 			}
 		} else {
-			return next(AppError('INCORRECT_CREDENTIALS'));
+			return next(appError('INCORRECT_CREDENTIALS'));
 		}
 	};
 })();

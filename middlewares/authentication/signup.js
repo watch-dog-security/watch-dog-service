@@ -7,7 +7,7 @@
  */
 
 let UserManager = require('./../../modules/users/user');
-let AppError = require('./../../modules/error/manager');
+let appError = require('./../../modules/error/manager');
 
 module.exports = (() => {
 	return (req, res, next) => {
@@ -16,9 +16,9 @@ module.exports = (() => {
 
 			oUser.save((error)=> {
 				if (error) {
-					let mongoAppError = AppError('MONGOOSE_USER_SAVE');
-					mongoAppError.message = error.message;
-					return next(mongoAppError);
+					let mongoappError = appError('MONGOOSE_USER_SAVE');
+					mongoappError.message = error.message;
+					return next(mongoappError);
 				}
 				return res.status(200).send(__('User saved successfully'));
 			});

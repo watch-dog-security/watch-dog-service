@@ -7,7 +7,7 @@ let colors = require('colors');
  * Show on console a tick with the message passed to the function
  * @param str
  */
-exports.consoleLogWithTick = (str)=>{
+exports.consoleLogWithTick = (str) => {
     console.log(' \u2714 ' + colors.cyan(str));
 };
 
@@ -19,7 +19,7 @@ exports.consoleLogWithTick = (str)=>{
  * @param msg
  * @returns {{name: *, instance: *, msg: *}}
  */
-exports.getArrayResponseForInstances = (nameOfTheService, instance, msg)=>{
+exports.getArrayResponseForInstances = (nameOfTheService, instance, msg) => {
     return {
         name: nameOfTheService,
         instance: instance,
