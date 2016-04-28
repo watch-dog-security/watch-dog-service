@@ -2,7 +2,6 @@
 
 let express = require('express');
 let request = require('supertest');
-let assert = require('assert');
 let giver = require('./../../../middlewares/jwt/giver');
 let User = require('./../../../models/user');
 let AppError = require('./../../../modules/error/manager');
@@ -47,7 +46,7 @@ describe('Middleware Giver: ', () => {
 	});
 
 	after((done) => {
-		mongoose.connection.db.dropCollection('users', (error, result) => {
+		mongoose.connection.db.dropCollection('users', (error) => {
 			if (!error) {
 				mongoose.connection.close((error) => {
 					if (!error) {

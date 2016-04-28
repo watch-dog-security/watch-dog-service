@@ -37,7 +37,7 @@ describe('Middleware SignIn: ', () => {
 	});
 
 	after((done) => {
-		mongoose.connection.db.dropCollection('users', (error, result) => {
+		mongoose.connection.db.dropCollection('users', (error) => {
 			if (!error) {
 				mongoose.connection.close((error) => {
 					if (!error)

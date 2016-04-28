@@ -44,7 +44,7 @@ describe('User Model', ()=> {
 	after((done) => {
 		app.close((error) => {
 			if (!error) {
-				mongoose.connection.db.dropCollection('users', (error, result) => {
+				mongoose.connection.db.dropCollection('users', (error) => {
 					if (!error) {
 						mongoose.connection.close((error) => {
 							if (!error)

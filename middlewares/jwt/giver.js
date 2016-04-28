@@ -3,17 +3,17 @@
 let UserManager = require('./../../modules/users/user');
 let jwt = require('../../modules/jwt/jwt');
 
+let checkBody = (req) => {
+	return !!(req.body &&
+	req.body.signin &&
+	req.body.signin.user)
+};
+
 let getUserFromRequest = (req) => {
 	if (checkBody(req)) {
 		return req.body.signin.user;
 	}
 	return undefined;
-};
-
-let checkBody = (req) => {
-	return !!(req.body &&
-	req.body.signin &&
-	req.body.signin.user)
 };
 
 module.exports = (() => {

@@ -1,6 +1,5 @@
 'use strict';
 
-let UserManager = require('./../../modules/users/user');
 let jwt = require('./../../modules/jwt/jwt');
 let AppError = require('./../../modules/error/manager');
 

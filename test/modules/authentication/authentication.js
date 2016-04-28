@@ -5,10 +5,8 @@ const express = require('express');
 const config = require('./../../../config/server/config.js');
 
 let assert = require('assert');
-let sinon = require('sinon');
 let chai = require('chai');
 let expect = chai.expect;
-
 let AppError = require('./../../../modules/error/manager');
 let authentication = require('./../../../modules/authentication/authentication.js');
 

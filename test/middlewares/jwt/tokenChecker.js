@@ -2,7 +2,6 @@
 
 let express = require('express');
 let request = require('supertest');
-let assert = require('assert');
 let tokenChecker = require('./../../../middlewares/jwt/tokenChecker');
 let UserManager = require('./../../../modules/users/user');
 let mock = require('./../../mocks/middlewares/jwt/tokenChecker');
@@ -82,7 +81,7 @@ describe('Middleware tokenChecker: ', () => {
 	});
 
 	after((done) => {
-		mongoose.connection.db.dropCollection('users', (error, result) => {
+		mongoose.connection.db.dropCollection('users', (error) => {
 			if (!error) {
 				mongoose.connection.close((error) => {
 					if (!error) {

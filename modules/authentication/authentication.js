@@ -1,6 +1,5 @@
 'use strict';
 
-const config = require('./../../config/server/config.js');
 let AppError = require('./../error/manager');
 
 /**

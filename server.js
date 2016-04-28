@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const config = require('./config/server/config.js');
 const utils = require('./modules/utils/utils.js');
-const serverEvents = require('./events/server.js');
 const authenticationRouter = require('./routers/authentication');
 const gatewayRouter = require('./routers/gway');
 const i18n = require("i18n");
@@ -52,27 +51,10 @@ app.use(cors());
 app.use('/auth', authenticationRouter);
 app.use(gatewayRouter);
 
-let start = () => {
-	return new Promise((resolve, reject) => {
-		Promise.all([
-				startApp(),
-				startMongoose(),
-				startRedis()
-			])
-			.then((data)=> {
-				resolve(data);
-			})
-			.catch((error)=> {
-				reject(error);
-			});
-	});
-};
-
 let startApp = () => {
 	//TODO: check how to close properly connection task
 	return new Promise((resolve) => {
 		instanceApp = app.listen(config.app.port, () => {
-			instanceApp = serverEvents.loadServerEvents(instanceApp);
 			resolve(
 				utils.getArrayResponseForInstances('APP', instanceApp, __('Server is up on port ') + instanceApp.address().port)
 			);
@@ -109,12 +91,12 @@ let startRedis = () => {
 	});
 };
 
-let stop = () => {
+let start = () => {
 	return new Promise((resolve, reject) => {
 		Promise.all([
-				stopApp(),
-				stopMongoose(),
-				stopRedis()
+				startApp(),
+				startMongoose(),
+				startRedis()
 			])
 			.then((data)=> {
 				resolve(data);
@@ -126,8 +108,8 @@ let stop = () => {
 };
 
 let stopApp = () => {
-	return new Promise((resolve, reject) => {
-		instanceApp.close((error) => {
+	return new Promise((resolve) => {
+		instanceApp.close(() => {
 			const msg = __('APP instance is correctly stoped');
 			instanceApp = undefined;
 			resolve(
@@ -138,8 +120,8 @@ let stopApp = () => {
 };
 
 let stopMongoose = () => {
-	return new Promise((resolve, reject) => {
-		instanceMoongose.connection.close((error) => {
+	return new Promise((resolve) => {
+		instanceMoongose.connection.close(() => {
 			let msg = __('MongoDB instance is correctly stoped');
 			instanceMoongose = undefined;
 			resolve(
@@ -158,6 +140,22 @@ let stopRedis = () => {
 				utils.getArrayResponseForInstances('Redis', instanceRedis, msg)
 			);
 		});
+	});
+};
+
+let stop = () => {
+	return new Promise((resolve, reject) => {
+		Promise.all([
+				stopApp(),
+				stopMongoose(),
+				stopRedis()
+			])
+			.then((data)=> {
+				resolve(data);
+			})
+			.catch((error)=> {
+				reject(error);
+			});
 	});
 };
 
