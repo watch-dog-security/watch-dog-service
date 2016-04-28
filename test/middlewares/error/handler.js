@@ -11,7 +11,7 @@ let AppError = require('./../../../modules/error/manager');
 describe('Middleware handler error: ', () => {
 
 
-	it('Should thrown an Error ""', (done) => {
+	it('Should thrown an Error "' + AppError('EMAIL_NOT_CORRECT').message + '"', (done) => {
 		let app = express();
 		let res = httpMocks.createResponse(app);
 		let req = httpMocks.createRequest();
