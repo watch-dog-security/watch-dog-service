@@ -4,14 +4,16 @@ const i18n = require("i18n");
 const express = require('express');
 const config = require('./../../../config/server/config.js');
 const mongoose = require('mongoose');
+
 let assert = require('assert');
-let UserManager = require('./../../../modules/users/user.js');
+let UserManager = require('./../../../modules/users/user');
 let User = require('./../../../models/user');
 let sinon = require('sinon');
 let chai = require('chai');
 let expect = chai.expect;
 let mock = require('./../../mocks/modules/users/user.js');
 let mockPayload = require('./../../mocks/modules/jwt/payload');
+let AppError = require('./../../../modules/error/manager');
 
 describe('User module', () => {
 	let app;
@@ -49,34 +51,34 @@ describe('User module', () => {
 			done();
 		});
 
-		it('should throw an Exception "' + i18n.__('User options is not correct') + '" when user.userName formation object is not correct', (done) => {
+		it('should throw an error "' + AppError('USER_OPTIONS').message + '" when user.userName formation object is not correct', (done) => {
 			expect(() => {
 				UserManager.makeOptionsWithUserModel(mock.userOptionsUserNameNotCorrect)
-			}).to.throw(i18n.__('User options is not correct'));
+			}).to.throw(AppError('USER_OPTIONS').message);
 
 			done();
 		});
 
-		it('should throw an Exception "' + i18n.__('User options is not correct') + '" when user.userName is undefined', (done) => {
+		it('should throw an error "' + AppError('USER_OPTIONS').message + '" when user.userName is undefined', (done) => {
 			expect(() => {
 				UserManager.makeOptionsWithUserModel(mock.userOptionsUserNameUndefined)
-			}).to.throw(i18n.__('User options is not correct'));
+			}).to.throw(AppError('USER_OPTIONS').message);
 
 			done();
 		});
 
-		it('should throw an Exception "' + i18n.__('User options is not correct') + '" when user.password formation object is not correct', (done) => {
+		it('should throw an error "' + AppError('USER_OPTIONS').message + '" when user.password formation object is not correct', (done) => {
 			expect(() => {
 				UserManager.makeOptionsWithUserModel(mock.userOptionsPasswordNotCorrect)
-			}).to.throw(i18n.__('User options is not correct'));
+			}).to.throw(AppError('USER_OPTIONS').message);
 
 			done();
 		});
 
-		it('should throw an Exception "' + i18n.__('User options is not correct') + '" when user.password is undefined', (done) => {
+		it('should throw an error "' + AppError('USER_OPTIONS').message + '" when user.password is undefined', (done) => {
 			expect(() => {
 				UserManager.makeOptionsWithUserModel(mock.userOptionsPasswordUndefined)
-			}).to.throw(i18n.__('User options is not correct'));
+			}).to.throw(AppError('USER_OPTIONS').message);
 
 			done();
 		});
@@ -91,19 +93,19 @@ describe('User module', () => {
 			done();
 		});
 
-		it('should throw an Exception "' + i18n.__('Body to parse to JSON is undefined') + '"', (done) => {
+		it('should throw an error "' + AppError('BODY_UNDEFINED').message + '" when json is undefined', (done) => {
 			expect(() => {
 				UserManager.parseJsonToUserModel(undefined);
-			}).to.throw(i18n.__('Body to parse to JSON is undefined'));
+			}).to.throw(AppError('BODY_UNDEFINED').message);
 			done();
 		});
 
-		it('should throw an Exception "' + i18n.__('User json formation is not correct') + '"', (done) => {
+		it('should throw an error "' + AppError('JSON_FORMATION').message + '" when json is not correct', (done) => {
 			expect(() => {
 				UserManager.parseJsonToUserModel({
 					body: mock.userJsonPasswordFormation
 				});
-			}).to.throw(i18n.__('User json formation is not correct'));
+			}).to.throw(AppError('JSON_FORMATION').message);
 			done();
 		});
 	});
@@ -225,18 +227,18 @@ describe('User module', () => {
 			done();
 		});
 
-		it('should thrown an Error when JSON is not correct', (done) => {
+		it('should thrown an error "' + AppError('JSON_FORMATION').message + '" when JSON is not correct', (done) => {
 			expect(() => {
 				UserManager.getUserFromJSON(mock.userJsonPasswordFormation)
-			}).to.throw(i18n.__('User json formation is not correct'));
+			}).to.throw(AppError('JSON_FORMATION').message);
 
 			done();
 		});
 
-		it('should thrown an Error when JSON value is undefined', (done) => {
+		it('should thrown an error "' + AppError('JSON_FORMATION').message + '" when JSON value is undefined', (done) => {
 			expect(() => {
 				UserManager.getUserFromJSON(mock.userJsonBirthdateIsUndefined)
-			}).to.throw(i18n.__('User json formation is not correct'));
+			}).to.throw(AppError('JSON_FORMATION').message);
 
 			done();
 		});
@@ -251,21 +253,20 @@ describe('User module', () => {
 			done();
 		});
 
-		//TODO: change to AppError instead i18n string
-		it('should return an error "' + i18n.__('Something is going wrong with the data of the user from request') + '" with a undefined _id', (done) => {
+		it('should return an error "' + AppError('WRONG_USER_FROM_REQUEST').message + '" with a undefined _id', (done) => {
 			try{
 				UserManager.parseUserToPayload(mockPayload.configurationUndefinedId);
 			}catch(exception){
-				assert.equal(exception.message, i18n.__('Something is going wrong with the data of the user from request'));
+				assert.equal(exception.message, AppError('WRONG_USER_FROM_REQUEST').message);
 				done();
 			}
 		});
-		//TODO: change to AppError instead i18n string
-		it('should return an error "' + i18n.__('Something is going wrong with the data of the user from request') + '" with a undefined username', (done) => {
+
+		it('should return an error "' + AppError('WRONG_USER_FROM_REQUEST').message + '" with a undefined username', (done) => {
 			try{
 				UserManager.parseUserToPayload(mockPayload.configurationUndefinedUsername);
 			}catch(exception){
-				assert.equal(exception.message, i18n.__('Something is going wrong with the data of the user from request'));
+				assert.equal(exception.message, AppError('WRONG_USER_FROM_REQUEST').message);
 				done();
 			}
 		});
@@ -323,16 +324,16 @@ describe('User module', () => {
 			});
 		});
 
-		it('should throw an Exception "' + i18n.__('User options is not correct') + '" when username is not correct', (done) => {
+		it('should throw an Exception "' + AppError('USER_OPTIONS').message + '" when username is not correct', (done) => {
 			UserManager.checkUserFromDB(mock.userOptionsUserNameNotCorrect).catch((error) => {
-				assert.equal(error.message, i18n.__('User options is not correct'));
+				assert.equal(error.message, AppError('USER_OPTIONS').message);
 				done();
 			});
 		});
 
-		it('should throw an Exception "' + i18n.__('User options is not correct') + '" when password is undefined', (done) => {
+		it('should throw an Exception "' + AppError('USER_OPTIONS').message + '" when password is undefined', (done) => {
 			UserManager.checkUserFromDB(mock.userOptionsPasswordUndefined).catch((error) => {
-				assert.equal(error.message, i18n.__('User options is not correct'));
+				assert.equal(error.message, AppError('USER_OPTIONS').message);
 				done();
 			});
 		});
@@ -347,10 +348,10 @@ describe('User module', () => {
 			done();
 		});
 
-		it('should throw an Error when body is undefined', (done) => {
+		it('should throw an error "' + AppError('BODY_UNDEFINED').message + '" when body is undefined', (done) => {
 			expect(() => {
 				UserManager.getParsedBodyJSON(undefined);
-			}).to.throw(i18n.__('Body to parse to JSON is undefined'));
+			}).to.throw(AppError('BODY_UNDEFINED').message);
 
 			done();
 		});
