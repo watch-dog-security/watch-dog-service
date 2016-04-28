@@ -58,7 +58,7 @@ describe('Middleware: Signup', () => {
 			.expect(__('User saved successfully'),done);
 	});
 
-	it('should return 401 response when body request is undefined', (done) => {
+	it('should return an error "' + AppError('JSON_FORMATION').message + '" when body request is undefined', (done) => {
 		request(app)
 			.post('/')
 			.send(undefined)
@@ -68,7 +68,7 @@ describe('Middleware: Signup', () => {
 			});
 	});
 
-	it('should return 401 response when json formation is incorrect', (done) => {
+	it('should return an error "' + AppError('JSON_FORMATION').message + '" when json formation is incorrect', (done) => {
 		request(app)
 			.post('/')
 			.send(mock.userJSONUndefinedUsername)
