@@ -162,5 +162,6 @@ module.exports = {
 	startRedis,
 	stopRedis,
 	startMongoose,
-	stopMongoose
+	stopMongoose,
+	i18n
 };

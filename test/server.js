@@ -6,6 +6,7 @@ let server = require('./../server.js');
 let User = require('./../models/user');
 let undefinedVar;
 const config = require('./../config/server/config');
+const i18n = server.i18n;
 
 describe(config.app.name + ' server', () => {
 	describe('APP service', () => {
@@ -37,7 +38,7 @@ describe(config.app.name + ' server', () => {
 
 		it('Should promise startApp resolve and start', (done) => {
 			assert(serverInstancePort);
-			assert.equal(serverInstanceMsg, __('Server is up on port ') + serverInstancePort);
+			assert.equal(serverInstanceMsg, i18n.__('Server is up on port ') + serverInstancePort);
 			done();
 		});
 
@@ -50,7 +51,7 @@ describe(config.app.name + ' server', () => {
 
 		it('Should promise stopApp resolve and stop App', (done) => {
 			server.stopApp().then((response) => {
-				assert.equal(response.msg, __('APP instance is correctly stoped'));
+				assert.equal(response.msg, i18n.__('APP instance is correctly stoped'));
 				serverInstance = response.instance;
 				done();
 			});
@@ -96,7 +97,7 @@ describe(config.app.name + ' server', () => {
 			assert(mongooseInstancePort);
 			assert.notEqual(mongooseInstance, undefinedVar);
 			assert.equal(actualConnectionState, connectionStateDefinedByMoongose);
-			assert.equal(mongooseInstanceMsg, __('MongoDB is up on port ') + mongooseInstancePort);
+			assert.equal(mongooseInstanceMsg, i18n.__('MongoDB is up on port ') + mongooseInstancePort);
 
 			done();
 		});
@@ -118,7 +119,7 @@ describe(config.app.name + ' server', () => {
 		it('Should promise stopMongoose resolve and stop listeing mongodb', (done) => {
 			server.stopMongoose().then((response) => {
 				assert(response.msg);
-				assert.equal(response.msg, __('MongoDB instance is correctly stoped'));
+				assert.equal(response.msg, i18n.__('MongoDB instance is correctly stoped'));
 				mongooseInstance = response.instance;
 				done();
 			});
@@ -164,7 +165,7 @@ describe(config.app.name + ' server', () => {
 		it('Should promise startRedis resolve and listening to redis-server', (done) => {
 			assert(redisInstancePort);
 			assert.equal(redisInstance.connected, true);
-			assert.equal(redisInstanceMsg, __('Redis is up on port ') + redisInstancePort);
+			assert.equal(redisInstanceMsg, i18n.__('Redis is up on port ') + redisInstancePort);
 			done();
 		});
 
@@ -210,7 +211,7 @@ describe(config.app.name + ' server', () => {
 
 		it('Should promise stopRedis resolve and stop listeing redis-server', (done) => {
 			server.stopRedis().then((response) => {
-				assert.equal(response.msg, __('Redis instance is correctly stoped'));
+				assert.equal(response.msg, i18n.__('Redis instance is correctly stoped'));
 				redisInstance = response.instance;
 				done();
 			});
@@ -227,15 +228,15 @@ describe(config.app.name + ' server', () => {
 					if (response.name === 'APP') {
 						let serverInstancePort = response.instance.address().port;
 						assert(serverInstancePort);
-						assert.equal(response.msg, __('Server is up on port ') + serverInstancePort);
+						assert.equal(response.msg, i18n.__('Server is up on port ') + serverInstancePort);
 					} else if (response.name === 'Mongoose') {
 						let mongooseInstancePort = response.instance.connection.port;
 						assert(mongooseInstancePort);
-						assert.equal(response.msg, __('MongoDB is up on port ') + mongooseInstancePort);
+						assert.equal(response.msg, i18n.__('MongoDB is up on port ') + mongooseInstancePort);
 					} else if (response.name === 'Redis') {
 						let redisInstancePort = response.instance.connection_options.port;
 						assert(redisInstancePort);
-						assert.equal(response.msg, __('Redis is up on port ') + redisInstancePort);
+						assert.equal(response.msg, i18n.__('Redis is up on port ') + redisInstancePort);
 					}
 				});
 				done();
@@ -262,11 +263,11 @@ describe(config.app.name + ' server', () => {
 					assert(response.msg);
 
 					if (response.name === 'APP') {
-						assert.equal(response.msg, __('APP instance is correctly stoped'));
+						assert.equal(response.msg, i18n.__('APP instance is correctly stoped'));
 					} else if (response.name === 'Mongoose') {
-						assert.equal(response.msg, __('MongoDB instance is correctly stoped'));
+						assert.equal(response.msg, i18n.__('MongoDB instance is correctly stoped'));
 					} else if (response.name === 'Redis') {
-						assert.equal(response.msg, __('Redis instance is correctly stoped'));
+						assert.equal(response.msg, i18n.__('Redis instance is correctly stoped'));
 					}
 				});
 				done();
