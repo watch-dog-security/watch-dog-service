@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "codacy-coverage": "^1.1.3",
     "coveralls": "^2.11.9",
     "cucumber": "^0.10.2",
     "istanbul": "^0.4.2",
@@ -35,6 +36,7 @@
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha test/ --recursive",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha test/ --  --recursive ",
+    "test-codacy": "cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage && rm -rf ./coverage",
     "clean": "rm -r ./node_modules",
     "start": "node app.js",
     "apidoc": "apidoc -i ./ -o apidoc/",
