@@ -17,17 +17,15 @@ mocks.configurationUndefinedId = {
 mocks.userFromRequestWithUndefinedId = mocks.configurationUndefinedId;
 
 mocks.configurationUndefinedUsername = {
-	_id: '1',
+	_id: '1'
 };
 
 mocks.userFromRequestWithUndefinedUsername = mocks.configurationUndefinedUsername;
 
-mocks.userFromRequestUndefined = undefined;
-
 mocks.payload = {
 	_id: '1',
 	username: 'UserNamePrueba',
-	encripted_at: new Date()
+	exp: new Date() + 1000
 };
 
 mocks.payloadIdUndefined = {

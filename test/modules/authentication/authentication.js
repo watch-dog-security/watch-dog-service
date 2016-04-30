@@ -115,10 +115,8 @@ describe('Authentication module', () => {
 		});
 
 		it('should throw an Error "' + appError('AUTH_HEADER_NOT_CORRECT').message + '" when header is undefined', (done) => {
-			var authorizationHeader = undefined;
-
 			expect(() => {
-				authentication.getUserAuthentication(authorizationHeader);
+				authentication.getUserAuthentication();
 			}).to.throw(appError('AUTH_HEADER_NOT_CORRECT').message);
 
 			done();

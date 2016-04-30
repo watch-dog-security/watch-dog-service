@@ -367,7 +367,7 @@ describe('User module', () => {
 		});
 
 		it('should return false when user from request is undefined', (done) => {
-			var checkedUserFromRequest = UserManager.checkUserFromRequest(mockPayload.userFromRequestUndefined);
+			var checkedUserFromRequest = UserManager.checkUserFromRequest();
 			assert.equal(checkedUserFromRequest, false);
 			done();
 		});

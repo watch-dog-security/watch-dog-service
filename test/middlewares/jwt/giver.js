@@ -72,7 +72,7 @@ describe('Middleware Giver: ', () => {
 	it('should return an error "' + appError('WRONG_USER_FROM_REQUEST').message + '" when request is undefined', (done) => {
 		request(app)
 			.post('/')
-			.send(undefined)
+			.send()
 			.end((error, response) => {
 				expect(response.error.text).to.contain(appError('WRONG_USER_FROM_REQUEST').message);
 				done();

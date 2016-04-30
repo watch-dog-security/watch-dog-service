@@ -53,7 +53,7 @@ exports.decode = (authorizationHeader) => {
  * @returns {{username: *, password: *}}
  */
 exports.parseAuthRequestToUserModel = (authorizationHeader) => {
-	if (authorizationHeader ||
+	if (!authorizationHeader ||
 		authorizationHeader.indexOf(':') === -1
 	) {
 		throw this.getAuthenticationException();
@@ -62,7 +62,7 @@ exports.parseAuthRequestToUserModel = (authorizationHeader) => {
 		return {
 			username: authorizationHeaderSplited[0],
 			password: authorizationHeaderSplited[1]
-		}
+		};
 	}
 };
 
