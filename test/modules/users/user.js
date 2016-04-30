@@ -218,11 +218,11 @@ describe('User module', () => {
 			var mockedCorrectUser = new User(mock.correctUser);
 			mockedCorrectUser._doc._id = userFromJson._doc._id;
 
-			assert(mockedCorrectUser.created_at);
-			assert(userFromJson.created_at);
+			assert(mockedCorrectUser.createdAt);
+			assert(userFromJson.createdAt);
 
-			mockedCorrectUser.created_at = '';
-			userFromJson.created_at = '';
+			mockedCorrectUser.createdAt = '';
+			userFromJson.createdAt = '';
 
 			assert.equal(JSON.stringify(userFromJson), JSON.stringify(mockedCorrectUser));
 
@@ -231,7 +231,7 @@ describe('User module', () => {
 
 		it('should thrown an error "' + appError('JSON_FORMATION').message + '" when JSON is not correct', (done) => {
 			expect(() => {
-				UserManager.getUserFromJSON(mock.userJsonPasswordFormation)
+				UserManager.getUserFromJSON(mock.userJsonPasswordFormation);
 			}).to.throw(appError('JSON_FORMATION').message);
 
 			done();
@@ -239,7 +239,7 @@ describe('User module', () => {
 
 		it('should thrown an error "' + appError('JSON_FORMATION').message + '" when JSON value is undefined', (done) => {
 			expect(() => {
-				UserManager.getUserFromJSON(mock.userJsonBirthdateIsUndefined)
+				UserManager.getUserFromJSON(mock.userJsonBirthdateIsUndefined);
 			}).to.throw(appError('JSON_FORMATION').message);
 
 			done();
@@ -294,8 +294,9 @@ describe('User module', () => {
 		after((done) => {
 			User.findOneAndRemove({"username": "albertoig", "password": "1234"}, () => {
 				mongoose.connection.close((error) => {
-					if (!error)
+					if (!error){
 						done();
+					}
 				});
 			});
 		});
@@ -316,7 +317,7 @@ describe('User module', () => {
 		});
 
 		it('should reject when error on find mongoose', (done) => {
-			sinon.stub(User, "findOne", (options, cb) => {
+			sinon.stub(User, 'findOne', (options, cb) => {
 				cb('Error', null);
 			});
 
@@ -352,7 +353,7 @@ describe('User module', () => {
 
 		it('should throw an error "' + appError('BODY_UNDEFINED').message + '" when body is undefined', (done) => {
 			expect(() => {
-				UserManager.getParsedBodyJSON(undefined);
+				UserManager.getParsedBodyJSON();
 			}).to.throw(appError('BODY_UNDEFINED').message);
 
 			done();

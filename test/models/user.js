@@ -293,7 +293,7 @@ describe('User Model', () => {
 
 				user.save((error) => {
 					assert.equal(error, undefined);
-					assert(user.created_at);
+					assert(user.createdAt);
 
 					if (!error){
 						done();
@@ -308,7 +308,7 @@ describe('User Model', () => {
 
 				user.save((error) => {
 					assert.equal(error, undefined);
-					assert(user.updated_at);
+					assert(user.updatedAt);
 
 					if (!error){
 						done();

@@ -1,6 +1,6 @@
 'use strict';
 
-const i18n = require("i18n");
+const i18n = require('i18n');
 const express = require('express');
 const config = require('./../../../config/server/config.js');
 

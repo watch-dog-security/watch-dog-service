@@ -18,7 +18,7 @@ describe('Middleware handler error: ', () => {
 		handlerError(appError('EMAIL_NOT_CORRECT'),req, res, () => {});
 
 		assert.equal(res.statusCode, appError('EMAIL_NOT_CORRECT').code);
-		done()
+		done();
 	});
 
 	it('Should call next when error is null or entry',(done) => {

@@ -150,7 +150,7 @@ let stop = () => {
 			])
 			.then((data) => {
 				resolve(data);
-			})
+			});
 	});
 };
 

@@ -57,15 +57,15 @@ let UserSchema = new Schema({
         age: Number,
         website: String
     },
-    created_at: {
+    createdAt: {
 		type: Date,
 		default: Date.now
 	},
-    updated_at: Date
+	updatedAt: Date
 });
 
 UserSchema.pre('save', function (next) {
-    this.updated_at = new Date();
+    this.updatedAt = new Date();
     next();
 });
 

@@ -81,7 +81,7 @@ describe('Middleware tokenChecker: ', () => {
 								prepareNotRedisToken(() => {
 									done();
 								});
-							})
+							});
 						});
 					}
 				});
@@ -114,7 +114,7 @@ describe('Middleware tokenChecker: ', () => {
 			},
 			app: {
 				get: function (name) {
-					return app.get(name)
+					return app.get(name);
 				}
 			}
 		});
