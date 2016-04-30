@@ -142,7 +142,7 @@ let stopRedis = () => {
 };
 
 let stop = () => {
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve) => {
 		Promise.all([
 				stopApp(),
 				stopMongoose(),

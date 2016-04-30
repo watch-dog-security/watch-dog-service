@@ -20,7 +20,7 @@ describe('Utils module', () => {
 			assert.equal(instance.instance, returnedInstance.instance);
 			assert.equal(instance.msg, returnedInstance.msg);
 			done();
-		})
+		});
 	});
 
 	describe('Check Function consoleLogWithTick', () => {
@@ -38,6 +38,6 @@ describe('Utils module', () => {
 			utils.consoleLogWithTick(msg);
 			expect(console.log).to.be.called;
 			done();
-		})
+		});
 	});
 });

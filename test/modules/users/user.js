@@ -97,7 +97,7 @@ describe('User module', () => {
 
 		it('should throw an error "' + appError('BODY_UNDEFINED').message + '" when json is undefined', (done) => {
 			expect(() => {
-				UserManager.parseJsonToUserModel(undefined);
+				UserManager.parseJsonToUserModel();
 			}).to.throw(appError('BODY_UNDEFINED').message);
 			done();
 		});
@@ -292,7 +292,7 @@ describe('User module', () => {
 		});
 
 		after((done) => {
-			User.findOneAndRemove({"username": "albertoig", "password": "1234"}, () => {
+			User.findOneAndRemove({'username': 'albertoig', 'password': '1234'}, () => {
 				mongoose.connection.close((error) => {
 					if (!error){
 						done();

@@ -292,7 +292,7 @@ describe('User Model', () => {
 				let user = new User(mockUserModel.validUserCreateAt);
 
 				user.save((error) => {
-					assert.equal(error, undefined);
+					assert(!error);
 					assert(user.createdAt);
 
 					if (!error){
@@ -307,7 +307,7 @@ describe('User Model', () => {
 				let user = new User(mockUserModel.validUserUpdateAt);
 
 				user.save((error) => {
-					assert.equal(error, undefined);
+					assert(!error);
 					assert(user.updatedAt);
 
 					if (!error){

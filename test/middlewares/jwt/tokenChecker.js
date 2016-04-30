@@ -34,7 +34,7 @@ describe('Middleware tokenChecker: ', () => {
 				mock.validToken.id = userFromManager._id.toString();
 
 				redisInstance.set(mock.validToken.id, mock.validToken.token);
-				callback();
+				return callback();
 			}
 		});
 	};
@@ -48,7 +48,7 @@ describe('Middleware tokenChecker: ', () => {
 			if (!err) {
 				mock.notPresentTokenOnRedis.token = encryptedJWT;
 				mock.notPresentTokenOnRedis.id = userFromManager._id.toString();
-				callback();
+				return callback();
 			}
 		});
 	};

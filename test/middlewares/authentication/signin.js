@@ -52,7 +52,7 @@ describe('Middleware SignIn: ', () => {
 		let user = new User(mock.validUserToMongoose);
 
 		user.save((error) => {
-			assert.equal(error, undefined);
+			assert(!error);
 
 			if (!error) {
 				request(app)

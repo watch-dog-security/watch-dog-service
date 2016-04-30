@@ -37,7 +37,7 @@ describe('User validator', () => {
 		});
 
 		it('should return false when email is undefined', (done) => {
-			let validatedEmail = validator.validateEmail(mockValidatorUserModel.emailUndefined);
+			let validatedEmail = validator.validateEmail();
 			assert.equal(validatedEmail, false);
 			done();
 		});
@@ -69,7 +69,7 @@ describe('User validator', () => {
 		});
 
 		it('should return false when country code is undefined', (done) => {
-			let validatedCountryCode = validator.validateCountryCode(mockValidatorUserModel.countryCodeUndefined);
+			let validatedCountryCode = validator.validateCountryCode();
 			assert.equal(validatedCountryCode, false);
 			done();
 		});

@@ -60,7 +60,7 @@ describe('Middleware: Signup', () => {
 	it('should return an error "' + appError('JSON_FORMATION').message + '" when body request is undefined', (done) => {
 		request(app)
 			.post('/')
-			.send(undefined)
+			.send()
 			.end((error, response) => {
 				expect(response.error.text).to.contain(appError('BODY_UNDEFINED').message);
 				done();
