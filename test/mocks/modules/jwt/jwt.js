@@ -13,7 +13,7 @@ mocks.configurationOfThePayload = {
 mocks.configurationOfThePayloadTokenNotActive = {
 	_id: '1',
 	username: 'UserNamePrueba',
-	nbf: Date.now() / 1000 + 1
+	nbf: Date.now() / 1000 + 1000
 };
 
 mocks.configurationOfThePayloadTokenExpired = {
