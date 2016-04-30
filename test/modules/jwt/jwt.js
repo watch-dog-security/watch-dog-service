@@ -97,10 +97,10 @@ describe('JWT module', () => {
 			let decodeToken = jwt.decode(token);
 			let username = decodeToken.username;
 			let _id = decodeToken._id;
-			let encripted_at = decodeToken.exp;
+			let exp = decodeToken.exp;
 
 			assert(username);
-			assert(encripted_at);
+			assert(exp);
 			assert(_id);
 
 			assert.equal(username, mock.configurationOfThePayload.username);

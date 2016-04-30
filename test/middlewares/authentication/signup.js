@@ -27,7 +27,6 @@ describe('Middleware: Signup', () => {
 			if (!error) {
 				User.ensureIndexes(function (err) {
 					if (!err) {
-
 						done();
 					}
 				});
@@ -40,8 +39,9 @@ describe('Middleware: Signup', () => {
 		mongoose.connection.db.dropCollection('users', (error) => {
 			if (!error) {
 				mongoose.connection.close((error) => {
-					if (!error)
+					if (!error){
 						done();
+					}
 				});
 			}
 		});

@@ -11,6 +11,7 @@ let appError = require('./../../../modules/error/manager');
 
 describe('Payload module', () => {
 	let app;
+	let undefinedVar;
 
 	app = express();
 	i18n.configure({
@@ -24,15 +25,17 @@ describe('Payload module', () => {
 
 	before((done) => {
 		app = app.listen(config.app.port, (error) => {
-			if (!error)
+			if (!error){
 				done();
+			}
 		});
 	});
 
 	after((done) => {
 		app.close((error) => {
-			if (!error)
+			if (!error){
 				done();
+			}
 		});
 	});
 
@@ -89,7 +92,7 @@ describe('Payload module', () => {
 
 		it('Should return an error "' + appError('WRONG_PAYLOAD').message + '" when _id is undefined', (done) => {
 			try {
-				payload.createPayload(undefined, mock.configuration.username);
+				payload.createPayload(undefinedVar, mock.configuration.username);
 			} catch(exception){
 				assert.equal(exception.message,  appError('WRONG_PAYLOAD').message);
 				done();
@@ -98,7 +101,7 @@ describe('Payload module', () => {
 
 		it('Should return an error "' +  appError('WRONG_PAYLOAD').message + '" when username is undefined', (done) => {
 			try {
-				payload.createPayload( mock.configuration._id ,undefined);
+				payload.createPayload( mock.configuration._id , undefinedVar);
 			} catch(exception){
 				assert.equal(exception.message,  appError('WRONG_PAYLOAD').message);
 				done();

@@ -1,6 +1,6 @@
 'use strict';
 
-let AppError = require('./../../../modules/error/manager.js');
+let appError = require('./../../../modules/error/manager.js');
 let chai = require('chai');
 let expect = chai.expect;
 let mockery = require('mockery');
@@ -25,9 +25,9 @@ describe('Error manager module', () => {
 		done();
 	});
 
-	describe('Check Object AppError', () => {
+	describe('Check Object appError', () => {
 		it('should return an error object', (done) => {
-			let bodyError = AppError('BODY_UNDEFINED');
+			let bodyError = appError('BODY_UNDEFINED');
 
 			expect(() => {
 				throw bodyError;
@@ -36,7 +36,7 @@ describe('Error manager module', () => {
 		});
 
 		it('should return a default error object', (done) => {
-			let defaultError = AppError('DEFAULT');
+			let defaultError = appError('DEFAULT');
 
 			expect(() => {
 				throw defaultError;
@@ -45,13 +45,13 @@ describe('Error manager module', () => {
 		});
 
 		it('should return a string with toString function', (done) => {
-			let bodyError = AppError('DEFAULT');
+			let bodyError = appError('DEFAULT');
 			expect(bodyError.toString()).to.be.a('string');
 			done();
 		});
 
 		it('should return a default error if TAG does not exist on JSON', (done) => {
-			let defaultError = AppError('DEFAULT2');
+			let defaultError = appError('DEFAULT2');
 
 			expect(() => {
 				throw defaultError;

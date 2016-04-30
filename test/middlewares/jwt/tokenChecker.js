@@ -14,6 +14,8 @@ let appError = require('./../../../modules/error/manager');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const redis = require('redis');
+const i18n = require('i18n');
+const __ = require('i18n').__;
 const config = require('./../../../config/server/config.js');
 const jwt = require('./../../../modules/jwt/jwt');
 
@@ -53,6 +55,13 @@ describe('Middleware tokenChecker: ', () => {
 
 	before((done) => {
 		app = express();
+		i18n.configure({
+			defaultLocale: 'en',
+			directory: __dirname + '/../../../config/locales',
+			register: global
+		});
+
+		app.use(i18n.init);
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({extended: true}));
 		app.use(tokenChecker);
