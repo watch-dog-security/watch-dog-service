@@ -26,7 +26,6 @@ mocks.userOptionsUserNameNotCorrect = {
 mocks.userOptionsUserNameUndefined = {
 	password: 'prueba'
 };
-mocks.userOptionsUndefined = undefined;
 
 mocks.userOptionsPasswordNotCorrect = {
 	username: 'prueba',

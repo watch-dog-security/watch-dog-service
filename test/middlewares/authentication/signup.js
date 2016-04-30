@@ -11,13 +11,23 @@ const bodyParser = require('body-parser');
 const mock = require('./../../mocks/modules/users/user');
 const mongoose = require('mongoose');
 const config = require('./../../../config/server/config');
+const i18n = require('i18n');
+
 
 describe('Middleware: Signup', () => {
 	let app;
 	before((done) => {
+		i18n.configure({
+			directory: __dirname + '/../../config/locales',
+			locales: ['en', 'es'],
+			defaultLocale: 'en',
+			register: global
+		});
+
 		app = express();
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({extended: true}));
+		app.set('i18n', i18n);
 		app.use(signup);
 		app.use((error, req, res, next) => {
 			return res.status(error.code).send(error.message);

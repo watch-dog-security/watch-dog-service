@@ -8,10 +8,12 @@
 
 let UserManager = require('./../../modules/users/user');
 let appError = require('./../../modules/error/manager');
+let i18n;
 
 module.exports = (() => {
 	return (req, res, next) => {
 		try {
+			i18n = req.app.get('i18n');
 			let oUser = UserManager.parseJsonToUserModel(req.body);
 
 			oUser.save((error) => {
@@ -20,7 +22,7 @@ module.exports = (() => {
 					mongoappError.message = error.message;
 					return next(mongoappError);
 				}
-				return res.status(200).send(__('User saved successfully'));
+				return res.status(200).send(i18n.__('User saved successfully'));
 			});
 		} catch (exception) {
 			return next(exception);

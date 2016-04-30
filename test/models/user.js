@@ -63,7 +63,7 @@ describe('User Model', () => {
 				let user = new User(mockUserModel.validUserEmail);
 
 				user.save((error) => {
-					assert.equal(error, undefined);
+					assert(!error);
 
 					if (!error){
 						done();
@@ -101,7 +101,7 @@ describe('User Model', () => {
 				let user = new User(mockUserModel.validUserUsername);
 
 				user.save((error) => {
-					assert.equal(error, undefined);
+					assert(!error);
 
 					if (!error){
 						done();
@@ -141,7 +141,7 @@ describe('User Model', () => {
 				let user = new User(mockUserModel.validUserPhone);
 
 				user.save((error) => {
-					assert.equal(error, undefined);
+					assert(!error);
 
 					if(!error){
 						done();
@@ -192,7 +192,7 @@ describe('User Model', () => {
 				let user = new User(mockUserModel.validUserCodeCountry);
 
 				user.save((error) => {
-					assert.equal(error, undefined);
+					assert(!error);
 
 					if(!error){
 						done();
@@ -204,7 +204,7 @@ describe('User Model', () => {
 				let user = new User(mockUserModel.validUserSecondCodeCountry);
 
 				user.save((error) => {
-					assert.equal(error, undefined);
+					assert(!error);
 					if(!error){
 						done();
 					}

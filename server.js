@@ -52,6 +52,9 @@ app.use(cors());
 app.use('/auth', authenticationRouter);
 app.use(gatewayRouter);
 
+app.set('i18n', i18n);
+app.set('log', log);
+
 let startApp = () => {
 	//TODO: check how to close properly connection task
 	return new Promise((resolve) => {

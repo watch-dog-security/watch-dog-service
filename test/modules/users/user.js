@@ -395,7 +395,7 @@ describe('User module', () => {
 		});
 
 		it('should return false when user from options is undefined', (done) => {
-			var checkedUserFromOptions = UserManager.checkUserFromOptions(mock.userOptionsUndefined);
+			var checkedUserFromOptions = UserManager.checkUserFromOptions();
 			assert.equal(checkedUserFromOptions, false);
 			done();
 		});
