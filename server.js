@@ -151,9 +151,6 @@ let stop = () => {
 			.then((data) => {
 				resolve(data);
 			})
-			.catch((error) => {
-				reject(error);
-			});
 	});
 };
 

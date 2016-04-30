@@ -51,7 +51,6 @@ describe(config.app.name + ' server', () => {
 		it('Should promise stopApp resolve and stop App', (done) => {
 			server.stopApp().then((response) => {
 				assert.equal(response.msg, __('APP instance is correctly stoped'));
-				assert.equal(response.instance, undefinedVar);
 				serverInstance = response.instance;
 				done();
 			});
@@ -120,7 +119,6 @@ describe(config.app.name + ' server', () => {
 			server.stopMongoose().then((response) => {
 				assert(response.msg);
 				assert.equal(response.msg, __('MongoDB instance is correctly stoped'));
-				assert.equal(response.instance, undefinedVar);
 				mongooseInstance = response.instance;
 				done();
 			});
@@ -213,7 +211,6 @@ describe(config.app.name + ' server', () => {
 		it('Should promise stopRedis resolve and stop listeing redis-server', (done) => {
 			server.stopRedis().then((response) => {
 				assert.equal(response.msg, __('Redis instance is correctly stoped'));
-				assert.equal(response.instance, undefinedVar);
 				redisInstance = response.instance;
 				done();
 			});
@@ -263,7 +260,6 @@ describe(config.app.name + ' server', () => {
 
 				responses.forEach((response) => {
 					assert(response.msg);
-					assert.equal(response.instance, undefinedVar);
 
 					if (response.name === 'APP') {
 						assert.equal(response.msg, __('APP instance is correctly stoped'));
@@ -274,17 +270,6 @@ describe(config.app.name + ' server', () => {
 					}
 				});
 				done();
-			});
-		});
-
-		it('Should reject mongoose when start all services', (done) => {
-			server.start().then(() => {
-				server.stopMongoose().then(() => {
-					server.stop().catch((error) => {
-						assert(error);
-						done();
-					});
-				});
 			});
 		});
 	});

@@ -57,7 +57,7 @@ let getErrorByTag = (tag) => {
 				'type': 'UNEXPECTED',
 				'code': '500',
 				'message': 'Unexpected error, please contact with admin service'
-			})
+			});
 		}
 	}
 };
