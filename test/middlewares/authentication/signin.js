@@ -40,8 +40,9 @@ describe('Middleware SignIn: ', () => {
 		mongoose.connection.db.dropCollection('users', (error) => {
 			if (!error) {
 				mongoose.connection.close((error) => {
-					if (!error)
+					if (!error) {
 						done();
+					}
 				});
 			}
 		});

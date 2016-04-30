@@ -23,12 +23,12 @@ exports.createPayload = (_id, username) => {
  * have control of the expiration time of the token. jwt-simple library defines these standard properties.
  * @param _id
  * @param username
- * @returns {{_id: *, username: *, encripted_at: Date}}
+ * @returns {{_id: *, username: *, exp: *}}
  */
 exports.fillPayload = (_id, username) => {
 	return {
-		_id: _id,
-		username: username,
+		_id,
+		username,
 		exp: new Date() + config.jwt.expire
 	};
 };

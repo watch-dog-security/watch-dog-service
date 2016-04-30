@@ -53,8 +53,7 @@ exports.decode = (authorizationHeader) => {
  * @returns {{username: *, password: *}}
  */
 exports.parseAuthRequestToUserModel = (authorizationHeader) => {
-	//TODO: refactor
-	if (authorizationHeader === undefined ||
+	if (authorizationHeader ||
 		authorizationHeader.indexOf(':') === -1
 	) {
 		throw this.getAuthenticationException();

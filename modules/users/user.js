@@ -19,7 +19,7 @@ UserManager.parseUserToPayload = (userFromRequest) => {
 
 			return payload.createPayload(userFromRequest._id, userFromRequest.username);
 		}catch(exception){
-			throw (exception)
+			throw (exception);
 		}
 };
 
