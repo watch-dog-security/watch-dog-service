@@ -8,4 +8,4 @@ before_script:
   - cp config/server/config_sample.json config/server/config.json
 script: "npm run-script test-travis"
 # Send coverage data to Coveralls and codacy
-after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js | ./node_modules/.bin/codacy-coverage"
+after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js | ./node_modules/.bin/codacy-coverage -t $CODACY_PROJECT_TOKEN"
