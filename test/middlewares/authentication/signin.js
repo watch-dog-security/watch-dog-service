@@ -21,6 +21,9 @@ describe('Middleware SignIn: ', () => {
 		app.use(bodyParser.urlencoded({extended: true}));
 		app.use(signin);
 		app.use((error, req, res, next) => {
+			if(!error){
+				return next();
+			}
 			return res.status(error.code).send(error.message);
 		});
 

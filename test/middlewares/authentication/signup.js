@@ -30,6 +30,9 @@ describe('Middleware: Signup', () => {
 		app.set('i18n', i18n);
 		app.use(signup);
 		app.use((error, req, res, next) => {
+			if(!error){
+				return next();
+			}
 			return res.status(error.code).send(error.message);
 		});
 
@@ -64,7 +67,7 @@ describe('Middleware: Signup', () => {
 				mock.userJson
 			)
 			.expect(200)
-			.expect(__('User saved successfully'),done);
+			.expect(i18n.__('User saved successfully'),done);
 	});
 
 	it('should return an error "' + appError('JSON_FORMATION').message + '" when body request is undefined', (done) => {
