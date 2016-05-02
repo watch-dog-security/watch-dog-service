@@ -7,4 +7,4 @@ services:
 before_script:
   - cp config/server/config_sample.json config/server/config.json
 script: "npm run-script test-travis"
-after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && echo $CODACY_PROJECT_TOKEN"
+after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js | ./node_modules/.bin/codacy-coverage -t $CODACY_PROJECT_TOKEN"
