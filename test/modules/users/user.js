@@ -54,11 +54,13 @@ describe('User module', () => {
 		mongoose.connection.db.dropCollection('users', (error) => {
 			if (!error) {
 				mongoose.connection.close((error) => {
-					app.close((error) => {
-						if (!error) {
-							done();
-						}
-					});
+					if (!error) {
+						app.close((error) => {
+							if (!error) {
+								done();
+							}
+						});
+					}
 				});
 			}
 		});

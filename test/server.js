@@ -3,7 +3,6 @@
 let assert = require('assert');
 let mockery = require('mockery');
 let server = require('./../server.js');
-let User;
 let undefinedVar;
 const config = require('./../config/server/config');
 const i18n = server.i18n;
