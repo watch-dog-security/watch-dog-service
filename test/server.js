@@ -3,7 +3,7 @@
 let assert = require('assert');
 let mockery = require('mockery');
 let server = require('./../server.js');
-let User = require('./../models/user');
+let User;
 let undefinedVar;
 const config = require('./../config/server/config');
 const i18n = server.i18n;
@@ -65,17 +65,12 @@ describe(config.app.name + ' server', () => {
 		let mongooseInstancePort;
 		const mongooseConfigPort = config.database.mongodb.port;
 
-		//TODO: check how to change to Each beacuse that produce and error when server stop and start fast
 		before((done) => {
 			server.startMongoose().then((response) => {
-				User.ensureIndexes(function (error) {
-					if (!error) {
-						mongooseInstance = response.instance;
-						mongooseInstanceMsg = response.msg;
-						mongooseInstancePort = mongooseInstance.connection.port;
-						done();
-					}
-				});
+				mongooseInstance = response.instance;
+				mongooseInstanceMsg = response.msg;
+				mongooseInstancePort = mongooseInstance.connection.port;
+				done();
 			});
 		});
 
@@ -180,7 +175,7 @@ describe(config.app.name + ' server', () => {
 					}
 				},
 				jwt: {
-					secret:'1'
+					secret: '1'
 				},
 				database: {
 					mongodb: {

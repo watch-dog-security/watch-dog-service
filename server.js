@@ -130,6 +130,7 @@ let stopApp = () => {
 
 let stopMongoose = () => {
 	return new Promise((resolve) => {
+		delete mongoose.connection.models['User'];
 		instanceMoongose.connection.close(() => {
 			let msg = __('MongoDB instance is correctly stoped');
 			resolve(
