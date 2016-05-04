@@ -15,6 +15,8 @@
 	},
 	"mongodb": {
 		"host": "mongodb://localhost",
+		"db": "wds",
+		"testdb": "wdstest",
 		"port": "27017"
 	},
 	"redis": {

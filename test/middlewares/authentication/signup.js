@@ -2,23 +2,22 @@
 
 let express = require('express');
 let request = require('supertest');
-let signup = require('./../../../middlewares/authentication/signup');
-let User = require('./../../../models/user');
-let appError = require('./../../../modules/error/manager');
 let expect = require('chai').expect;
-
+const mongoose = require('mongoose');
+const i18n = require('i18n');
+let signup = require('./../../../middlewares/authentication/signup');
+let appError = require('./../../../modules/error/manager');
 const bodyParser = require('body-parser');
 const mock = require('./../../mocks/modules/users/user');
-const mongoose = require('mongoose');
 const config = require('./../../../config/server/config');
-const i18n = require('i18n');
-
+let User;
+let UserManager;
 
 describe('Middleware: Signup', () => {
 	let app;
 	before((done) => {
 		i18n.configure({
-			directory: __dirname + '/../../config/locales',
+			directory: __dirname + '/../../../config/locales',
 			locales: ['en', 'es'],
 			defaultLocale: 'en',
 			register: global
@@ -28,23 +27,21 @@ describe('Middleware: Signup', () => {
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({extended: true}));
 		app.set('i18n', i18n);
+
 		app.use(signup);
 		app.use((error, req, res, next) => {
-			if(!error){
+			if (!error) {
 				return next();
 			}
 			return res.status(error.code).send(error.message);
 		});
 
-		mongoose.connect(config.database.mongodb.host, (error) => {
+		mongoose.connect(config.database.mongodb.host + ':' + config.database.mongodb.port + '/' + config.database.mongodb.testdb, (error) => {
+			UserManager = require('./../../../modules/users/user')(mongoose);
+			app.set('UserManager', UserManager);
 			if (!error) {
-				User.ensureIndexes(function (err) {
-					if (!err) {
-						done();
-					}
-				});
+				done();
 			}
-
 		});
 	});
 
@@ -52,7 +49,7 @@ describe('Middleware: Signup', () => {
 		mongoose.connection.db.dropCollection('users', (error) => {
 			if (!error) {
 				mongoose.connection.close((error) => {
-					if (!error){
+					if (!error) {
 						done();
 					}
 				});
@@ -67,7 +64,7 @@ describe('Middleware: Signup', () => {
 				mock.userJson
 			)
 			.expect(200)
-			.expect(i18n.__('User saved successfully'),done);
+			.expect(i18n.__('User saved successfully'), done);
 	});
 
 	it('should return an error "' + appError('JSON_FORMATION').message + '" when body request is undefined', (done) => {

@@ -20,6 +20,8 @@ module.exports = {
     database: {
         mongodb: {
             host: process.env.WDS_MONGODB_HOST || config.mongodb.host,
+            db: process.env.WDS_MONGODB_DB || config.mongodb.db,
+            testdb: process.env.WDS_MONGODB_TEST_DB || config.mongodb.testdb,
             port: process.env.WDS_MONGODB_PORT || config.mongodb.port
         },
         redis: {

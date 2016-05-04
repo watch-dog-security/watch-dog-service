@@ -6,7 +6,7 @@
 	"MongoDB instance is correctly stoped": "MongoDB instance is correctly stoped",
 	"Redis instance is correctly stoped": "Redis instance is correctly stoped",
 	"Something is going wrong with the data of the payload": "Something is going wrong with the data of the payload",
-	"User saved successfully": "User saved successfully!",
+	"User saved successfully": "User saved successfully",
 	"You must to signin on the system with the correct credentials": "You must to signin on the system with the correct credentials",
 	"Not authorize": "Not authorize",
 	"You must to add the headers, incorrect call": "You must to add the headers, incorrect call",

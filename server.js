@@ -35,6 +35,7 @@ let app = express();
 let instanceApp;
 let instanceMoongose;
 let instanceRedis;
+let UserManager;
 
 i18n.configure({
 	defaultLocale: 'en',
@@ -68,10 +69,15 @@ let startApp = () => {
 
 let startMongoose = () => {
 	return new Promise((resolve, reject) => {
-		instanceMoongose = mongoose.connect(config.database.mongodb.host, (err) => {
+		instanceMoongose = mongoose.connect(config.database.mongodb.host + ':' + config.database.mongodb.port +  '/' + config.database.mongodb.db, (err) => {
 			if (err) {
 				reject(err);
 			} else {
+				UserManager = require('./modules/users/user')(mongoose);
+
+				app.set('mongooseInstance', mongoose);
+				app.set('UserManager', UserManager);
+
 				resolve(
 					utils.getArrayResponseForInstances('Mongoose', instanceMoongose, __('MongoDB is up on port ') + instanceMoongose.connection.port)
 				);
