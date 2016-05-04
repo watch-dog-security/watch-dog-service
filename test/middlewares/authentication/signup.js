@@ -5,10 +5,9 @@ let request = require('supertest');
 let expect = require('chai').expect;
 let signup = require('./../../../middlewares/authentication/signup');
 let appError = require('./../../../modules/error/manager');
-let User;
 let UserManager;
 
-const mongoose = require('mongoose');
+let mongoose = require('mongoose');
 const i18n = require('i18n');
 const bodyParser = require('body-parser');
 const mock = require('./../../mocks/modules/users/user');
@@ -46,6 +45,7 @@ describe('Middleware: Signup', () => {
 	});
 
 	after((done) => {
+		delete mongoose.connection.models['User'];
 		mongoose.connection.db.dropCollection('users', (error) => {
 			if (!error) {
 				mongoose.connection.close((error) => {

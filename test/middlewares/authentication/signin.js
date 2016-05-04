@@ -4,14 +4,13 @@ let express = require('express');
 let request = require('supertest');
 let assert = require('assert');
 let signin = require('./../../../middlewares/authentication/signin');
-let User;
 let appError = require('./../../../modules/error/manager');
 let expect = require('chai').expect;
 let UserManager;
 
 const bodyParser = require('body-parser');
 const mock = require('./../../mocks/middlewares/authentication/signin');
-const mongoose = require('mongoose');
+let mongoose = require('mongoose');
 const config = require('./../../../config/server/config');
 
 describe('Middleware SignIn: ', () => {
@@ -38,11 +37,13 @@ describe('Middleware SignIn: ', () => {
 	});
 
 	after((done) => {
+		delete mongoose.connection.models['User'];
 		mongoose.connection.db.dropCollection('users', (error) => {
 			if (!error) {
 				mongoose.connection.close((error) => {
 					if (!error) {
 						done();
+
 					}
 				});
 			}

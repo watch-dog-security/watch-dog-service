@@ -6,17 +6,19 @@
  * @type {UserManager|exports|module.exports}
  */
 
-let UserManager = require('./../../modules/users/user');
 let appError = require('./../../modules/error/manager');
+let UserManager;
 let i18n;
+let user;
 
 module.exports = (() => {
 	return (req, res, next) => {
 		try {
 			i18n = req.app.get('i18n');
-			let oUser = UserManager.parseJsonToUserModel(req.body);
+			UserManager = req.app.get('UserManager');
+			user = UserManager.parseJsonToUserModel(req.body);
 
-			oUser.save((error) => {
+			user.save((error) => {
 				if (error) {
 					let mongoappError = appError('MONGOOSE_USER_SAVE');
 					mongoappError.message = error.message;
@@ -24,8 +26,8 @@ module.exports = (() => {
 				}
 				return res.status(200).send(i18n.__('User saved successfully'));
 			});
-		} catch (exception) {
-			return next(exception);
+		} catch (error) {
+			return next(error);
 		}
 	};
 })();
