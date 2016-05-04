@@ -3,10 +3,9 @@
 let express = require('express');
 let request = require('supertest');
 let giver = require('./../../../middlewares/jwt/giver');
-let User = require('./../../../models/user');
 let appError = require('./../../../modules/error/manager');
 let expect = require('chai').expect;
-
+let UserManager;
 
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -24,24 +23,21 @@ describe('Middleware Giver: ', () => {
 		app.use(bodyParser.urlencoded({extended: true}));
 		app.use(giver);
 		app.use((error, req, res, next) => {
-			if(!error){
+			if (!error) {
 				return next();
 			}
 			return res.status(error.code).send(error.message);
 		});
 
-		mongoose.connect(config.database.mongodb.host, (error) => {
+		mongoose.connect(config.database.mongodb.host + ':' + config.database.mongodb.port + '/' + config.database.mongodb.testdb, (error) => {
 			if (!error) {
-				User.ensureIndexes(function (err) {
-					if (!err) {
+				redisInstance = redis.createClient(config.database.redis.port, config.database.redis.host);
 
-						redisInstance = redis.createClient(config.database.redis.port, config.database.redis.host);
-
-						redisInstance.on('connect', () => {
-							app.set('redisInstance', redisInstance);
-							done();
-						});
-					}
+				redisInstance.on('connect', () => {
+					app.set('redisInstance', redisInstance);
+					UserManager = require('./../../../modules/users/user')(mongoose);
+					app.set('UserManager', UserManager);
+					done();
 				});
 			}
 
@@ -49,6 +45,7 @@ describe('Middleware Giver: ', () => {
 	});
 
 	after((done) => {
+		delete mongoose.connection.models['User'];
 		mongoose.connection.db.dropCollection('users', (error) => {
 			if (!error) {
 				mongoose.connection.close((error) => {
@@ -69,7 +66,7 @@ describe('Middleware Giver: ', () => {
 		request(app)
 			.post('/')
 			.send(mock.validRequest)
-			.expect(200,done);
+			.expect(200, done);
 	});
 
 	it('should return an error "' + appError('WRONG_USER_FROM_REQUEST').message + '" when request is undefined', (done) => {

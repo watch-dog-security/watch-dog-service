@@ -43,7 +43,6 @@ describe('Middleware SignIn: ', () => {
 				mongoose.connection.close((error) => {
 					if (!error) {
 						done();
-
 					}
 				});
 			}

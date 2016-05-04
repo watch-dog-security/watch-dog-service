@@ -1,7 +1,7 @@
 'use strict';
 
-let userManager = require('./../../modules/users/user');
 let jwt = require('../../modules/jwt/jwt');
+let UserManager;
 
 let checkBody = (req) => {
 	return !!(req.body &&
@@ -19,9 +19,10 @@ module.exports = (() => {
 	return (req, res, next) => {
 		let userFromRequest = getUserFromRequest(req);
 		let redisInstance = req.app.get('redisInstance');
+		UserManager = req.app.get('UserManager');
 
 		try {
-			let payload = userManager.parseUserToPayload(userFromRequest);
+			let payload = UserManager.parseUserToPayload(userFromRequest);
 			let encryptedJWT = jwt.encrypt(payload);
 			redisInstance.set(payload._id.toString(), encryptedJWT);
 			return res.status(200).send(encryptedJWT);

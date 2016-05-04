@@ -6,14 +6,14 @@ const config = require('./../../../config/server/config.js');
 const mongoose = require('mongoose');
 
 let assert = require('assert');
-let UserManager = require('./../../../modules/users/user');
-let User = require('./../../../models/user');
+let UserManager;
 let sinon = require('sinon');
 let chai = require('chai');
 let expect = chai.expect;
 let mock = require('./../../mocks/modules/users/user.js');
 let mockPayload = require('./../../mocks/modules/jwt/payload');
 let appError = require('./../../../modules/error/manager');
+let userFromManager;
 
 describe('User module', () => {
 	let app;
@@ -21,7 +21,7 @@ describe('User module', () => {
 	app = express();
 	i18n.configure({
 		directory: __dirname + '/../../../config/locales',
-		locales:['en', 'es'],
+		locales: ['en', 'es'],
 		defaultLocale: 'en',
 		register: global
 	});
@@ -29,24 +29,44 @@ describe('User module', () => {
 	app.use(i18n.init);
 
 	before((done) => {
-		app = app.listen(config.app.port, (error) => {
-			if (!error){
-				done();
+		mongoose.connect(config.database.mongodb.host + ':' + config.database.mongodb.port + '/' + config.database.mongodb.testdb, (error) => {
+			if (!error) {
+				UserManager = require('./../../../modules/users/user')(mongoose);
+
+				app = app.listen(config.app.port, (error) => {
+					if (!error) {
+						userFromManager = UserManager.parseJsonToUserModel(mock.userJson);
+
+						userFromManager.save((err) => {
+							if (!err) {
+								done();
+							}
+						});
+					}
+				});
 			}
 		});
+
 	});
 
 	after((done) => {
-		app.close((error) => {
-			if (!error){
-				done();
+		delete mongoose.connection.models['User'];
+		mongoose.connection.db.dropCollection('users', (error) => {
+			if (!error) {
+				mongoose.connection.close((error) => {
+					app.close((error) => {
+						if (!error) {
+							done();
+						}
+					});
+				});
 			}
 		});
 	});
 
 	describe('Check Function makeOptionsWithUserModel', () => {
 		it('should return an object with username and password', (done) => {
-			var madeOptions = UserManager.makeOptionsWithUserModel(mock.userOptions);
+			let madeOptions = UserManager.makeOptionsWithUserModel(mock.userOptions);
 
 			assert.deepEqual(mock.optionsVerified, madeOptions);
 
@@ -114,91 +134,91 @@ describe('User module', () => {
 
 	describe('Check Function checkUserFromJSON', () => {
 		it('should return true when info is correct', (done) => {
-			var booleanCheck = UserManager.checkUserFromJSON(mock.userJson);
+			let booleanCheck = UserManager.checkUserFromJSON(mock.userJson);
 			assert.equal(booleanCheck, true);
 			done();
 		});
 
 		it('should return false when fullname name formation is not correct', (done) => {
-			var booleanCheck = UserManager.checkUserFromJSON(mock.userJsonFullNameFormation);
+			let booleanCheck = UserManager.checkUserFromJSON(mock.userJsonFullNameFormation);
 			assert.equal(booleanCheck, false);
 			done();
 		});
 
 		it('should return false when fullname is undefined', (done) => {
-			var booleanCheck = UserManager.checkUserFromJSON(mock.userJsonFullNameIsUndefined);
+			let booleanCheck = UserManager.checkUserFromJSON(mock.userJsonFullNameIsUndefined);
 			assert.equal(booleanCheck, false);
 			done();
 		});
 
 		it('should return false when password name formation is not correct', (done) => {
-			var booleanCheck = UserManager.checkUserFromJSON(mock.userJsonPasswordFormation);
+			let booleanCheck = UserManager.checkUserFromJSON(mock.userJsonPasswordFormation);
 			assert.equal(booleanCheck, false);
 			done();
 		});
 
 		it('should return false when password is undefined', (done) => {
-			var booleanCheck = UserManager.checkUserFromJSON(mock.userJsonPasswordIsUndefined);
+			let booleanCheck = UserManager.checkUserFromJSON(mock.userJsonPasswordIsUndefined);
 			assert.equal(booleanCheck, false);
 			done();
 		});
 
 		it('should return false when username name formation is not correct', (done) => {
-			var booleanCheck = UserManager.checkUserFromJSON(mock.userJsonUserNameFormation);
+			let booleanCheck = UserManager.checkUserFromJSON(mock.userJsonUserNameFormation);
 			assert.equal(booleanCheck, false);
 			done();
 		});
 
 		it('should return false when username is undefined', (done) => {
-			var booleanCheck = UserManager.checkUserFromJSON(mock.userJsonUserNameIsUndefined);
+			let booleanCheck = UserManager.checkUserFromJSON(mock.userJsonUserNameIsUndefined);
 			assert.equal(booleanCheck, false);
 			done();
 		});
 
 		it('should return false when email name formation is not correct', (done) => {
-			var booleanCheck = UserManager.checkUserFromJSON(mock.userJsonEmailFormation);
+			let booleanCheck = UserManager.checkUserFromJSON(mock.userJsonEmailFormation);
 			assert.equal(booleanCheck, false);
 			done();
 		});
 
 		it('should return false when email is undefined', (done) => {
-			var booleanCheck = UserManager.checkUserFromJSON(mock.userJsonEmailIsUndefined);
+			let booleanCheck = UserManager.checkUserFromJSON(mock.userJsonEmailIsUndefined);
 			assert.equal(booleanCheck, false);
 			done();
 		});
 
 		it('should return false when codecountry name formation is not correct', (done) => {
-			var booleanCheck = UserManager.checkUserFromJSON(mock.userJsonCodeCountryFormation);
+			let booleanCheck = UserManager.checkUserFromJSON(mock.userJsonCodeCountryFormation);
 			assert.equal(booleanCheck, false);
 			done();
 		});
 
 		it('should return false when codecountry is undefined', (done) => {
-			var booleanCheck = UserManager.checkUserFromJSON(mock.userJsonCodeCountryIsUndefined);
+			let booleanCheck = UserManager.checkUserFromJSON(mock.userJsonCodeCountryIsUndefined);
 			assert.equal(booleanCheck, false);
 			done();
 		});
 
 		it('should return false when birthdate name formation is not correct', (done) => {
-			var booleanCheck = UserManager.checkUserFromJSON(mock.userJsonBirthdateFormation);
+			let booleanCheck = UserManager.checkUserFromJSON(mock.userJsonBirthdateFormation);
 			assert.equal(booleanCheck, false);
 			done();
 		});
 
 		it('should return false when birthdate is undefined', (done) => {
-			var booleanCheck = UserManager.checkUserFromJSON(mock.userJsonBirthdateIsUndefined);
+			let booleanCheck = UserManager.checkUserFromJSON(mock.userJsonBirthdateIsUndefined);
 			assert.equal(booleanCheck, false);
 			done();
 		});
 
 		it('should return false when mobilephone name formation is not correct', (done) => {
-			var booleanCheck = UserManager.checkUserFromJSON(mock.userJsonMobilePhoneFormation);
+			let booleanCheck = UserManager.checkUserFromJSON(mock.userJsonMobilePhoneFormation);
 			assert.equal(booleanCheck, false);
 			done();
 		});
 
 		it('should return false when mobilephone is undefined', (done) => {
-			var booleanCheck = UserManager.checkUserFromJSON(mock.userJsonMobilePhoneIsUndefined);
+			let booleanCheck = UserManager.checkUserFromJSON(mock.userJsonMobilePhoneIsUndefined);
 			assert.equal(booleanCheck, false);
 			done();
 		});
@@ -206,7 +226,7 @@ describe('User module', () => {
 
 	describe('Check Function makeUserFromJSON', () => {
 		it('should return an object with a user Object', (done) => {
-			var madeUser = UserManager.makeUserFromJSON(mock.userJson);
+			let madeUser = UserManager.makeUserFromJSON(mock.userJson);
 			assert.deepEqual(mock.correctUser, madeUser);
 			done();
 		});
@@ -214,8 +234,8 @@ describe('User module', () => {
 
 	describe('Check Function getUserFromJSON', () => {
 		it('should return a correct User object from JSON object', (done) => {
-			var userFromJson = UserManager.getUserFromJSON(mock.userJson);
-			var mockedCorrectUser = new User(mock.correctUser);
+			let userFromJson = UserManager.getUserFromJSON(mock.userJson);
+			let mockedCorrectUser = UserManager.getNewUser(mock.correctUser);
 			mockedCorrectUser._doc._id = userFromJson._doc._id;
 
 			assert(mockedCorrectUser.createdAt);
@@ -256,18 +276,18 @@ describe('User module', () => {
 		});
 
 		it('should return an error "' + appError('WRONG_USER_FROM_REQUEST').message + '" with a undefined _id', (done) => {
-			try{
+			try {
 				UserManager.parseUserToPayload(mockPayload.configurationUndefinedId);
-			}catch(exception){
+			} catch (exception) {
 				assert.equal(exception.message, appError('WRONG_USER_FROM_REQUEST').message);
 				done();
 			}
 		});
 
 		it('should return an error "' + appError('WRONG_USER_FROM_REQUEST').message + '" with a undefined username', (done) => {
-			try{
+			try {
 				UserManager.parseUserToPayload(mockPayload.configurationUndefinedUsername);
-			}catch(exception){
+			} catch (exception) {
 				assert.equal(exception.message, appError('WRONG_USER_FROM_REQUEST').message);
 				done();
 			}
@@ -275,32 +295,6 @@ describe('User module', () => {
 	});
 
 	describe('Check Function checkUserFromDB', () => {
-		let userFromManager;
-
-		before((done) => {
-			mongoose.connect(config.database.mongodb.host, (error) => {
-				if (!error) {
-					userFromManager = UserManager.parseJsonToUserModel(mock.userJson);
-
-					userFromManager.save((err) => {
-						if (!err) {
-							done();
-						}
-					});
-				}
-			});
-		});
-
-		after((done) => {
-			User.findOneAndRemove({'username': 'albertoig', 'password': '1234'}, () => {
-				mongoose.connection.close((error) => {
-					if (!error){
-						done();
-					}
-				});
-			});
-		});
-
 		it('should resolve when APP find a User', (done) => {
 			UserManager.checkUserFromDB(mock.userOptionsJson).then((user) => {
 				assert(user._id);
@@ -317,7 +311,7 @@ describe('User module', () => {
 		});
 
 		it('should reject when error on find mongoose', (done) => {
-			sinon.stub(User, 'findOne', (options, cb) => {
+			sinon.stub(UserManager.getSchema(), 'findOne', (options, cb) => {
 				cb('Error', null);
 			});
 
@@ -344,7 +338,7 @@ describe('User module', () => {
 
 	describe('Check Function getParsedBodyJSON', () => {
 		it('should return an object when pass a correct JSON', (done) => {
-			var parsedBodyFromJSON = UserManager.getParsedBodyJSON(mock.userJson);
+			let parsedBodyFromJSON = UserManager.getParsedBodyJSON(mock.userJson);
 
 			assert.equal(JSON.stringify(mock.userJson), JSON.stringify(parsedBodyFromJSON));
 
@@ -362,25 +356,25 @@ describe('User module', () => {
 
 	describe('Check Function checkUserFromRequest', () => {
 		it('should return true when user from request is correct', (done) => {
-			var checkedUserFromRequest = UserManager.checkUserFromRequest(mockPayload.correctUserFromRequest);
+			let checkedUserFromRequest = UserManager.checkUserFromRequest(mockPayload.correctUserFromRequest);
 			assert.equal(checkedUserFromRequest, true);
 			done();
 		});
 
 		it('should return false when user from request is undefined', (done) => {
-			var checkedUserFromRequest = UserManager.checkUserFromRequest();
+			let checkedUserFromRequest = UserManager.checkUserFromRequest();
 			assert.equal(checkedUserFromRequest, false);
 			done();
 		});
 
 		it('should return false when user._id is undefined', (done) => {
-			var checkedUserFromRequest = UserManager.checkUserFromRequest(mockPayload.userFromRequestWithUndefinedId);
+			let checkedUserFromRequest = UserManager.checkUserFromRequest(mockPayload.userFromRequestWithUndefinedId);
 			assert.equal(checkedUserFromRequest, false);
 			done();
 		});
 
 		it('should return false when user.username is undefined', (done) => {
-			var checkedUserFromRequest = UserManager.checkUserFromRequest(mockPayload.userFromRequestWithUndefinedUsername);
+			let checkedUserFromRequest = UserManager.checkUserFromRequest(mockPayload.userFromRequestWithUndefinedUsername);
 			assert.equal(checkedUserFromRequest, false);
 			done();
 		});
@@ -389,25 +383,25 @@ describe('User module', () => {
 
 	describe('Check Function checkUserFromOptions', () => {
 		it('should return true when user from options is correct', (done) => {
-			var checkedUserFromOptions = UserManager.checkUserFromOptions(mock.userOptions);
+			let checkedUserFromOptions = UserManager.checkUserFromOptions(mock.userOptions);
 			assert.equal(checkedUserFromOptions, true);
 			done();
 		});
 
 		it('should return false when user from options is undefined', (done) => {
-			var checkedUserFromOptions = UserManager.checkUserFromOptions();
+			let checkedUserFromOptions = UserManager.checkUserFromOptions();
 			assert.equal(checkedUserFromOptions, false);
 			done();
 		});
 
 		it('should return false when user.password is undefined', (done) => {
-			var checkedUserFromOptions = UserManager.checkUserFromOptions(mock.userOptionsUserNameUndefined);
+			let checkedUserFromOptions = UserManager.checkUserFromOptions(mock.userOptionsUserNameUndefined);
 			assert.equal(checkedUserFromOptions, false);
 			done();
 		});
 
 		it('should return false when user.username is undefined', (done) => {
-			var checkedUserFromOptions = UserManager.checkUserFromOptions(mock.userOptionsUserNameUndefined);
+			let checkedUserFromOptions = UserManager.checkUserFromOptions(mock.userOptionsUserNameUndefined);
 			assert.equal(checkedUserFromOptions, false);
 			done();
 		});

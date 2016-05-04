@@ -62,6 +62,22 @@ module.exports = (mongoose) => {
 	};
 
 	/**
+	 * create a new user object form user schema
+	 * @param user
+     */
+	UserManager.getNewUser = (user) => {
+		return new User(user);
+	};
+
+	/**
+	 * Get the user schema
+	 * @returns {*}
+     */
+	UserManager.getSchema = () => {
+		return User;
+	};
+
+	/**
 	 * Make a new user object with JSON object, if something is not correct
 	 * will throw an Exception.
 	 * @param userJson

@@ -8,7 +8,7 @@ const express = require('express');
 const expect = require('chai').expect;
 
 let assert = require('assert');
-let User = require('./../../models/user');
+let User;
 
 describe('User Model', () => {
 	let app;
@@ -24,18 +24,14 @@ describe('User Model', () => {
 	app.use(i18n.init);
 
 	before((done) => {
-		//TODO: Add other collection to avoid delete the real db
 		app = app.listen(config.app.port, (error) => {
 			if (!error) {
-				mongoose.connect(config.database.mongodb.host, (error) => {
-					if (!error) {
-						User.ensureIndexes(function (err) {
-							if (!err) {
-								done();
-							}
-						});
-					}
+				mongoose.connect(config.database.mongodb.host + ':' + config.database.mongodb.port + '/' + config.database.mongodb.testdb, (error) => {
+					User = require('./../../models/user')(mongoose);
 
+					if (!error) {
+						done();
+					}
 				});
 			}
 		});
@@ -44,10 +40,11 @@ describe('User Model', () => {
 	after((done) => {
 		app.close((error) => {
 			if (!error) {
+				delete mongoose.connection.models['User'];
 				mongoose.connection.db.dropCollection('users', (error) => {
 					if (!error) {
 						mongoose.connection.close((error) => {
-							if (!error){
+							if (!error) {
 								done();
 							}
 						});
@@ -65,7 +62,7 @@ describe('User Model', () => {
 				user.save((error) => {
 					assert(!error);
 
-					if (!error){
+					if (!error) {
 						done();
 					}
 				});
@@ -77,7 +74,7 @@ describe('User Model', () => {
 				user.save((error) => {
 					assert.equal(error.errors.email.message, 'Path `email` is required.');
 
-					if (error){
+					if (error) {
 						done();
 					}
 				});
@@ -89,7 +86,7 @@ describe('User Model', () => {
 				user.save((error) => {
 					assert.equal(error.errors.email.message, i18n.__('Email syntax is not correct'));
 
-					if (error){
+					if (error) {
 						done();
 					}
 				});
@@ -103,7 +100,7 @@ describe('User Model', () => {
 				user.save((error) => {
 					assert(!error);
 
-					if (!error){
+					if (!error) {
 						done();
 					}
 				});
@@ -117,7 +114,7 @@ describe('User Model', () => {
 					expect(error.message).to.contain('username');
 					assert.equal(error.code, 11000);
 
-					if(error){
+					if (error) {
 						done();
 					}
 				});
@@ -128,8 +125,8 @@ describe('User Model', () => {
 
 				user.save((error) => {
 					//TODO: convert default mesagges to i18n
-					assert.equal(error.errors.username.message,  'Path `username` is required.');
-					if(error){
+					assert.equal(error.errors.username.message, 'Path `username` is required.');
+					if (error) {
 						done();
 					}
 				});
@@ -143,7 +140,7 @@ describe('User Model', () => {
 				user.save((error) => {
 					assert(!error);
 
-					if(!error){
+					if (!error) {
 						done();
 					}
 				});
@@ -153,9 +150,9 @@ describe('User Model', () => {
 				let user = new User(mockUserModel.userWithoutPhone);
 
 				user.save((error) => {
-					assert.equal(error.errors.mobilePhone.message,  'Path `mobilePhone` is required.');
+					assert.equal(error.errors.mobilePhone.message, 'Path `mobilePhone` is required.');
 
-					if(error){
+					if (error) {
 						done();
 					}
 				});
@@ -165,9 +162,9 @@ describe('User Model', () => {
 				let user = new User(mockUserModel.userWithLettersOnMobile);
 
 				user.save((error) => {
-					assert.equal(error.errors.mobilePhone.message,  'Cast to Number failed for value "' + mockUserModel.userWithLettersOnMobile.mobilePhone + '" at path "mobilePhone"');
+					assert.equal(error.errors.mobilePhone.message, 'Cast to Number failed for value "' + mockUserModel.userWithLettersOnMobile.mobilePhone + '" at path "mobilePhone"');
 
-					if(error){
+					if (error) {
 						done();
 					}
 				});
@@ -180,7 +177,7 @@ describe('User Model', () => {
 					expect(error.message).to.contain('mobilePhone');
 					assert.equal(error.code, 11000);
 
-					if(error){
+					if (error) {
 						done();
 					}
 				});
@@ -194,7 +191,7 @@ describe('User Model', () => {
 				user.save((error) => {
 					assert(!error);
 
-					if(!error){
+					if (!error) {
 						done();
 					}
 				});
@@ -205,7 +202,7 @@ describe('User Model', () => {
 
 				user.save((error) => {
 					assert(!error);
-					if(!error){
+					if (!error) {
 						done();
 					}
 				});
@@ -215,8 +212,8 @@ describe('User Model', () => {
 				let user = new User(mockUserModel.userWithoutCodeCountry);
 
 				user.save((error) => {
-					assert.equal(error.errors.codeCountry.message,  'Path `codeCountry` is required.');
-					if(error){
+					assert.equal(error.errors.codeCountry.message, 'Path `codeCountry` is required.');
+					if (error) {
 						done();
 					}
 				});
@@ -227,7 +224,7 @@ describe('User Model', () => {
 
 				user.save((error) => {
 					assert.equal(error.errors.codeCountry.message, i18n.__('Country code is not correct'));
-					if(error){
+					if (error) {
 						done();
 					}
 				});
@@ -239,8 +236,8 @@ describe('User Model', () => {
 				let user = new User(mockUserModel.userWithoutBirthdate);
 
 				user.save((error) => {
-					assert.equal(error.errors['meta.birthdate'].message,  'Path `meta.birthdate` is required.');
-					if (error){
+					assert.equal(error.errors['meta.birthdate'].message, 'Path `meta.birthdate` is required.');
+					if (error) {
 						done();
 					}
 				});
@@ -250,9 +247,9 @@ describe('User Model', () => {
 				let user = new User(mockUserModel.userWrongBirthdate);
 
 				user.save((error) => {
-					assert.equal(error.errors['meta.birthdate'].message,  'Cast to Date failed for value "' + mockUserModel.userWrongBirthdate.meta.birthdate + '" at path "meta.birthdate"');
+					assert.equal(error.errors['meta.birthdate'].message, 'Cast to Date failed for value "' + mockUserModel.userWrongBirthdate.meta.birthdate + '" at path "meta.birthdate"');
 
-					if (error){
+					if (error) {
 						done();
 					}
 				});
@@ -264,9 +261,9 @@ describe('User Model', () => {
 				let user = new User(mockUserModel.userWithoutPassword);
 
 				user.save((error) => {
-					assert.equal(error.errors.password.message,  'Path `password` is required.');
+					assert.equal(error.errors.password.message, 'Path `password` is required.');
 
-					if (error){
+					if (error) {
 						done();
 					}
 				});
@@ -278,9 +275,9 @@ describe('User Model', () => {
 				let user = new User(mockUserModel.userWithoutFullname);
 
 				user.save((error) => {
-					assert.equal(error.errors.fullName.message,  'Path `fullName` is required.');
+					assert.equal(error.errors.fullName.message, 'Path `fullName` is required.');
 
-					if (error){
+					if (error) {
 						done();
 					}
 				});
@@ -295,7 +292,7 @@ describe('User Model', () => {
 					assert(!error);
 					assert(user.createdAt);
 
-					if (!error){
+					if (!error) {
 						done();
 					}
 				});
@@ -310,7 +307,7 @@ describe('User Model', () => {
 					assert(!error);
 					assert(user.updatedAt);
 
-					if (!error){
+					if (!error) {
 						done();
 					}
 				});
