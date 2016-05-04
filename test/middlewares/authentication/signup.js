@@ -3,15 +3,16 @@
 let express = require('express');
 let request = require('supertest');
 let expect = require('chai').expect;
-const mongoose = require('mongoose');
-const i18n = require('i18n');
 let signup = require('./../../../middlewares/authentication/signup');
 let appError = require('./../../../modules/error/manager');
+let User;
+let UserManager;
+
+const mongoose = require('mongoose');
+const i18n = require('i18n');
 const bodyParser = require('body-parser');
 const mock = require('./../../mocks/modules/users/user');
 const config = require('./../../../config/server/config');
-let User;
-let UserManager;
 
 describe('Middleware: Signup', () => {
 	let app;
@@ -27,7 +28,6 @@ describe('Middleware: Signup', () => {
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({extended: true}));
 		app.set('i18n', i18n);
-
 		app.use(signup);
 		app.use((error, req, res, next) => {
 			if (!error) {

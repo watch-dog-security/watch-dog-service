@@ -1,16 +1,19 @@
 'use strict';
 
-let UserManager = require('./../../modules/users/user');
 let authentication = require('./../../modules/authentication/authentication');
 let appError = require('./../../modules/error/manager');
+let authRequest;
+let userAuthentication;
+let UserManager;
 
 module.exports = (() => {
 	return (req, res, next) => {
-		let authRequest = req.headers['authorization'];
+		authRequest = req.headers['authorization'];
+		UserManager = req.app.get('UserManager');
 
 		if (authentication.check(authRequest)) {
 			try {
-				let userAuthentication = authentication.getUserAuthentication(authRequest);
+				userAuthentication = authentication.getUserAuthentication(authRequest);
 
 				UserManager.checkUserFromDB(userAuthentication)
 					.then((user) => {
@@ -25,8 +28,8 @@ module.exports = (() => {
 						return next(error);
 					});
 
-			} catch (exception) {
-				return next(exception);
+			} catch (error) {
+				return next(error);
 			}
 		} else {
 			return next(appError('INCORRECT_CREDENTIALS'));

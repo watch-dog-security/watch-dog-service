@@ -4,9 +4,10 @@ let express = require('express');
 let request = require('supertest');
 let assert = require('assert');
 let signin = require('./../../../middlewares/authentication/signin');
-let User = require('./../../../models/user');
+let User;
 let appError = require('./../../../modules/error/manager');
 let expect = require('chai').expect;
+let UserManager;
 
 const bodyParser = require('body-parser');
 const mock = require('./../../mocks/middlewares/authentication/signin');
@@ -27,15 +28,12 @@ describe('Middleware SignIn: ', () => {
 			return res.status(error.code).send(error.message);
 		});
 
-		mongoose.connect(config.database.mongodb.host, (error) => {
+		mongoose.connect(config.database.mongodb.host + ':' + config.database.mongodb.port + '/' + config.database.mongodb.testdb, (error) => {
 			if (!error) {
-				User.ensureIndexes(function (err) {
-					if (!err) {
-						done();
-					}
-				});
+				UserManager = require('./../../../modules/users/user')(mongoose);
+				app.set('UserManager', UserManager);
+				done();
 			}
-
 		});
 	});
 
@@ -52,7 +50,7 @@ describe('Middleware SignIn: ', () => {
 	});
 
 	it('Should user login on system with the correct credentials', (done) => {
-		let user = new User(mock.validUserToMongoose);
+		let user = UserManager.getUserFromJSON(mock.validUserToMongoose);
 
 		user.save((error) => {
 			assert(!error);
