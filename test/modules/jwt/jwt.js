@@ -64,7 +64,7 @@ describe('JWT module', () => {
 
 		it('Should throw an error "' + appError('ENTRY_PAYLOAD').message + '" when payload is entry' , (done) => {
 			expect(() => {
-				jwt.encrypt('');
+				jwt.encrypt();
 			}).to.throw(appError('ENTRY_PAYLOAD').message);
 			done();
 		});
