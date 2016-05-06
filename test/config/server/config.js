@@ -37,6 +37,16 @@ describe('Server config', () => {
             assert(config.database.mongodb.port);
             done();
         });
+
+		it('Should have testdb value', (done) => {
+            assert(config.database.mongodb.testdb);
+            done();
+        });
+
+        it('Should have db value', (done) => {
+            assert(config.database.mongodb.db);
+            done();
+        });
     });
 
     describe('Redis', () => {
