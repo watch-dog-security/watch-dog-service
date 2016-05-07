@@ -13,9 +13,12 @@ describe(config.app.name + ' server', () => {
 
 	after((done) => {
 		fs.unlink(__dirname + '/../logs/' + mock.fakeServerConfigForRedis.app.name + '-error.log', () => {
-			fs.unlink(__dirname + '/../logs/'+ mock.fakeServerConfigForRedis.app.name + '-warn.log', (error) => {
-				console.log(error);
-				done();
+			fs.unlink(__dirname + '/../logs/'+ mock.fakeServerConfigForRedis.app.name + '-warn.log', () => {
+				fs.unlink(__dirname + '/config/locales/en.json', () => {
+					fs.unlink(__dirname + '/config/locales/es.json', () => {
+						done();
+					});
+				});
 			});
 		});
 	});
