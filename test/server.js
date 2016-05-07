@@ -6,6 +6,7 @@ let server = require('./../server.js');
 let undefinedVar;
 const config = require('./../config/server/config');
 const i18n = server.i18n;
+const mock = require('./mocks/server.js');
 
 describe(config.app.name + ' server', () => {
 	describe('APP service', () => {
@@ -164,29 +165,7 @@ describe(config.app.name + ' server', () => {
 		});
 
 		it('Should promise startRedis reject with an Error', (done) => {
-			mockery.registerMock('./config/server/config.js', {
-				app: {
-					name: '1',
-					host: '1',
-					port: '1',
-					password: {
-						check: '1'
-					}
-				},
-				jwt: {
-					secret: '1'
-				},
-				database: {
-					mongodb: {
-						host: '1',
-						port: '1'
-					},
-					redis: {
-						host: '1',
-						port: '1'
-					}
-				}
-			});
+			mockery.registerMock('./config/server/config.js', mock.fakeServerConfigForRedis);
 
 			server = require('./../server.js');
 

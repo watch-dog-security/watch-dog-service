@@ -26,7 +26,7 @@ mocks.validUserUsername = {
 	codeCountry: '+1'
 };
 
-mocks.reapetedUserUsername = mocks.validUserUsername;
+mocks.reapetedUserUsername =  Object.assign({}, mocks.validUserUsername);
 
 mocks.validUserPhone = {
 	fullName: 'Hugo Weaving',

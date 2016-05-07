@@ -55,4 +55,21 @@ mocks.userJSONUndefinedUsername = JSON.stringify([
 	mocks.configurationUndefinedUsername
 ]);
 
+mocks.configurationOfThePayload = {
+	_id: '1',
+	username: 'UserNamePrueba'
+};
+
+mocks.configurationOfThePayloadTokenNotActive = {
+	_id: '1',
+	username: 'UserNamePrueba',
+	nbf: Date.now() / 1000 + 1000
+};
+
+mocks.configurationOfThePayloadTokenExpired = {
+	_id: '1',
+	username: 'UserNamePrueba',
+	exp: (Date.now() / 1000) - 1000
+};
+
 module.exports = mocks;
