@@ -2,6 +2,7 @@
 
 let assert = require('assert');
 let mockery = require('mockery');
+let fs = require('fs');
 let server = require('./../server.js');
 let undefinedVar;
 const config = require('./../config/server/config');
@@ -9,6 +10,16 @@ const i18n = server.i18n;
 const mock = require('./mocks/server.js');
 
 describe(config.app.name + ' server', () => {
+
+	after((done) => {
+		fs.unlink(__dirname + '/../logs/' + mock.fakeServerConfigForRedis.app.name + '-error.log', () => {
+			fs.unlink(__dirname + '/../logs/'+ mock.fakeServerConfigForRedis.app.name + '-warn.log', (error) => {
+				console.log(error);
+				done();
+			});
+		});
+	});
+
 	describe('APP service', () => {
 
 		let serverInstance;
