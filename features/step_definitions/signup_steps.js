@@ -14,15 +14,14 @@ var myStepDefinitionsWrapper = function () {
 	});
 
 	this.When(/^new user with json (.*) call to "\/auth\/signup"$/, function (jsonUser, callback) {
-		console.log(jsonUser)
 		request(config.app.host + ':' + config.app.port)
 			.post('/auth/signup')
 			.set('Content-Type', 'application/json')
-			.send(JSON.stringify(jsonUser))
+			.send(jsonUser)
 			.end((error, response) => {
 				assert(!error);
 				statusCodeFromCall = response.res.statusCode;
-				messageFromCall = response.res.message;
+				messageFromCall = response.res.text;
 				callback();
 			});
 	});
