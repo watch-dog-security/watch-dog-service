@@ -58,6 +58,12 @@ Para ejecutar estos informes hay que ejecutar el siguiente comando:
 
 `npm run test-travis`
 
+También está cubierto por cucumber.js para trabajar con BDD y así comprobar
+de principio a final que hace lo que debe hacer, para ejecutarlo debeís meter
+el siguiente comando:
+
+`npm run cucumber`
+
 Development Rules
 -----------------
 Si deseas particiar en el proyecto puedes hacerlo siempre a través de pull request y se supervisará de ésta forma el código
