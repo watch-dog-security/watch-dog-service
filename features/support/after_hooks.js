@@ -1,6 +1,4 @@
 'use strict';
-let server = require('./../../server');
-let mongoose = require('mongoose');
 
 var afterHook = function () {
 	this.After((scenario, callback) => {
@@ -8,7 +6,7 @@ var afterHook = function () {
 			if (!error) {
 				global.server.stop().then(() => {
 					callback();
-				})
+				});
 			}
 		});
 	});
