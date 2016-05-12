@@ -4,11 +4,12 @@ let mongoose = require('mongoose');
 
 var afterHook = function () {
 	this.After((scenario, callback) => {
-		server.stop().then((response) => {
-			console.log('after is executing' + response);
-			callback();
-		}).catch((error) => {
-			console.log('error:' + error)
+		global.mongoose.connection.db.dropCollection('users', (error) => {
+			if (!error) {
+				global.server.stop().then(() => {
+					callback();
+				})
+			}
 		});
 	});
 };
