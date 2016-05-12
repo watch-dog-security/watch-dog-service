@@ -3,10 +3,8 @@ let server = require('./../../server');
 let mockery = require('mockery');
 let configForTest = require('./../../config/server/config.js');
 
-
 let myHooks = function () {
 	this.Before((scenario, callback) => {
-		console.log('Before');
 		mockery.enable({
 			useCleanCache: true,
 			warnOnReplace: false,
@@ -23,9 +21,7 @@ let myHooks = function () {
 					global.mongoose = data.instance;
 				}
 			});
-
 			callback();
-			//global.mongoose = response.mongoose;
 		});
 	});
 };
