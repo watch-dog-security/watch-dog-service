@@ -9,7 +9,7 @@ var myStepDefinitionsWrapper = function () {
 	let statusCodeFromCall;
 	let messageFromCall;
 
-	this.Given(/^A new user try to signup$/, function (callback) {
+	this.Given(/^A new valid user$/, function (callback) {
 		callback();
 	});
 
