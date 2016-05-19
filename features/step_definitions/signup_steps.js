@@ -6,16 +6,19 @@ const config = require('./../../config/server/config.js');
 
 var myStepDefinitionsWrapper = function () {
 
+	const url = config.app.host + ':' + config.app.port;
 	let statusCodeFromCall;
 	let messageFromCall;
+	let route;
 
-	this.Given(/^A new valid user$/, function (callback) {
-		callback();
+	this.Given(/^A user trying to signup on the route "\/auth\/signup"$/, function (route, callback) {
+		route = this.route;
+		callback()
 	});
 
-	this.When(/^new user with json (.*) call to "\/auth\/signup"$/, function (jsonUser, callback) {
-		request(config.app.host + ':' + config.app.port)
-			.post('/auth/signup')
+	this.When(/^he send his (.*)$/, function (jsonUser, callback) {
+		request(url)
+			.post(route)
 			.set('Content-Type', 'application/json')
 			.send(jsonUser)
 			.end((error, response) => {
@@ -26,7 +29,7 @@ var myStepDefinitionsWrapper = function () {
 			});
 	});
 
-	this.Then(/^should user create and get status "([^"]*)" and message "([^"]*)"$/, function (statusCode, message, callback) {
+	this.Then(/^he should receive the message "([^"]*)" with code "([^"]*)"$/, function (message, statusCode, callback) {
 		assert.equal(statusCode, statusCodeFromCall.toString());
 		assert.equal(message, messageFromCall);
 		callback();
