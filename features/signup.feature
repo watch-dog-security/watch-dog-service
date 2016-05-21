@@ -6,38 +6,27 @@ Feature: Signup feature
 	Scenario Outline: A correct user signup
 		Given A user trying to signup on the route "/auth/signup"
 		When he send his <data>
-		Then he should receive the message "User saved successfully" with code "200"
+		Then he should receive the message "User saved successfully"
+		And code "200"
 		Examples:
-			| data                                                                                                                                                                                                     |
-			| { "fullname": "Alberto Iglesias Gallego", "username": "albertoig", "password": "1234", "birthdate": "01/01/2002", "email": "alberto.uchiha@gmail.com", "mobilephone": "666555444", "codecountry": "+34"} |
-			| { "fullname": "Carlos Iglesias", "username": "carlosig", "password": "5678", "birthdate": "01/01/2001", "email": "carlos.uchiha@gmail.com", "mobilephone": "4453564334", "codecountry": "+34"}           |
+			| data                                                                                                                                                                                                        |
+			| { "fullname": "Alberto Iglesias Gallego", "username": "albertoig", "password": "1234", "birthdate": "01/01/2002", "email": "alberto.uchiha@gmail.com", "mobilephone": "666555444", "codecountry": "+34"}    |
+			| { "fullname": "Norman Reedus", "username": "normanReedus00", "password": "WalkingDead001", "birthdate": "01/06/1969", "email": "norman.reedus@gmail.com", "mobilephone": "4453564334", "codecountry": "+1"} |
+			| { "fullname": "Andrew Lincoln", "username": "andrew0Lincoln", "password": "Test01", "birthdate": "08/14/1973", "email": "andrewLincoln@hotmail.com", "mobilephone": "767656545", "codecountry": "+44"}      |
+			| { "fullname": "Steven Yeun", "username": "StevenYeun", "password": "1234", "birthdate": "12/21/1983", "email": "stevenYeun@gmail.com", "mobilephone": "643452344", "codecountry": "+82"}                    |
+			| { "fullname": "Lauren Cohan", "username": "laurenCohan", "password": "Qw3rty01", "birthdate": "01/07/1983", "email": "LaurenCohan@gmail.com", "mobilephone": "54323423", "codecountry": "+1"}               |
 
 	@repeted_users
 	Scenario Outline: A user signup with a repeted username
 		Given A user trying to signup on the route "/auth/signup"
 		When he send his <data>
-		Then he should receive the message "bla bla bla" with code "401"
+		Then he should receive the message "E11000 duplicate key error index"
+		And code "401"
 		Examples:
-			| data                                                                                                                                                                                             |
-			| { "fullname": "Alberto Iglesias", "username": "albertoig", "password": "1234", "birthdate": "01/01/2002", "email": "alberto.uchiha@gmail.com", "mobilephone": "666555444", "codecountry": "+34"} |
-			| { "fullname": "Carlos Iglesias", "username": "carlosig", "password": "5678", "birthdate": "01/01/2001", "email": "carlos.uchiha@gmail.com", "mobilephone": "4453564334", "codecountry": "+34"}   |
+			| data                                                                                                                                                                                                        |
+			| { "fullname": "Alberto Iglesias Gallego", "username": "albertoig", "password": "1234", "birthdate": "01/01/2002", "email": "alberto.uchiha@gmail.com", "mobilephone": "666555444", "codecountry": "+34"}    |
+			| { "fullname": "Norman Reedus", "username": "normanReedus00", "password": "WalkingDead001", "birthdate": "01/06/1969", "email": "norman.reedus@gmail.com", "mobilephone": "4453564334", "codecountry": "+1"} |
+			| { "fullname": "Andrew Lincoln", "username": "andrew0Lincoln", "password": "Test01", "birthdate": "08/14/1973", "email": "andrewLincoln@hotmail.com", "mobilephone": "767656545", "codecountry": "+44"}      |
+			| { "fullname": "Steven Yeun", "username": "StevenYeun", "password": "1234", "birthdate": "12/21/1983", "email": "stevenYeun@gmail.com", "mobilephone": "643452344", "codecountry": "+82"}                    |
+			| { "fullname": "Lauren Cohan", "username": "laurenCohan", "password": "Qw3rty01", "birthdate": "01/07/1983", "email": "LaurenCohan@gmail.com", "mobilephone": "54323423", "codecountry": "+1"}               |
 
-	@malformed_email
-	Scenario Outline: A user try to signup on Watch dog service with incorrect email
-		Given A user trying to signup on the route "/auth/signup"
-		When he send his <data>
-		Then he should receive the message "Email syntax is not correct" with code "401"
-		Examples:
-			| data                                                                                                                                                                                             |
-			| { "fullname": "Alberto Iglesias", "username": "albertoig", "password": "1234", "birthdate": "01/01/2002", "email": "alberto.uchiha@gmail.com", "mobilephone": "666555444", "codecountry": "+34"} |
-			| { "fullname": "Carlos Iglesias", "username": "carlosig", "password": "5678", "birthdate": "01/01/2001", "email": "carlos.uchiha@gmail.com", "mobilephone": "4453564334", "codecountry": "+34"}   |
-
-	@malformed_code_country
-	Scenario Outline: A user try to signup on Watch dog service with incorrect code country
-		Given A user trying to signup on the route "/auth/signup"
-		When he send his <data>
-		Then he should receive the message "Country code is not correct" with code "401"
-		Examples:
-			| data                                                                                                                                                                                             |
-			| { "fullname": "Alberto Iglesias", "username": "albertoig", "password": "1234", "birthdate": "01/01/2002", "email": "alberto.uchiha@gmail.com", "mobilephone": "666555444", "codecountry": "+34"} |
-			| { "fullname": "Carlos Iglesias", "username": "carlosig", "password": "5678", "birthdate": "01/01/2001", "email": "carlos.uchiha@gmail.com", "mobilephone": "4453564334", "codecountry": "+34"}   |

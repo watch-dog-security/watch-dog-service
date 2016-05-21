@@ -4,7 +4,7 @@ let mockery = require('mockery');
 let configForTest = require('./../../config/server/config.js');
 
 let myHooks = function () {
-	this.Before((scenario, callback) => {
+	this.BeforeFeature((scenario, callback) => {
 		mockery.enable({
 			useCleanCache: true,
 			warnOnReplace: false,

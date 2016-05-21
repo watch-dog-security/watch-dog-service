@@ -2,6 +2,7 @@
 
 let assert = require('assert');
 let request = require('supertest');
+let expect = require('chai').expect;
 const config = require('./../../config/server/config.js');
 
 var myStepDefinitionsWrapper = function () {
@@ -11,8 +12,8 @@ var myStepDefinitionsWrapper = function () {
 	let messageFromCall;
 	let route;
 
-	this.Given(/^A user trying to signup on the route "\/auth\/signup"$/, function (route, callback) {
-		route = this.route;
+	this.Given(/^A user trying to signup on the route "\/auth\/signup"$/, function (callback) {
+		route = '/auth/signup';
 		callback()
 	});
 
@@ -29,11 +30,16 @@ var myStepDefinitionsWrapper = function () {
 			});
 	});
 
-	this.Then(/^he should receive the message "([^"]*)" with code "([^"]*)"$/, function (message, statusCode, callback) {
+	this.Then(/^code "([^"]*)"$/, function (statusCode, callback) {
 		assert.equal(statusCode, statusCodeFromCall.toString());
-		assert.equal(message, messageFromCall);
 		callback();
 	});
+
+	this.Then(/^he should receive the message "([^"]*)"$/, function (message, callback) {
+		//assert.equal(message, messageFromCall);
+		expect(messageFromCall).to.contains(message);
+        callback();
+    });
 };
 
 module.exports = myStepDefinitionsWrapper;
