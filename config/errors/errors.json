@@ -109,7 +109,7 @@
 	},
 	"MONGOOSE_USER_SAVE": {
 		"id": "19",
-		"type": "UNEXPECTED",
+		"type": "CONTROLLED",
 		"code": "401",
 		"message": ""
 	},
@@ -118,5 +118,11 @@
 		"type": "CONTROLLED",
 		"code": "401",
 		"message": "You must to signin on the system with the correct credentials"
+	},
+	"NO_DATA": {
+		"id": "21",
+		"type": "CONTROLLED",
+		"code": "401",
+		"message": "You must to add data to body request"
 	}
 }

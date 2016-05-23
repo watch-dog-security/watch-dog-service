@@ -36,7 +36,6 @@ var myStepDefinitionsWrapper = function () {
 	});
 
 	this.Then(/^he should receive the message "([^"]*)"$/, function (message, callback) {
-		//assert.equal(message, messageFromCall);
 		expect(messageFromCall).to.contains(message);
         callback();
     });

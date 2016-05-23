@@ -30,5 +30,6 @@
 	"Token is not present, please send one to server": "No hay token en la llamada, envia uno al servidor",
 	"CONTROLLED": "CONTROLADO",
 	"Key is not present": "La clave no está presente para la encriptación JWT",
-	"Entry payload": "Payload vacio"
+	"Entry payload": "Payload vacio",
+	"You must to add data to body request": "Debes añadir datos al cuerpo de la petición"
 }

@@ -4,6 +4,7 @@ let express = require('express');
 let request = require('supertest');
 let expect = require('chai').expect;
 let signup = require('./../../../middlewares/authentication/signup');
+let errorHandler = require('./../../../middlewares/error/handler');
 let appError = require('./../../../modules/error/manager');
 let UserManager;
 
@@ -28,12 +29,7 @@ describe('Middleware: Signup', () => {
 		app.use(bodyParser.urlencoded({extended: true}));
 		app.set('i18n', i18n);
 		app.use(signup);
-		app.use((error, req, res, next) => {
-			if (!error) {
-				return next();
-			}
-			return res.status(error.code).send(error.message);
-		});
+		app.use(errorHandler);
 
 		mongoose.connect(config.database.mongodb.host + ':' + config.database.mongodb.port + '/' + config.database.mongodb.testdb, (error) => {
 			UserManager = require('./../../../modules/users/user')(mongoose);

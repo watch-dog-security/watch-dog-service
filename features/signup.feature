@@ -30,3 +30,17 @@ Feature: Signup feature
 			| { "fullname": "Steven Yeun", "username": "StevenYeun", "password": "1234", "birthdate": "12/21/1983", "email": "stevenYeun@gmail.com", "mobilephone": "643452344", "codecountry": "+82"}                    |
 			| { "fullname": "Lauren Cohan", "username": "laurenCohan", "password": "Qw3rty01", "birthdate": "01/07/1983", "email": "LaurenCohan@gmail.com", "mobilephone": "54323423", "codecountry": "+1"}               |
 
+	@no_data
+	Scenario Outline: A user signup with no data on call
+		Given A user trying to signup on the route "/auth/signup"
+		When he send his <data>
+		Then he should receive the message "E11000 duplicate key error index"
+		And code "401"
+		Examples:
+			| data      |
+			| undefined |
+			| {}        |
+			| null      |
+			| ""        |
+			| ''        |
+
