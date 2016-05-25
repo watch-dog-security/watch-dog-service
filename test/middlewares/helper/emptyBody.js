@@ -2,6 +2,8 @@
 
 let express = require('express');
 let request = require('supertest');
+
+let expect = require('chai').expect;
 let emptyBody = require('./../../../middlewares/helper/emptyBody');
 let errorHandler = require('./../../../middlewares/error/handler');
 let appError = require('./../../../modules/error/manager');
@@ -37,11 +39,15 @@ describe('Middleware: empty body', () => {
 	});
 
 	it('Should send code "' + appError('NO_DATA').code + '" with message "' + appError('NO_DATA').message + '" when body data is "undefined"', (done) => {
+		console.log(appError('NO_DATA').code);
 		request(app)
 			.post('/')
-			.send()
+			.send('')
 			.expect(appError('NO_DATA').code)
-			.expect(appError('NO_DATA').message, done);
+			.end((error, response) => {
+				expect(response.error.text).to.contain(appError('NO_DATA').message);
+				done();
+			});
 	});
 
 	it('Should send code "' + appError('NO_DATA').code + '" with message "' + appError('NO_DATA').message + '" when body data is "null"', (done) => {
@@ -49,7 +55,10 @@ describe('Middleware: empty body', () => {
 			.post('/')
 			.send(mock.nullVariable)
 			.expect(appError('NO_DATA').code)
-			.expect(appError('NO_DATA').message, done);
+			.end((error, response) => {
+				expect(response.error.text).to.contain(appError('NO_DATA').message);
+				done();
+			});
 	});
 
 	it('Should send code "' + appError('NO_DATA').code + '" with message "' + appError('NO_DATA').message + '" when body data is "{}"', (done) => {
@@ -57,7 +66,10 @@ describe('Middleware: empty body', () => {
 			.post('/')
 			.send(mock.emptyObject)
 			.expect(appError('NO_DATA').code)
-			.expect(appError('NO_DATA').message, done);
+			.end((error, response) => {
+				expect(response.error.text).to.contain(appError('NO_DATA').message);
+				done();
+			});
 	});
 
 	it('Should send code "' + appError('NO_DATA').code + '" with message "' + appError('NO_DATA').message + '" when body data is ""', (done) => {
@@ -65,14 +77,17 @@ describe('Middleware: empty body', () => {
 			.post('/')
 			.send(mock.emptyString)
 			.expect(appError('NO_DATA').code)
-			.expect(appError('NO_DATA').message, done);
+			.end((error, response) => {
+				expect(response.error.text).to.contain(appError('NO_DATA').message);
+				done();
+			});
 	});
 
 	it('Should send code "200" when', (done) => {
 		request(app)
 			.post('/')
 			.send(mock.body)
-			.expect(200,done)
+			.expect(404,done)
 	});
 
 });
