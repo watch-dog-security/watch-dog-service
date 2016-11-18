@@ -4,20 +4,20 @@
   "description": "Proyecto de seguridad de micro servicios. Project of security micro-services.",
   "main": "server.js",
   "dependencies": {
-    "body-parser": "^1.13.3",
-    "bunyan": "^1.8.0",
+    "body-parser": "^1.15.2",
+    "bunyan": "^1.8.5",
     "colors": "^1.1.2",
-    "cors": "^2.7.1",
-    "eslint": "^2.9.0",
-    "express": "^4.13.4",
-    "http-proxy": "^1.13.2",
-    "i18n": "^0.8.1",
+    "cors": "^2.8.1",
+    "eslint": "^3.10.2",
+    "express": "^4.14.0",
+    "http-proxy": "^1.15.2",
+    "i18n": "^0.8.3",
     "jsdoc": "git+https://github.com/jsdoc3/jsdoc.git",
     "jwt-simple": "^0.5.0",
-    "moment": "^2.12.0",
-    "mongoose": "^4.4.14",
-    "redis": "^2.5.3",
-    "request": "^2.65.0"
+    "moment": "^2.16.0",
+    "mongoose": "^4.6.8",
+    "redis": "^2.6.3",
+    "request": "^2.78.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -49,7 +49,10 @@
     "url": "git+https://github.com/albertoig/watch-dog-service.git"
   },
   "keywords": [
-    "security", "jwt", "micro", "service"
+    "security",
+    "jwt",
+    "micro",
+    "service"
   ],
   "author": "Alberto Iglesias Gallego",
   "license": "ISC",
