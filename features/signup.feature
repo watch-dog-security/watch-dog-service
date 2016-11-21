@@ -34,13 +34,13 @@ Feature: Signup feature
 	Scenario Outline: A user signup with no data on call
 		Given A user trying to signup on the route "/auth/signup"
 		When he send his <data>
-		Then he should receive the message "E11000 duplicate key error index"
+		Then he should receive the message "You must to add data to body request"
 		And code "401"
 		Examples:
-			| data      |
-			| undefined |
-			| {}        |
-			| null      |
-			| ""        |
-			| ''        |
+			| data |
+			|      |
+			| {}   |
+			| null |
+			| ""   |
+			| ''   |
 
