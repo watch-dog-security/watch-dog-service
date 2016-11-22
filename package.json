@@ -36,7 +36,7 @@
   },
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha test/ --recursive",
-    "cucumber": "./node_modules/cucumber/bin/cucumber.js test/features",
+    "cucumber": "./node_modules/cucumber/bin/cucumber.js features",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha test/ --  --recursive ",
     "test-codacy": "cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage",
     "clean": "rm -r ./node_modules",
