@@ -1,9 +1,9 @@
-@tag1
+@gateway
 Feature: Gateway feature
 	Gateway redirect to other services that just can be accessible for Watch dog service.
 
-	@tag2
-	Scenario Outline: Access to api rest under watch dog service protection
+	@service_one
+	Scenario Outline: Access to api rest service one under watch dog service protection.
 		Given A list of users
 		When <user> call to <route> with token <token>
 		Then should get <status_response>
