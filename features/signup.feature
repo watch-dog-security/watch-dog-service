@@ -40,7 +40,4 @@ Feature: Signup feature
 			| data |
 			|      |
 			| {}   |
-			| null |
-			| ""   |
-			| ''   |
 
