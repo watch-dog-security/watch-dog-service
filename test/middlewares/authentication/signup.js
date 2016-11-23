@@ -28,6 +28,7 @@ describe('Middleware: Signup', () => {
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({extended: true}));
 		app.set('i18n', i18n);
+		app.set('appError', appError);
 		app.use(signup);
 		app.use(errorHandler);
 

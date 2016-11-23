@@ -5,14 +5,15 @@ const mongoose = require('mongoose');
 const redis = require('redis');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const config = require('./config/server/config.js');
-const utils = require('./modules/utils/utils.js');
-const authenticationRouter = require('./routers/authentication');
-const gatewayRouter = require('./routers/gateway');
 const i18n = require('i18n');
 const __ = require('i18n').__;
 const bunyan = require('bunyan');
 const path = require('path');
+const config = require('./config/server/config.js');
+const utils = require('./modules/utils/utils.js');
+const authenticationRouter = require('./routers/authentication');
+const gatewayRouter = require('./routers/gateway');
+const appError = require('./modules/error/manager');
 const log = bunyan.createLogger({
 	name: config.app.name,
 	streams: [
@@ -50,14 +51,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 
-app.use('/auth', authenticationRouter);
-app.use(gatewayRouter);
-
+/**
+ * INSTANCES
+ */
+app.set('appError', appError);
+app.set('config', config);
 app.set('i18n', i18n);
 app.set('log', log);
 
+/**
+ * ROUTES
+ */
+app.use('/auth', authenticationRouter);
+app.use(gatewayRouter);
+
 let startApp = () => {
-	//TODO: check how to close properly connection task
 	return new Promise((resolve) => {
 		instanceApp = app.listen(config.app.port, () => {
 			resolve(

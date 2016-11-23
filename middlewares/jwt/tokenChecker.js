@@ -1,12 +1,13 @@
 'use strict';
 
 let jwt = require('./../../modules/jwt/jwt');
-let appError = require('./../../modules/error/manager');
+let appError;
 
 module.exports = (() => {
     return (req, res, next) => {
         let token = req.headers['token'];
 		let redisInstance = req.app.get('redisInstance');
+		let appError = req.app.get('appError');
 
 		try{
             let decodeToken = jwt.decode(token);

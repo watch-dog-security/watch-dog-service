@@ -64,6 +64,7 @@ describe('Middleware tokenChecker: ', () => {
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({extended: true}));
 		app.use(tokenChecker);
+		app.set('appError', appError);
 		app.use((error, req, res, next) => {
 			if (!error) {
 				return next();

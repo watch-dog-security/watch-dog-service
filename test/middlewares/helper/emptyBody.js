@@ -29,6 +29,7 @@ describe('Middleware: empty body', () => {
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({extended: true}));
 		app.set('i18n', i18n);
+		app.set('appError', appError);
 		app.use(emptyBody);
 		app.use(errorHandler);
 		done();

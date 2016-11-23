@@ -6,7 +6,7 @@
  * @type {UserManager|exports|module.exports}
  */
 
-let appError = require('./../../modules/error/manager');
+let appError;
 let UserManager;
 let i18n;
 let user;
@@ -15,6 +15,7 @@ module.exports = (() => {
 	return (req, res, next) => {
 		try {
 			i18n = req.app.get('i18n');
+			appError = req.app.get('appError');
 			UserManager = req.app.get('UserManager');
 			user = UserManager.parseJsonToUserModel(req.body);
 

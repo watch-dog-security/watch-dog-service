@@ -1,7 +1,7 @@
 'use strict';
 
 let authentication = require('./../../modules/authentication/authentication');
-let appError = require('./../../modules/error/manager');
+let appError;
 let authRequest;
 let userAuthentication;
 let UserManager;
@@ -10,6 +10,7 @@ module.exports = (() => {
 	return (req, res, next) => {
 		authRequest = req.headers['authorization'];
 		UserManager = req.app.get('UserManager');
+		appError = req.app.get('appError');
 
 		if (authentication.check(authRequest)) {
 			try {
