@@ -27,6 +27,7 @@ describe('Middleware SignIn: ', () => {
 			return res.status(error.code).send(error.message);
 		});
 		app.set('appError', appError);
+		mongoose.Promise = global.Promise;
 		mongoose.connect(config.database.mongodb.host + ':' + config.database.mongodb.port + '/' + config.database.mongodb.testdb, (error) => {
 			if (!error) {
 				UserManager = require('./../../../modules/users/user')(mongoose);

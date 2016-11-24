@@ -77,6 +77,7 @@ let startApp = () => {
 
 let startMongoose = () => {
 	return new Promise((resolve, reject) => {
+		mongoose.Promise = global.Promise;
 		instanceMoongose = mongoose.connect(config.database.mongodb.host + ':' + config.database.mongodb.port +  '/' + config.database.mongodb.db, (err) => {
 			if (err) {
 				reject(err);
