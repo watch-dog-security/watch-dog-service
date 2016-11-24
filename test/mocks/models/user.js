@@ -61,7 +61,7 @@ mocks.validUserSecondCodeCountry = {
 	username: 'fry',
 	password: 'Stephen',
 	meta: {
-		birthdate: new Date('24/08/1957')
+		birthdate: new Date('08/24/1957')
 	},
 	email: 'stephen.fry@gmail.com',
 	mobilePhone: '166252333',
@@ -73,7 +73,7 @@ mocks.validUserCreateAt = {
 	username: 'tom',
 	password: 'hardy',
 	meta: {
-		birthdate: new Date('15/09/1977')
+		birthdate: new Date('09/16/1977')
 	},
 	email: 'tom.hardy@gmail.com',
 	mobilePhone: '887744553',
