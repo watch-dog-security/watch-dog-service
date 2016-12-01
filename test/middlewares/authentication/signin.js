@@ -1,32 +1,21 @@
 'use strict';
 
-let express = require('express');
+let middleInyector = require('middle-inyector');
 let request = require('supertest');
 let assert = require('assert');
-let signin = require('./../../../middlewares/authentication/signin');
-let appError = require('./../../../modules/error/manager');
-let expect = require('chai').expect;
-let UserManager;
-
-const bodyParser = require('body-parser');
-const mock = require('./../../mocks/middlewares/authentication/signin');
 let mongoose = require('mongoose');
+let expect = require('chai').expect;
+let appError = require('./../../../modules/error/manager');
+let mock = require('./../../mocks/middlewares/authentication/signin');
 const config = require('./../../../config/server/config');
+
+let UserManager;
 
 describe('Middleware SignIn: ', () => {
 	let app;
+
 	before((done) => {
-		app = express();
-		app.use(bodyParser.json());
-		app.use(bodyParser.urlencoded({extended: true}));
-		app.use(signin);
-		app.use((error, req, res, next) => {
-			if(!error){
-				return next();
-			}
-			return res.status(error.code).send(error.message);
-		});
-		app.set('appError', appError);
+		app = middleInyector('express', mock.dependencies, mock.variables);
 		mongoose.Promise = global.Promise;
 		mongoose.connect(config.database.mongodb.host + ':' + config.database.mongodb.port + '/' + config.database.mongodb.testdb, (error) => {
 			if (!error) {
