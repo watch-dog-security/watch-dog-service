@@ -1,36 +1,22 @@
 'use strict';
 
-let express = require('express');
+let middleInyector = require('middle-inyector');
 let request = require('supertest');
-let expect = require('chai').expect;
-let signup = require('./../../../middlewares/authentication/signup');
-let errorHandler = require('./../../../middlewares/error/handler');
-let appError = require('./../../../modules/error/manager');
-let UserManager;
-
 let mongoose = require('mongoose');
-const i18n = require('i18n');
-const bodyParser = require('body-parser');
+let expect = require('chai').expect;
+let UserManager;
+let i18n;
+let app;
+
 const mock = require('./../../mocks/modules/users/user');
 const config = require('./../../../config/server/config');
+const mockSignup = require('./../../mocks/middlewares/authentication/signup');
+const appError = require('./../../../modules/error/manager');
 
 describe('Middleware: Signup', () => {
-	let app;
 	before((done) => {
-		i18n.configure({
-			directory: __dirname + '/../../../config/locales',
-			locales: ['en', 'es'],
-			defaultLocale: 'en',
-			register: global
-		});
-
-		app = express();
-		app.use(bodyParser.json());
-		app.use(bodyParser.urlencoded({extended: true}));
-		app.set('i18n', i18n);
-		app.set('appError', appError);
-		app.use(signup);
-		app.use(errorHandler);
+		app = middleInyector('express', mockSignup.dependencies, mockSignup.variables);
+		i18n = app.get('i18n');
 
 		mongoose.connect(config.database.mongodb.host + ':' + config.database.mongodb.port + '/' + config.database.mongodb.testdb, (error) => {
 			UserManager = require('./../../../modules/users/user')(mongoose);
@@ -57,9 +43,7 @@ describe('Middleware: Signup', () => {
 	it('should return 200 response if user request save user on mongodb', (done) => {
 		request(app)
 			.post('/')
-			.send(
-				mock.userJson
-			)
+			.send(mock.userJson)
 			.expect(200)
 			.expect(i18n.__('User saved successfully'), done);
 	});
