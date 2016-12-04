@@ -1,42 +1,33 @@
 'use strict';
 
-let express = require('express');
+let middleInyector = require('middle-inyector');
 let request = require('supertest');
-let giver = require('./../../../middlewares/jwt/giver');
-let appError = require('./../../../modules/error/manager');
-let expect = require('chai').expect;
-let UserManager;
-
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const redis = require('redis');
+let expect = require('chai').expect;
 const config = require('./../../../config/server/config.js');
 const mock = require('./../../mocks/middlewares/jwt/giver');
+let giver = require('./../../../middlewares/jwt/giver');
+let appError = require('./../../../modules/error/manager');
+
+let app;
+let UserManager;
+let redisInstance;
 
 describe('Middleware Giver: ', () => {
-	let app;
-	let redisInstance;
+
 
 	before((done) => {
-		app = express();
-		app.use(bodyParser.json());
-		app.use(bodyParser.urlencoded({extended: true}));
-		app.use(giver);
-		app.use((error, req, res, next) => {
-			if (!error) {
-				return next();
-			}
-			return res.status(error.code).send(error.message);
-		});
+		app = middleInyector('express', mock.dependencies, mock.variables);
 
 		mongoose.connect(config.database.mongodb.host + ':' + config.database.mongodb.port + '/' + config.database.mongodb.testdb, (error) => {
 			if (!error) {
 				redisInstance = redis.createClient(config.database.redis.port, config.database.redis.host);
 
 				redisInstance.on('connect', () => {
-					app.set('redisInstance', redisInstance);
 					UserManager = require('./../../../modules/users/user')(mongoose);
 					app.set('UserManager', UserManager);
+					app.set('redisInstance', redisInstance);
 					done();
 				});
 			}
