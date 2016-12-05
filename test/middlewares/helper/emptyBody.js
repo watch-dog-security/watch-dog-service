@@ -5,15 +5,12 @@ let request = require('supertest');
 let expect = require('chai').expect;
 let appError = require('./../../../modules/error/manager');
 let mock = require('./../../mocks/middlewares/helper/emptyBody');
-let config = require('./../../../config/server/config');
-let i18n;
 let app;
 
 describe('Middleware: empty body', () => {
 
 	before((done) => {
 		app = middleInyector('express', mock.dependencies, mock.variables);
-		i18n = app.get('i18n');
 		done();
 	});
 
