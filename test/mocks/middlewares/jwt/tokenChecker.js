@@ -1,7 +1,11 @@
 'use strict';
 
 const mocksFromUsers = require('./../../modules/users/user');
-
+const bodyParser = require('body-parser');
+const tokenChecker = require('./../../../../middlewares/jwt/tokenChecker');
+const appError = require('./../../../../modules/error/manager');
+const errorHandler = require('./../../../../middlewares/error/handler');
+let i18n = require('i18n');
 let mocks = () => {
 };
 
@@ -34,5 +38,34 @@ mocks.tokenSignedWithOtherPassword = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzd
 
 mocks.voidStringToken = '';
 
+mocks.dependencies = [
+	{
+		name: 'body-parser-json',
+		instance: bodyParser.json()
+	},
+	{
+		name: 'body-parser-url-encoded',
+		instance: bodyParser.urlencoded({extended: true})
+	},
+	{
+		name: 'tokenChecker',
+		instance: tokenChecker
+	},
+	{
+		name: 'error-handler',
+		instance: errorHandler
+	}
+];
+
+mocks.variables = [
+	{
+		name: 'appError',
+		object: appError
+	},
+	{
+		name: 'i18n',
+		object: i18n
+	}
+];
 
 module.exports = mocks;

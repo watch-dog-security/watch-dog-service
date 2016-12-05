@@ -1,26 +1,23 @@
 'use strict';
 
-let express = require('express');
+let middleInyector = require('middle-inyector');
 let request = require('supertest');
-let tokenChecker = require('./../../../middlewares/jwt/tokenChecker');
-let UserManager;
-let mock = require('./../../mocks/middlewares/jwt/tokenChecker');
 let expect = require('chai').expect;
 let sinon = require('sinon');
 let httpMocks = require('node-mocks-http');
-let appError = require('./../../../modules/error/manager');
-
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const redis = require('redis');
-const i18n = require('i18n');
-const __ = require('i18n').__;
+let tokenChecker = require('./../../../middlewares/jwt/tokenChecker');
+let mock = require('./../../mocks/middlewares/jwt/tokenChecker');
+let appError = require('./../../../modules/error/manager');
 const config = require('./../../../config/server/config.js');
 const jwt = require('./../../../modules/jwt/jwt');
 
+let app;
+let redisInstance;
+let UserManager;
+
 describe('Middleware tokenChecker: ', () => {
-	let app;
-	let redisInstance;
 
 	let prepareValidToken = (callback) => {
 		let userFromManager = UserManager.parseJsonToUserModel(mock.validUser);
@@ -53,24 +50,7 @@ describe('Middleware tokenChecker: ', () => {
 	};
 
 	before((done) => {
-		app = express();
-		i18n.configure({
-			defaultLocale: 'en',
-			directory: __dirname + '/../../../config/locales',
-			register: global
-		});
-
-		app.use(i18n.init);
-		app.use(bodyParser.json());
-		app.use(bodyParser.urlencoded({extended: true}));
-		app.use(tokenChecker);
-		app.set('appError', appError);
-		app.use((error, req, res, next) => {
-			if (!error) {
-				return next();
-			}
-			return res.status(error.code).send(error.message);
-		});
+		app = middleInyector('express', mock.dependencies, mock.variables);
 
 		mongoose.connect(config.database.mongodb.host + ':' + config.database.mongodb.port + '/' + config.database.mongodb.testdb, (error) => {
 			UserManager = require('./../../../modules/users/user')(mongoose);
