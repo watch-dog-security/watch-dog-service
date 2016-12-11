@@ -1,6 +1,6 @@
 'use strict';
 
-let middleInyector = require('middle-inyector');
+let middleInjector = require('middle-injector');
 let request = require('supertest');
 let mongoose = require('mongoose');
 let expect = require('chai').expect;
@@ -15,7 +15,7 @@ const appError = require('./../../../modules/error/manager');
 
 describe('Middleware: Signup', () => {
 	before((done) => {
-		app = middleInyector('express', mockSignup.dependencies, mockSignup.variables);
+		app = middleInjector('express', mockSignup.dependencies, mockSignup.variables);
 		i18n = app.get('i18n');
 
 		mongoose.connect(config.database.mongodb.host + ':' + config.database.mongodb.port + '/' + config.database.mongodb.testdb, (error) => {

@@ -1,6 +1,6 @@
 'use strict';
 
-let middleInyector = require('middle-inyector');
+let middleInjector = require('middle-injector');
 let request = require('supertest');
 let expect = require('chai').expect;
 let sinon = require('sinon');
@@ -50,7 +50,7 @@ describe('Middleware tokenChecker: ', () => {
 	};
 
 	before((done) => {
-		app = middleInyector('express', mock.dependencies, mock.variables);
+		app = middleInjector('express', mock.dependencies, mock.variables);
 
 		mongoose.connect(config.database.mongodb.host + ':' + config.database.mongodb.port + '/' + config.database.mongodb.testdb, (error) => {
 			UserManager = require('./../../../modules/users/user')(mongoose);

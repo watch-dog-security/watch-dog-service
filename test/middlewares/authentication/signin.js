@@ -1,6 +1,6 @@
 'use strict';
 
-let middleInyector = require('middle-inyector');
+let middleInjector = require('middle-injector');
 let request = require('supertest');
 let assert = require('assert');
 let mongoose = require('mongoose');
@@ -15,7 +15,7 @@ describe('Middleware SignIn: ', () => {
 	let app;
 
 	before((done) => {
-		app = middleInyector('express', mock.dependencies, mock.variables);
+		app = middleInjector('express', mock.dependencies, mock.variables);
 		mongoose.Promise = global.Promise;
 		mongoose.connect(config.database.mongodb.host + ':' + config.database.mongodb.port + '/' + config.database.mongodb.testdb, (error) => {
 			if (!error) {

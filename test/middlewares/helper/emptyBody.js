@@ -1,6 +1,6 @@
 'use strict';
 
-let middleInyector = require('middle-inyector');
+let middleInjector = require('middle-injector');
 let request = require('supertest');
 let expect = require('chai').expect;
 let appError = require('./../../../modules/error/manager');
@@ -10,7 +10,7 @@ let app;
 describe('Middleware: empty body', () => {
 
 	before((done) => {
-		app = middleInyector('express', mock.dependencies, mock.variables);
+		app = middleInjector('express', mock.dependencies, mock.variables);
 		done();
 	});
 

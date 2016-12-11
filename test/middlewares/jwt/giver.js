@@ -1,6 +1,6 @@
 'use strict';
 
-let middleInyector = require('middle-inyector');
+let middleInjector = require('middle-injector');
 let request = require('supertest');
 const mongoose = require('mongoose');
 const redis = require('redis');
@@ -18,7 +18,7 @@ describe('Middleware Giver: ', () => {
 
 
 	before((done) => {
-		app = middleInyector('express', mock.dependencies, mock.variables);
+		app = middleInjector('express', mock.dependencies, mock.variables);
 
 		mongoose.connect(config.database.mongodb.host + ':' + config.database.mongodb.port + '/' + config.database.mongodb.testdb, (error) => {
 			if (!error) {
